@@ -1,0 +1,6 @@
+a.txt
+stele
+stele.c
+a.txt
+stele
+stele.c

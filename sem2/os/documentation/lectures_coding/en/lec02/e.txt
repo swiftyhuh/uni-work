@@ -1,0 +1,9 @@
+.:
+a.txt
+b.txt
+c.txt
+d.txt
+e.txt
+stars
+stars.c
+ directory

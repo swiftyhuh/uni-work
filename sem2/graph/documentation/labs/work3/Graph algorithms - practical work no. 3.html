@@ -1,0 +1,92 @@
+
+<!-- saved from url=(0053)https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/lab3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="StyleSheet" href="./Graph algorithms - practical work no. 3_files/normal-style.css" type="text/css">
+ <title>Graph algorithms - practical work no. 3</title>
+</head>
+<body><address class="topnav">
+  <a href="https://www.cs.ubbcluj.ro/~rlupsa/index-en.html">home page</a> -&gt;
+  <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/index.html">teaching</a> -&gt;
+  <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/index.html">graph algorithms</a> -&gt;
+  <span class="selflink">practical work no. 3</span>
+</address>
+
+<h1><center>Graph algorithms - practical work no. 3</center></h1>
+
+<p>
+<b>Due:</b> week 9-10.
+
+</p><p>Note: computing the minimum cost walk (as some kind of a list of vertices) is a mandatory part of the assignment.
+
+</p><p>
+Solve the assigned problem from those below. Additionaly, you may solve one
+or more of the bonus problems at the end of the page.
+Use the abstract data type created for lab. 1; modify it if necessary.
+</p><p>
+<b>Assigned problems</b>
+</p><p>
+1. Write a program that, given a graph with positive costs and two vertices,
+finds a lowest cost walk between the given vertices, using the Dijkstra
+algorithm.
+</p><p>
+2. Write a program that, given a graph with positive costs and two vertices,
+finds a lowest cost walk between the given vertices, using a "backwards"
+Dijkstra algorithm (Dijkstra algorithm that searches backwards, from the
+ending vertex).
+</p><p>
+3. Write a program that, given a graph with costs and two vertices,
+finds a lowest cost walk between the given vertices, or prints a message
+if there are negative cost cycles accessible from the starting vertex.
+The program will use a matrix defined as <i>d[x,k]=the cost of the
+lowest cost walk from s to x and of length at most k</i>,
+where <i>s</i> is the starting vertex.
+</p><p>
+4. Write a program that, given a graph with costs and two vertices,
+finds a lowest cost walk between the given vertices, or prints a message
+if there are negative cost cycles accessible from the starting vertex.
+The program will use a matrix defined as <i>d[x,k]=the cost of the
+lowest cost walk from s to x and of length equal to k</i>,
+where <i>s</i> is the starting vertex.
+</p><p>
+5. Write a program that, given a graph with costs and two vertices,
+finds a lowest cost walk between the given vertices, or prints a message
+if there are negative cost cycles accessible from the starting vertex.
+The program will use the Ford's algorithm.
+</p><p>
+6. Write a program that, given a graph with costs and two vertices,
+finds a lowest cost walk between the given vertices, or prints a message
+if there are negative cost cycles in the graph. The program shall use
+the matrix multiplication algorithm.
+</p><p>
+7. Write a program that, given a graph with costs that has no negative cost
+cycles and two vertices, finds a lowest cost walk between the given vertices.
+The program shall use the Floyd-Warshall algorithm.
+
+</p><p>
+<b>Optional, "bonus" problems</b>
+</p><p>
+1B. Write a program that, given a graph with costs, having no negative
+cost cycles, and a pair of vertices, finds the number of distinct
+walks of minimum cost between the given vertices.
+</p><p>
+2B. Write a program that, given a graph that has no cycles (a directed
+acyclic graph, DAG) and a pair of vertices, finds the number of distinct
+walks between the given vertices.
+</p><p>
+3B. Use a lowest cost path algorithm and a new implementation of the
+interface from lab 1 to solve the <em>bridge and torch</em> problem:
+A number of people (up to 20) must cross a bridge, at night. They have a torch
+that provides only enough light for at most two people to cross together.
+For each person, we are given the time needed to cross the bridge alone.
+If two people cross together, they cross at the pace of the slowest one.
+Find a solution for all to cross the river, using as little time as
+possible.
+
+</p><address class="signature">
+<a href="http://www.cs.ubbcluj.ro/~rlupsa/index-en.html">Radu-Lucian LUPŞA</a><br>
+2010-10-29
+</address>
+
+
+
+</body></html>

@@ -1,0 +1,370 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    text-align: justify;
+    padding: 10px
+}
+
+a:link {
+    color: blue;
+}
+
+a:visited {
+    color: blue;
+}
+
+a:active {
+    color: red;
+}
+
+table, tr, td {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    vertical-align: top;
+}
+
+ul, ol {
+    margin-top: 0.25em;
+}
+
+.Container {
+    width: 60em;
+}
+
+.Title {
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.Semester {
+    font-size: 1.5em;
+}
+
+.Year {
+    font-size: 1.25em;
+}
+
+.ProfLabel {
+    font-size: 1em;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.Prof {
+    font-size: 1em;
+    white-space: nowrap;
+    margin-left: 0.5em;
+}
+
+.SectionTitle {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.LatestNews {
+    font-size: 1em;
+    border: solid red 1px;
+    color: red;
+}
+
+.OldNews {
+    font-size: 1em;
+    border: solid #777 1px;
+    color: #777;
+}
+
+pre {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+}
+
+comment {
+    color: #777;
+}
+
+.MonospacedBold {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.Monospaced {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+}
+
+.InlineSourceCode {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    background: lightblue;
+}
+
+.SourceCode {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    color: #008;
+}
+
+.PseudoCode {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    font-weight: bold;
+    color: #00F;
+}
+
+.OldSourceCode {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    color: #558;
+}
+
+.LabHead {
+    font-size: 1em;
+    font-weight: bold;
+    border: solid black 1px;
+}
+
+.Lab {
+    font-size: 1em;
+    border: solid black 1px;
+}
+
+.WhiteRow {
+    background: white;
+    vertical-align: top;
+}
+
+.DarkRow {
+    background: #DDDDDD;
+    vertical-align: top;
+}
+
+.HeaderRow {
+    background: #AAA;
+    vertical-align: top;
+}
+
+.Level1 {
+    margin-left: 0px;
+}
+
+.Level2 {
+    margin-left: 35px;
+}
+
+.Level3 {
+    margin-left: 70px;
+}
+
+.sched {
+    border-collapse: collapse;
+}
+
+.hdat {
+    background: #c1c1c1;
+    font-weight: bold;
+    border: 1px solid black;
+    width: 6em;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.hlec {
+    background: #62abf3;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.hsem {
+    background: #fdad4b;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.hlab {
+    background: #71d065;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.htst {
+    background: #ffdd00;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.hpex {
+    background: #f75959;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.off {
+    color: #aaaaaa  ;
+    text-align: center;
+}
+
+.dat {
+    background: white;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.lec {
+    background: #c1e9f7;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.sem {
+    background: #f9ddab;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.lab {
+    background: #cdffcd;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.tst {
+    background: #fbfbab;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.pex {
+    background: #ff7777;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.vdt {
+    background: #c1c1c1;
+    font-weight: bold;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.vac {
+    background: #dedede;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+.non {
+    background: white;
+    border: 1px solid black;
+    font-size: 1em;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 10em;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -120px;
+    font-family: Ubuntu,serif;
+    font-weight: normal;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tip {
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+.tip .tiptext {
+    visibility: hidden;
+    width: 10em;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    font-family: Ubuntu,serif;
+    font-weight: normal;
+}
+
+.tip:hover .tiptext {
+    visibility: visible;
+}
+
+.num {
+    color: blue;
+}
+
+.lnk {
+    color: blue;
+}
+
+.const {
+    color: #3f0067;
+}
+
+.taught {
+    background: #c1e9f7;
+    vertical-align: top;
+    font-size: 1em;
+}
+
+sup {
+    font-size: 0.6em;
+}
+
+.tldr {
+    background: #cdffcd;
+    padding: 0.5em;
+    border-radius: 1em;
+    width: 25.5em;
+    margin-top: 1.7em;
+}
+
+.b1 {
+    background: white;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 1em;
+}

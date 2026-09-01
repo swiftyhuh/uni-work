@@ -1,0 +1,143 @@
+1. How many threads would you use for processing a million files? Justify your choice.
+
+solution:
+i would use a number of threads equal to the number of cores on the processor so there is a balance between having too many threads that don't actualyy get the processor to run their code and to few threads that the code becomes almost as if we were to write it iteratively.
+
+2. Dati un exemplu de valori pentru T, N1, N2 si N3 pentru care programul de mai jos se incheie
+
+pthread_barrier_t b1, b2, b3;
+
+void* f1(void* a)
+{
+	pthread_barrier_wait(&b1);
+	return NULL;
+}
+
+void* f2(void* a)
+{
+        pthread_barrier_wait(&b2);
+        return NULL;
+}
+
+void* f3(void* a)
+{
+        pthread_barrier_wait(&b3);
+        return NULL;
+}
+
+int main()
+{
+	int i;
+	pthread_t t[T][3];
+
+	pthread_barrier_init(&b1, N1);
+	pthread_barrier_init(&b2, N2);
+	pthread_barrier_init(&b3, N3);
+	for (i = 0; i < T; i++)
+	{
+		pthread_join(t[i][0], NULL);
+		pthread_join(t[i][1], NULL);
+		pthread_join(t[i][2], NULL);
+	}
+	pthread_barrier_destroy(&b1);
+	pthread_barrier_destroy(&b2);
+	pthread_barrier_destroy(&b3);
+	return NULL;
+}
+
+solution:
+T = 5
+N1 = 5
+N2 = 5
+N3 = 5
+
+3. Why I/O operations cause a process to move from the state RUN to the state WAIT?
+
+solution:
+Because the process has to pause itself while it gets/sends the data through the I/O operations and it frees the processor until the operations have been completed, leaving the processor for other processes
+
+4. How is the address calculation done in the absolute fixed partition allocation?
+
+solution:
+there are multiple predetermined partitions and the RAM locations are already established
+the first program takes the first position, the first address takes the beginning of the partition
+
+5. Give an advantage and a disadvantage of the First-Fit placement policy versus the Worst-Fit
+
+solution:
+First-Fit is very fast, but some memory goes to waste
+
+6. What is the most prioritary memory page that the NRU replacement policy chooses as victim page?
+
+solution:
+the page from class 0: the unreffered and unmodified page (0, 0)
+
+7. Considering that the size of a block is B and the size of an address is A, how many data blocks are addressed by the triple indirect addressing of an i-node?
+
+solution:
+(B/A)^3
+
+8. Write a regular expression that accepts lines that contain the letter "a" but do not contain the letter "b"
+
+solution:
+grep "a" file_name | grep -v "b"
+
+9. What is the maximum number of child processes, created by the code fragment below, that can coexist simultaneously?
+
+for (i = 0; i < 7; i++)
+{
+	if (fork() == 0)
+	{
+		sleep(rand() % 10);
+		exit(0);
+	}
+	if (i % 3 == 0)
+	{
+		wait(0);
+	}
+}
+
+solution:
+3
+
+10. Processes A, B and C communicate through FIFOs X, Y and Z according to the diagram below. Sketch the code fragments that open the FIFOs in the 3 processes.
+
+A --X--> B
+B --Y--> C
+C --Z--> A
+
+solution:
+
+if (A == 0)
+{
+	open("X", O_RDONLY);
+	open("Z", O_WRONLY);
+}
+
+if (B == 0)
+{
+        open("Y", O_RDONLY);
+        open("X", O_WRONLY);
+}
+
+if (C == 0)
+{
+        open("Z", O_RDONLY);
+        open("Y", O_WRONLY);
+}
+
+11. Why a hard-link can be created only toward files on the same partition and not toward files on other partitions?
+
+solution:
+A hard link is a directory entry that points to an inode, which represents a file on a file system. The limitation of creating hard links only within the same partition (or file system) and not across partitions is primarily due to the way file systems are structured and how they manage disk space.
+
+When a file is created, it is allocated space on a specific partition, which is a logical division of a physical storage device. The file system manages the allocation and organization of data within that partition. Here's why hard links are restricted to the same partition:
+
+1. File System Organization: Each file system has its own organization and data structures for managing files and directories. These structures include the superblock, inode table, and data blocks. Different partitions may have different file system types, structures, and configurations. When a file is created, it becomes part of the specific file system's organization and cannot be directly linked to files on a different file system.
+
+2. Inode and Data Block Allocation: Inodes contain metadata about files, such as permissions, ownership, and pointers to the file's data blocks. Inodes are typically assigned and managed within the context of a specific file system. When a hard link is created, it points to the inode of the original file. If the original file and the hard link were on different partitions with different file systems, their inodes would be managed separately, potentially leading to inconsistencies and difficulties in maintaining synchronization and coherence between the file systems.
+
+3. Disk Space Management: File systems manage disk space allocation, including how data blocks are allocated and tracked. Disk space management is typically performed within the boundaries of a partition. Hard links within the same partition can share the same data blocks, which helps in optimizing storage utilization. However, across partitions, different disk space management mechanisms may be employed, making it difficult to ensure efficient and coherent sharing of data blocks between hard-linked files.
+
+
+Considering these factors, allowing hard links across partitions could lead to complexities in managing file system structures, synchronization of metadata, and maintaining data integrity. Therefore, file systems typically enforce the restriction that hard links can only be created within the same partition, ensuring simplicity and consistency within the file system's organization and disk space management.

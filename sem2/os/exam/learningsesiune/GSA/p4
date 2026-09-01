@@ -1,0 +1,1 @@
+touch problem3 sed -E 's/([0-9]+)/\1\1/g' test

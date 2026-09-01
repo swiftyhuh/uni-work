@@ -1,0 +1,35 @@
+template <typename T>
+class Adder {
+private:
+    vector<T> values;  
+    T lastAdded;       
+public:
+    Adder(T initial) {
+        values.push_back(initial);
+        lastAdded = initial;
+    }
+    Adder operator+(T val) const {
+        Adder result = *this;
+        result.values.push_back(val);
+        result.lastAdded = val;
+        return result;
+    }
+    Adder& operator++() {
+        values.push_back(lastAdded);
+        return *this;
+    }
+    Adder& operator--() {
+        if (values.size() <= 1)
+            throw runtime_error("No more values!");
+        values.pop_back();
+        lastAdded = values.back();
+        return *this;
+    }
+    T sum() const {
+        T total = T{};
+        for (const auto& v : values) total += v;
+        return total;
+    }
+};
+
+

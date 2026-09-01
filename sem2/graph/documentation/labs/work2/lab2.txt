@@ -1,0 +1,28 @@
+The problem statement is at the address: html site that its in the same folder 
+
+The assigned problems for the practical works are on Teams, the private channel of the group ->Files, file:  group_Assigned problems.docx  
+
+Notes:  
+
+Add in the menu of Practical work no.1 an option for the task that you have to solve.  
+Problems 1 and 2  
+– display the minimum length path between two vertices and the corresponding length.  
+
+– test your programs on the large files: graph1k, graph10k, graph100k,…  
+
+ Problems 3 and 4 -  create a list with the connected components generated as graph objects.  
+Students have to submit on Teams before the lab class corresponding to the due date:  
+
+1.     the source code (with comments) of the functions that implement the algorithm  
+
+2.      manual executions   - 2 points (from 10 points)                                      (see manual_execution_lab2.pdf and manual_execution_lab2_connected.pdf) 
+
+                  
+
+ 2.1    for problems 1 and 2 a pdf file containing:  
+
+2 manual executions of the algorithm for a small graph (5 vertices and 10 edges);  
+the minimum length paths and their lengths from 1 to 100 and from 100 to 1 in graph1k, graph10k, graph100k as they are determined by your program.  
+2.2      for problems 3 and 4 a pdf file containing:  
+
+2 manual executions of the algorithm for 2 graphs with at least 5 vertices and 8 edges: one having 3 connected components (with one isolated vertex) and the other one having 1 connected component.  

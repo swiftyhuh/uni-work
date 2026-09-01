@@ -1,0 +1,147 @@
+1. Give a regular expression that matches any even-length sequence of lower-case words separated by spaces, if for each word its length and its position in the sequence are either both odd or both even. Ex: the 5th word has to be of odd length and the 16th has to be of even length.
+
+solution:
+
+2. When would you load into memory the pages of a process that is just starting?
+
+solution:
+
+3. Considering that the size of a block is B and the size of an address isA, how many data blocks are addressed by the double indirect addressing of an i-node?
+
+solution:
+(B/A)^2
+
+4. What state transition will a process undergo when it calls sem_wait and under what conditions? Justify your answer.
+
+solution:
+
+5. Give an example of distinct values greater than 0 for T, N1, N2 and N3 for which the program below finishes execution.
+
+pthread_barrier_t b1, b2;
+
+void* f1(void* a)
+{
+	pthread_barrier_wait(&b1);
+	return NULL;
+}
+
+void* f2(void* a)
+{
+	pthread_barrier_wait(&b2);
+	return NULL;
+}
+
+int main()
+{
+	int i;
+	pthread_t t[T][2];
+
+	pthread_barrier_init(&b1, NULL, N1);
+	pthread_barrier_init(&b2, NULL, N2);
+	for (i = 0; i < T; i++)
+	{
+		pthread_create(&t[i][0], NULL, f1, NULL);
+		pthread_create(&t[i][1], NULL, f2, NULL);
+	}	
+	for (i = 0; i < T; i++)
+	{
+		pthread_join(t[i][0], NULL);
+		pthread_join(t[i][1], NULL);
+	}
+	pthread_barrier_destroy(&b1);
+	pthread_barrier_destroy(&b2);
+	return NULL;
+}
+
+solution:
+T = 1, N1 = 1, N2 = 1, N3 = 1
+even tho N3 doesn't exist
+
+6. What could happen if function f were executed by several simultaneous threads? Why?
+
+pthread_mutex_t m[2];
+void* f(void* p)
+{
+	int id = (int) p;
+	pthread_mutex_t* first = &m[id % 2];
+	pthread_mutex_t* second = &m[(id + 1) % 2];
+
+	pthread_mutex_lock(first);
+	pthread_mutex_lock(second);
+	...
+	pthread_mutex_unlock(second);
+	pthread_mutex_unlock(first);
+}
+
+solution:
+
+7. What can you do as a software developer to prevent deadlocks?
+
+solution:
+eliminate circular wait: choose an order for your resources and always lock them in the same order.
+
+8. What will be the effect of replacing calls to pthread_mutex_lock with calls to sem_post?
+
+solution:
+
+9. Give three function calls that ensure mutual exclusion.
+
+solution:
+
+10. What is a "critical section"?
+
+solution:
+
+11. When would you use execv instead of execl?
+
+solution:
+
+12. How many FIFOs can a process open for reading if the FIFOs are and will ever be used by other processes only for writing?
+
+solution:
+
+13. Explain why the file descriptor returned by popen must be closed with pclose instead of fclose.
+
+solution:
+
+14. What will the fragment below print? Justify your answer.
+
+execl("expr", "expr", "1", "+", "1", NULL);
+execlp("echo", "echo", "3", NULL);
+printf("4\n");
+
+solution:
+
+15. Give three ways of finding the size of a file on the linux command line.
+
+solution:
+ls -s
+
+16. Draw the hierarchy of processes created by the code below, including the parent process.
+
+for (i = 0; i < 3; i++)
+{
+	if (fork() > 0)
+	{
+		wait(0);
+		wait(0);
+		exit(0);
+	}
+}
+
+solution:
+p -> c1
+c1 -> c2
+c2 -> c3
+
+17. Write two SED commands that display a file's lines deleting the first non-empty sequence of lower-case letters.
+
+solution:
+
+18. Write an AWK command that displays the sum of all the numbers in a text file whose lines consist of sequences of digits separated by spaces.
+
+solution:
+
+19. Give three GREP commands that display the lines of a file which consist exclusively of a non-empty sequence of alternating leters and digits (ex: a0g or 1r5m)
+
+solution:

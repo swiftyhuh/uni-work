@@ -1,0 +1,256 @@
+
+RO: Dati o expresie regulara care accepta stringuri formate exclusiv din exact 3 secvente de cifra para, litera mica, cifra impara, litera mare. De exemplu 8m3R6p1H4a3R.
+EN: Give a regular expression that accepts strings contianing exclusively exactly 3 sequences of even digit, lower-case letter, odd digit, upper-case letter. For instance 8m3R6p1H4a3R.
+
+Answer:
+"^([02468][a-z][13579][A-Z]){3,3}$"
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew02.txt
+RO: Scrieți doua comenzi GREP care afișează toate liniile de lungime impara unui fișier text.
+EN: Write two GREP commands that display all the lines of odd length of a text file.
+
+Answer:
+grep -E "^(..)*.$"
+grep -E -v "^(..)*$"
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew03.txt
+RO: Se consideră un fișier text care conține pe fiecare linie cel putin 2 cuvinte (secvențe nevide
+de litere mari sau mici) separate prin SPAȚII. Scrieți două comenzi SED care să șteargă
+DOAR a doua litera mică din cel de-al doilea cuvânt de pe fiecare linie a acestui fișier.
+
+EN: Consider a text file that contains at least 2 words (non-empty sequences of uppercase
+or lowercase letters) separated by SPACES on each line. Write two SED commands that
+delete ONLY the second lowercase letter of the second word on each line of this file.
+
+Answer:
+sed -E "s/ +/ /g" file | sed -E "s/^([a-zA-Z]+) ([A-Z]*)([a-z])([a-zA-Z]*)([a-z])(.*)$/\1 \2\3\4\6/"
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew04.txt
+RO: Scrieţi o comandă AWK care afişează suma primului câmp de pe fiecare linie doar daca este numeric si este mai mare decat 50.
+EN: Write an AWK command that displays the sum of the first field of each line only if it is numeric and greater than 50.
+
+Answer:
+awk '$1 >= 50 { sum += $1 } END { print sum }' file
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew05.txt
+RO: Scrieti in doua moduri o linie de comanda in care programul B se executa doar daca programul A nu s-a executat cu success.
+EN: Write in two ways a command line in which program B is executed only if program A has not executed successfully.
+
+Answer:
+./A || ./B
+./A 2> err.log && grep -E -q "." err.log || ./B
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew06.txt
+RO: Scrieti un script Shell care ia dintr-un fisier a.txt perechi de nume de fisiere si il redenumeste pe primul intr-al doilea doar daca primul fisier exista iar al doilea fisier nu exista.
+
+EN: Write a Shell script that reads from file a.txt pairs of file names and renames the first into the second only if the first file exists and the second file does not exist.
+
+Answer:
+
+#!/bin/bash
+while read F1 F2; do
+    if [ -e "$F1"] && ! [ -e "$F2" ]; then
+        mv "$F1" "$F2"
+    fi
+done < a.txt
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew07.txt
+RO: Considerand ca apelul fork se executa cu succes, cate procese va crea programul de mai jos, excluzand procesul parinte initial? Justificati raspunsul.
+
+EN: Considering that the fork call is executed successfully, how many processes will be created by the program below, excluding the initial parent process? Justify your answer.
+
+    int main() {
+        while(wait(NULL) < 0)
+            if(fork() > 0) {
+                exit(0);
+            }
+        }
+        return 0;
+    }
+
+Answer:
+Se vor crea procese noi la nesfarsit, deoarece wait() returneaza -1 daca nu a fost asteptat cu succes un proces fiu, se intra in bucla, apoi se apeleaza fork(), iar pentru procesul parinte (valoare nenula) se iese din program. In procesul fiu se repeta aceasta bucla.
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew08.txt
+RO: Scrieti un apel exec care executa programul si argumentele date ca argumente programului ./a de mai jos (ex: ./a ls -l /etc/passwd)
+
+EN: Write an exec call that executes the program and arguments given as arguments to program ./a below (i.e. ./a ls -l /etc/passwd)
+
+    int main(int argc, char** argv) {
+        ...
+    }
+
+Answer:
+execvp(argv[1], argv + 1);
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew09.txt
+RO: Cum restaurați stdout după o redirecționare temporară cu dup2?
+EN: How do you restore stdout after a temporary dup2 redirection?
+
+Answer:
+Cu un alt apel dup2, de forma dup2(1,1)
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew10.txt
+RO: Explicați ce se întâmplă dacă un proces încearcă să citească dintr-un pipe gol al cărui capăt de citire a fost închis de toate celelalte procese.
+
+EN: Explain what happens if a process tries to read from an empty pipe whose read end has been closed by all other processes.
+
+Answer:
+Daca nu exista scriitori activi (toate capetele de scriere au fost inchise) se va returna valoarea 0 (EOF - end of file). Daca exista scriitori activi, executia este blocata pana cand sunt scrise date in pipe. Inchiderea capatului de citire de catre celelalte procese nu afecteaza executia in aceasta situatie
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew11.txt
+RO: open() pentru citire: Un proces încearcă să deschidă un FIFO pentru citire. Ce se întâmplă dacă niciun alt proces nu a deschis încă acel FIFO pentru scriere? Se blochează, returnează o eroare sau altceva?
+
+EN: open() for Reading: A process tries to open a FIFO for reading. What happens if no other process has opened that FIFO for writing yet? Does it block, return an error, or something else?
+
+Answer:
+Executia programului se va bloca pana la deschiderea pentru scriere
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew12.txt
+RO: Protejati sectiunea critica din programul de mai jos.
+EN: Protect the critical section in the program below.
+
+Answer:
+
+int n = 0;
+pthread_mutex_t m;
+
+void* f(void* v){
+        pthread_mutex_lock(&m);
+        if(n < 500) {
+            n++;
+        }
+
+        if(n > 600) {
+            n = 0;
+        }
+        pthread_mutex_unlock(&m);
+        return NULL;
+}
+
+int main(){ 
+    pthread_t t;
+    pthread_mutex_init(&m, NULL);
+    pthread_create(&t, NULL, f, NULL);
+    pthread_join(t, NULL);
+    pthread_mutex_destroy(&m);
+    return 0;
+}
+
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew13.txt
+RO: Explicati programul de mai jos si explicati cum puteti schimba numarul cabinelor de vot (votanti simultani).
+EN: Explain the code bellow and explain how can you change the number of voting stationsi (simutlaneous voters).
+
+
+sem_t mutex;
+
+void* voteaza(void* args){
+
+	int i = *(int*)args;
+	printf("votant %d  a ajuns la sectia de votare\n”,i);
+	//printf(“voter  %d  has reached the voting station\n”,i);
+	sem_wait(&mutex);
+	printf("votant %d a intrat in cabina de vot\n”,i);
+	//printf(“voter  %d has entered the voting booth\n”,i);
+	sleep(2);
+	printf("votantul %d a votat\n",i);
+	//printf(“voter %d has voted\n",i);
+	sem_post(&mutex);
+	
+	return NULL;
+}
+
+
+int main(){
+
+	int nr_votanti = 5;
+	pthread_t thread_votanti[nr_votanti];
+	int thread_ids[nr_votanti];
+	sem_init(&mutex,0,3);
+	for(int i=0;i<nr_votanti;i++){
+		thread_ids[i]=i;
+		pthread_create(&thread_votanti[i],NULL,voteaza,&thread_ids[i]);
+	}
+    for(int i=0;i<nr_votanti;i++){
+		pthread_join(thread_votanti[i],NULL);
+    }
+
+	sem_destroy(&mutex);
+	return 0;
+
+}
+Se creeaza un vector de 5 thread-uri si unul cu 5 id-uri. Se initializeaza semaforul "mutex" cu valoarea 3, deci pot lucra maxim 3 thread-uri simultan, celelalte asteapta. Numarul votantilor poate fi schimbat prin modificarea valorii de initializare a semaforului (sem_init(&mutex, 0, 4) de exemplu). Pentru fiecare thread se apeleaza functia de creare, care vor lucra in functia void* voteaza(void* args), cu parametru thread_ids[i]. Dupa crearea tuturor thread-urilor in for, este asteptat fiecare thread pana isi termina executia cu valoarea de iesire NULL, apoi este distrus semaforul. In functia voteaza se face cast la *int din *void si dereferentiat argumentul. Se executa comenzile, apoi prin sem_wait se decrementeaza valoarea semaforului. Cand aceasta ajunge la 0, blocheaza celelalte threaduri. Se asteapta doua secunde prin apelul sleep, apoi se apeleaza sem_post, care incrementeaza semaforul si trezeste un thread.
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew14.txt
+RO: Ce face functia pthread_cond_wait cu mutexul primit ca argument?
+EN: What does pthread_cond_wait do with the mutex it gets as an argument?
+
+Answer:
+Functia elibereaza temporar mutexul primit ca argument, suspenda thread-ul curent pana este indeplinita conditia (pthread_cond_signal sau pthread_cond_broadcast), apoi blocheaza din nou mutexul, trezind thread-ul curent.
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew15.txt
+RO: Cum ar fi afectata functionarea unui program daca toate mutex-urile s-ar inlocui cu semafoare si toate apelurile mutex_lock s-ar inlocui cu sem_wait? Justificati raspunsul.
+
+EN: How would affect the functioning of a program the replacement of all mutexes with semaphores and all calls to mutex_lock with sem_wait? Justify your answer.
+
+
+Answer:
+Daca semafoarele sunt initializate cu 1 si se apeleaza sem_post corespunzator, programul ar functiona ca inaintea modificarii acestuia. Daca acesta e initializat cu o valoare mai mare decat 1, pot aparea comportamente nedefinite daca exista sectiuni critice neprotejate. Pot aparea si diferente de performanta, mutexurile fiind mai rapide.
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew16.txt
+RO: Dati valori pentru T, N1, N2 (toate strict pozitive) pentru care
+programul de mai jos se termina corect, stiind ca fiecare iteratie a buclei
+creeaza doua fire de executie pentru functia f1 (care asteapta la b1) si un
+fir pentru functia f2 (care asteapta la b2).
+
+EN: Give values for T, N1, N2 (all strictly positive) for which the program
+below finishes correctly, knowing that each loop iteration creates two threads
+for function f1 (which waits on b1) and one thread for function f2 (which
+waits on b2).
+
+#include <pthread.h>
+
+pthread_barrier_t b1, b2;
+
+void* f1(void* a) { pthread_barrier_wait(&b1); return NULL; }
+void* f2(void* a) { pthread_barrier_wait(&b2); return NULL; }
+
+int main() {
+    int T, N1, N2;
+
+    pthread_t all_threads[3 * T];
+
+    pthread_barrier_init(&b1, NULL, N1);
+    pthread_barrier_init(&b2, NULL, N2);
+
+    for(int i=0; i<T; i++) {
+        pthread_create(&all_threads[i*3 + 0], NULL, f1, NULL);
+        pthread_create(&all_threads[i*3 + 1], NULL, f1, NULL);
+        pthread_create(&all_threads[i*3 + 2], NULL, f2, NULL);
+    }
+
+    for(int i=0; i<3*T; i++) {
+        pthread_join(all_threads[i], NULL);
+    }
+
+    pthread_barrier_destroy(&b1);
+    pthread_barrier_destroy(&b2);
+    return 0;
+}
+
+Answer:
+T = 4
+N1 = 4
+N2 = 4
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew17.txt
+RO: Ce puteţi face ca programator pentru a preveni deadlock-urile? Justificaţi răspunsul.
+EN: What can you do as a software developer to prevent deadlocks? Justify your answer.
+
+Answer:
+Pentru a preveni deadlock-urile, mutexii trebuie ierarhizati. Se stabileste o ordine a blocarii acestora, ce va fi respectata de fiecare apelant. Pentru thread-urile A si B si M1, M2, mutexii M1 si M2 vor fi blocati si deblocati in aceeasi ordinede catre A si B.
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew18.txt
+RO: Care este diferenta dintre politicile de planificare SJF si FIFO/FCFS?
+EN: What is the difference between the SJF and FIFO/FCFS scheduling policies?
+
+Answer:
+SJF (shortest job first) executa non-preemptiv, adica executa pana la capat sarcina cu cel mai mic timp de executie la momentul verificarii. FIFO/FCFS(first in first out/first come first serve) executa prima sarcina in coada, fara a compara timpii de executie a acestora.
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew19.txt
+RO: Un process are următoarea listă de zone de memorie nealocată: 32, 44, 98. Cum va arăta lista după două apeluri malloc(33) ştiind că se foloseşte algoritmul Next Fit?
+
+EN: CA process has the following list of unallocated memory zones: 32, 44, 98. What will the list be after two malloc(33) requests given that it uses the Next Fit algorithm?
+
+Answer:
+dupa primul apel: 32 11 98
+dupa al doilea: 32 11 65
+/home/xm/exam/os/account/cristian.filip/ex2031> cat exam-ew20.txt
+RO: Ce se intampla cu un link hard cand este sters fisierul spre care puncteaza?
+EN: What happens to a hard link when the file to which it points is deleted?
+
+Answer:
+Acesta ramane valid, intrucat indica I-node-ul fisierului si are acces la metadatele lui (permisiuni, uid, dimensiune, timestamps), fiind sters doar numele fisierului respectiv.

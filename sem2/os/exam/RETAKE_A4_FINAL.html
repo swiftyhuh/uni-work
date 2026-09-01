@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OS Written Retake — Final Two-Sided A4</title>
+<style>
+@page { size: A4 landscape; margin: 4.5mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; color: #101010; font-family: "DejaVu Sans", Arial, sans-serif; }
+.page { width: 297mm; height: 210mm; padding: 4.5mm; page-break-after: always; overflow: hidden; }
+.page:last-child { page-break-after: auto; }
+h1 { margin: 0 0 1.5mm; text-align: center; font-size: 10px; line-height: 1; }
+.layout { width:100%; border-collapse:separate; border-spacing:1.2mm 0; table-layout:fixed; }
+.layout > tbody > tr > .col, .layout > tr > .col { width:20%; border:0; padding:0; vertical-align:top; }
+.col .box { margin-bottom:1.1mm; }
+.box { border: .25mm solid #777; border-radius: .6mm; padding: .7mm .8mm; break-inside: avoid; }
+.box h2 { margin: -.7mm -.8mm .5mm; padding: .45mm .75mm; font-size: 7.7px; line-height: 1; background: #dfe7ef; border-bottom: .2mm solid #999; }
+.g h2 { background:#dff1d8; } .p h2 { background:#dbeaff; } .t h2 { background:#fff0c9; }
+.m h2 { background:#ebe0ff; } .r h2 { background:#ffe0e0; } .f h2 { background:#dff1ef; }
+pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 6.35px; line-height: 1.075; }
+.small pre { font-size: 5.95px; line-height: 1.045; }
+.tight pre { font-size: 5.70px; line-height: 1.025; }
+table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:5.75px; line-height:1.02; }
+th,td { border:.18mm solid #aaa; padding:.28mm; vertical-align:top; overflow-wrap:anywhere; }
+th { background:#eee; }
+.abbr { margin-bottom:1.2mm; border:.25mm solid #777; padding:.55mm .8mm; background:#f6f6f6; }
+.abbr pre { font-size:6px; line-height:1.05; }
+.warn { color:#8b0000; font-weight:700; }
+.ok { color:#075f23; font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- SIDE 1 -->
+<section class="page">
+<h1>SIDE 1 — UNIX / GSA · Processes / IPC · Threads / Synchronization</h1>
+<table class="layout"><tr>
+
+<td class="col">
+  <div class="box g">
+    <h2>REGEX (use grep/sed -E)</h2>
+<pre>. any char        \ escape next
+^ start line      $ end line
+[abc] one listed  [^abc] not listed
+[a-z] range       [[:digit:]] digit
+* 0+ previous     + 1+ previous
+? 0/1 previous    {m,n} repetition
+(...) group        \1 back-reference
+word: \&lt;word\&gt;   any string: .*
+exact line: ^text$
+odd length: ^(..)*.$
+length multiple 3: ^(...)*$
+alternating: ^([A-Za-z][0-9])*[A-Za-z]?$
+<span class="warn">shell glob * ≠ regex *</span>
+shell *.c = names ending .c
+regex .*\.c$ = any text ending .c</pre>
+  </div>
+  <div class="box g">
+    <h2>grep / sort / uniq</h2>
+<pre>grep -E 're' f      extended regex
+grep -i 're' f      ignore case
+grep -v 're' f      nonmatching lines
+grep -n 're' f      line numbers
+grep -c 're' f      matching-line count
+grep -oE 're' f     matching pieces only
+grep -q 're' f      quiet; test status
+grep -rE 're' dir   recursive
+
+sort f              lexical
+sort -n / -r / -k2  numeric/reverse/key
+sort f | uniq       remove adjacent dupes
+sort f | uniq -c    count values
+sort f | uniq -u    values occurring once</pre>
+  </div>
+  <div class="box g">
+    <h2>sed patterns</h2>
+<pre>sed -E 's/re/repl/' f     first/line
+sed -E 's/re/repl/g' f   all/line
+sed -n -E '/re/p' f      print matches
+sed -E '/re/d' f         delete matches
+sed -n '2,5p' f          address range
+sed 'y/abc/ABC/' f       char translate
+sed -n '/[0-9]/!p' f     lines without digit
+sed '/[0-9]/d' f         same result
+
+groups in replacement: \1 \2
+swap digit pairs:
+sed -E 's/([0-9])([0-9])/\2\1/g' f
+duplicate letter before digit:
+sed -E 's/([A-Za-z])([0-9])/\1\1\2/g' f
+<span class="warn">Trap: y/// is not regex; g needed for all.</span></pre>
+  </div>
+  <div class="box g small">
+    <h2>Useful command pipeline</h2>
+<pre>find . -type f -name '*.c'
+find . -maxdepth 1 -type f
+cut -d: -f1,5 /etc/passwd
+tr '[:lower:]' '[:upper:]'
+wc -l/-w/-c f   head -n 5   tail -n 5
+cmd1 | cmd2  # stdout1 → stdin2
+man 1 command | man 2 syscall | man 3 libc</pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box g">
+    <h2>awk essentials</h2>
+<pre>awk -F: 'condition { action } END{...}' f
+$0 whole line      $1,$2 fields
+NF nr fields       $NF last field
+$(NF-1) previous   NR current record nr
+FNR per-file nr    FS input separator
+OFS output separator
+$0 ~ /re/ match    $0 !~ /re/ no match
+length($2) length; x%2 modulo
+
+awk -F: '$3&gt;1000 {print $1,$NF}' f
+awk '$1~/^[0-9]+$/ &amp;&amp; $1&gt;50{s+=$1}END{print s}' f
+awk '{sum+=$2} END{print sum}' f
+awk '{n[$1]++} END{for(k in n)print k,n[k]}'
+BEGIN runs before input; END after input.
+<span class="warn">Trap: awk fields are $1; shell vars are $x.</span></pre>
+  </div>
+  <div class="box g">
+    <h2>Bash vars / quoting / tests</h2>
+<pre>$0 script   $1 arg1   $# nr args
+"$@" all args safely  $? last status
+$$ shell PID   $(cmd) output   $((x+1))
+0 status = success/true; nonzero = fail
+
+Always quote expansions: "$x", "$file"
+[ "$a" = "$b" ]   [ "$a" != "$b" ]
+[ -n "$s" ] nonempty  [ -z "$s" ] empty
+[ "$n" -eq 3 ]  -ne -lt -le -gt -ge
+[ -e "$f" ] exists   -f regular  -d dir
+-r readable  -w writable  -x executable
+[ cond ] &amp;&amp; cmd;  cmd1 || cmd2
+A &amp;&amp; B: B iff A succeeds; A || B: B iff A fails
+A &amp;&amp; B &amp;&amp; C: C iff both succeed
+A || B || C: C iff A and B fail
+<span class="warn">[ needs spaces. Use = for strings, -eq numbers.</span></pre>
+  </div>
+  <div class="box g">
+    <h2>Bash loops / exam templates</h2>
+<pre>for x in "$@"; do
+  printf '%s\n' "$x"
+done
+
+while [ $# -gt 0 ]; do
+  x=$1; shift
+done
+
+while read -r F1 F2; do
+  if [ -e "$F1" ]; then rm -- "$F2"; fi
+done &lt; a.txt
+
+while read -r a b c; do
+ [ -e "$a" ] &amp;&amp; [ -e "$b" ] &amp;&amp; [ ! -e "$c" ] &amp;&amp;
+   cat -- "$a" "$b" &gt; "$c"
+done &lt; a.txt
+
+while IFS=: read -r user x uid rest; do
+  [ "$uid" -gt 1000 ] &amp;&amp; echo "$user"
+done &lt; /etc/passwd
+<span class="warn">Trap: read loop input redirect goes after done.</span></pre>
+  </div>
+  <div class="box g small">
+    <h2>Redirection order</h2>
+<pre>cmd &gt;out        stdout overwrite
+cmd &gt;&gt;out       stdout append
+cmd 2&gt;err       stderr
+cmd &gt;out 2&gt;&amp;1   both to out
+cmd 2&gt;&amp;1 | next both through pipe
+cmd &lt;in         stdin from file
+<span class="warn">Order matters: 2&gt;&amp;1 copies current stdout.</span></pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box p">
+    <h2>fork / wait / process tree</h2>
+<pre>pid_t pid=fork();
+pid == 0  child
+pid &gt; 0   parent; value = child PID
+pid == -1 error
+Both continue after fork; memory copied, not shared.
+Every process reaching another fork creates a child.
+
+wait(NULL): reaps ONE terminated direct child;
+NULL only means ignore exit status.
+No direct children → wait returns -1 (ECHILD).
+waitpid(pid,&amp;st,0): chosen direct child.
+Parent waiting sleeps; child/grandchild may continue.
+zombie = exited child, status not reaped.
+orphan = parent ended first; child adopted.
+<span class="warn">wait does not wait for grandchildren/all children.</span></pre>
+  </div>
+  <div class="box p">
+    <h2>exec family</h2>
+<pre>execl(path,arg0,...,NULL)
+execlp(prog,arg0,...,NULL)   p searches PATH
+execv(path,argv)             v gets vector
+execvp(prog,argv)
+
+execl("/bin/ls","ls","-l",NULL);
+execlp("ls","ls","-l",NULL);
+execvp(argv[1],argv+1);
+char *v[]={"gcc","-Wall","a.c",NULL};
+execv("/usr/bin/gcc",v);
+
+Success: same PID, image replaced, never returns.
+Failure: returns -1; following old code executes.
+arg0 normally program name; list ends NULL.
+<span class="warn">execl("ls",...) fails unless "ls" is a path.</span></pre>
+  </div>
+  <div class="box p">
+    <h2>Signals</h2>
+<pre>void h(int sig){...}
+signal(SIGUSR1,h);  kill(pid,SIGUSR1);
+SIGINT Ctrl-C        SIGCHLD child ended
+SIGUSR1/2 user use   SIGPIPE write/no readers
+SIGKILL cannot catch, block, or ignore.
+Default SIGPIPE terminates; if handled/ignored,
+write returns -1 with EPIPE.</pre>
+  </div>
+  <div class="box p small">
+    <h2>Files / links / descriptors</h2>
+<pre>FD 0 stdin, 1 stdout, 2 stderr.
+Hard link = new name → same inode; not a copy;
+cannot cross FS. unlink decrements link count.
+Data freed at links=0 AND no process has it open.
+Symlink = separate file containing path; can cross FS;
+target removal leaves dangling link.</pre>
+  </div>
+  <div class="box p small">
+    <h2>Process vs thread</h2>
+<pre>Process: isolated memory/faults; good for exec/separate
+programs. Thread: shares globals+heap; cheaper communication
+and switching, but races/faults affect same process.</pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box p">
+    <h2>pipe behavior</h2>
+<pre>int p[2]; pipe(p);  p[0]=read, p[1]=write
+Create before fork so both inherit descriptors.
+Close every unused copy; duplicate writers delay EOF.
+
+read when data exists → returns bytes immediately
+empty + any writer open → blocks
+empty + all writers closed → returns 0 (EOF)
+full + reader exists → write blocks
+all readers closed → SIGPIPE / EPIPE
+read/write may be partial: loop until done.
+One pipe is one-way; two-way IPC needs two pipes.
+Pipe as semaphore/token: write byte=post; blocking read=wait.
+Empty pipe blocks reader until token arrives.
+<span class="warn">EOF depends on ALL write descriptors closed.</span></pre>
+  </div>
+  <div class="box p">
+    <h2>dup / dup2 / open / pipeline</h2>
+<pre>int save=dup(1);          // save stdout
+dup2(fd,1);              // stdout → fd
+dup2(save,1); close(save);// restore
+After dup2, closing original fd leaves duplicate open.
+
+int fd=open("out",O_WRONLY|O_CREAT|O_TRUNC,0644);
+// O_CREAT requires mode; O_TRUNC overwrites.
+
+ls child:   dup2(p[1],1); close ends; exec ls
+grep child: dup2(p[0],0); close ends; exec grep
+parent: close both ends; wait twice
+<span class="warn">Writer uses p[1]; reader uses p[0].</span></pre>
+  </div>
+  <div class="box p">
+    <h2>FIFO / popen</h2>
+<pre>mkfifo("x",0600);  unlink("x");
+FIFO=named pipe; bytes in kernel buffer, not file.
+open O_RDONLY blocks until writer opens.
+open O_WRONLY blocks until reader opens.
+Opposite open order avoids two-FIFO deadlock.
+One FIFO one direction; use X and Y for duplex.
+
+FILE *f=popen("cmd","r"); // parent reads child stdout
+FILE *f=popen("cmd","w"); // parent writes child stdin
+pclose(f); // close + wait child (avoid zombie)
+Sketch popen(r): pipe→fork; child dup2(write,1), exec
+"sh -c cmd"; parent fdopen(read,"r"); pclose→waitpid.
+<span class="warn">"r"/"w" are from parent’s direction.</span></pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box t">
+    <h2>pthread create / join / arguments</h2>
+<pre>void *worker(void *arg){ return NULL; }
+pthread_t t[N]; int id[N];
+for(int i=0;i&lt;N;i++){
+ id[i]=i;
+ pthread_create(&amp;t[i],NULL,worker,&amp;id[i]);
+}
+for(...) pthread_join(t[i],NULL);
+Threads share globals+heap; own stack+registers.
+<span class="warn">Never pass shared loop &amp;i; use stable id[i].</span>
+Never return &amp;local. Return malloc result; joining
+thread reads and frees it. Join can block caller.</pre>
+  </div>
+  <div class="box t">
+    <h2>Mutex / RWLock</h2>
+<pre>pthread_mutex_t m=PTHREAD_MUTEX_INITIALIZER; // static
+pthread_mutex_init(&amp;m,NULL); // dynamic
+lock; unlock; destroy
+Critical section = shared-data access. Same shared
+invariant must use same lock. Keep region minimal.
+Locking already-held normal mutex by same thread blocks
+(self-deadlock); other thread blocks until unlock.
+
+rwlock_rdlock: many readers, NO modification
+rwlock_wrlock: one writer, excludes all readers/writers
+unlock; writer may starve under continuous readers.
+Mutex→wrlock preserves exclusion, more overhead.
+Mutex→rdlock lets modifiers race. RWLock→binary sem makes
+all readers serialize: correctness may remain, concurrency lost.</pre>
+  </div>
+  <div class="box t">
+    <h2>Condition variable</h2>
+<pre>pthread_cond_t c=PTHREAD_COND_INITIALIZER;
+// or cond_init(&amp;c,NULL); ... cond_destroy(&amp;c)
+lock(m);
+while(!ready) pthread_cond_wait(&amp;c,&amp;m);
+use_resource();
+unlock(m);
+
+Producer: lock; change predicate; signal; unlock.
+cond_wait atomically unlocks+sleeps; before return it
+relocks m. while rechecks after wake/spurious wake/race.
+State: RUNNING→BLOCKED; signal makes waiter READY.
+signal wakes one; broadcast wakes all (many can proceed
+or different predicates). Signal without predicate lock
+can cause lost wake-up/check-wait race.</pre>
+  </div>
+  <div class="box t tight">
+    <h2>Semaphore / barrier / producer-consumer</h2>
+<pre>sem_init(&amp;s,0,K); wait decrements or blocks at 0;
+post increments/wakes one. Any thread may post; mutex
+has ownership and owner unlocks. K permits ≤K entrants.
+Alternation A/B: sem A=1, sem B=0; wait own/post other.
+Replacing lock calls with sem_post grows count/opens gate.
+
+Producer: wait(empty); wait(mutex); insert;
+          post(mutex); post(full)
+Consumer: wait(full);  wait(mutex); remove;
+          post(mutex); post(empty)
+<span class="warn">Wait empty/full BEFORE mutex or deadlock.</span>
+
+barrier_init(&amp;b,NULL,N); barrier_wait; destroy
+Exactly N arrivals release together; reusable rounds.
+For each kind: total arrivals % N = 0; N=1 passes now.
+Leftover thread hangs. To change count: after unused,
+destroy then init, or use separate barrier.</pre>
+  </div>
+  <div class="box t tight">
+    <h2>Deadlock / Coffman / lock ordering</h2>
+<pre>Deadlock needs ALL: mutual exclusion; hold-and-wait;
+no preemption; circular wait. Break one to prevent.
+Practical fix: global lock order (low address → high).
+T0 locks A then B; T1 locks B then A → possible cycle.
+Starvation: one waits indefinitely while others progress.
+Deadlock: involved threads cannot progress.
+Lock A, lock B, unlock B, unlock A is good IF every
+thread acquires A before B (unlock order not cause).</pre>
+  </div>
+</td>
+
+</tr></table>
+</section>
+
+<!-- SIDE 2 -->
+<section class="page">
+<h1>SIDE 2 — OS Theory · Scheduling · Memory · RAID · Inodes</h1>
+<div class="abbr">
+<pre>ABBREV: OS operating system · CPU central processing unit · RAM random-access memory · I/O input/output · IPC inter-process communication · PID process ID · PCB process control block · LDE limited direct execution · PC program counter · SP stack pointer · FD file descriptor · FS filesystem · FCFS/FIFO first-come-first-served/first-in-first-out · RR round robin · MLFQ multi-level feedback queue · SJF shortest job first · STCF/SRTF shortest time-to-completion/remaining-time first · VM virtual memory · MMU memory-management unit · VA/PA virtual/physical address · VPN/PFN virtual-page/physical-frame number · PTE page-table entry · PTBR page-table base register · AMAT average memory access time · OPT optimal · LRU/LFU least recently/frequently used · R/W/X read/write/execute · RAID redundant array of inexpensive disks · IOPS I/O operations per second · EOF end of file</pre>
+</div>
+<table class="layout"><tr>
+
+<td class="col">
+  <div class="box m">
+    <h2>Process / LDE / PCB / syscall</h2>
+<pre>Process = OS abstraction of running program.
+CPU virtualization = time-sharing one CPU.
+LDE: run user code directly for speed; retain control
+with user mode, traps/syscalls, timer interrupts.
+User mode restricted; kernel mode privileged.
+System call: library wrapper → trap → kernel handler →
+return-from-trap. A library call is not automatically a
+syscall. Trap does not imply context switch.
+PCB: PID/state, PC/SP/general regs/flags, scheduling,
+memory mappings, open files. Register context is saved
+on stop and restored on resume.
+Context switch: save A → choose B → restore B.
+OS is passive while user code runs; timer regains CPU.
+VM goals: transparency/private illusion, efficiency in time
+and space, protection/isolation between processes+OS.</pre>
+  </div>
+  <div class="box m">
+    <h2>Process states</h2>
+<pre>RUNNING = on CPU; READY = runnable, waits CPU;
+BLOCKED/WAIT = waits event/I/O.
+READY → RUNNING scheduled
+RUNNING → READY preempted / timer
+RUNNING → BLOCKED blocking read/wait/I/O/sleep
+BLOCKED → READY event/I/O complete
+<span class="warn">Completion is not BLOCKED→RUNNING.</span>
+CPU-bound = mostly CPU, long bursts, little I/O.
+I/O-bound/interactive = frequent blocking, short bursts.</pre>
+  </div>
+  <div class="box m">
+    <h2>Scheduling formulas / policies</h2>
+<pre>turnaround = completion − arrival
+response = first_run − arrival
+waiting = turnaround − required_runtime
+
+FIFO/FCFS nonpreemptive arrival order; convoy effect.
+SJF nonpreemptive shortest ready job; optimal average
+turnaround only with known runtimes/ideal assumptions.
+STCF/SRTF preemptive SJF; least remaining work.
+RR each ready job gets quantum. Small q: response good,
+more switch cost. Large q approaches FIFO.
+Scheduling with I/O overlap improves utilization.
+Turnaround favors completion; response favors interactivity.</pre>
+  </div>
+  <div class="box m small">
+    <h2>Deadlock answer template</h2>
+<pre>Deadlock = permanent circular resource waiting.
+Coffman: mutual exclusion + hold/wait + no preemption +
+circular wait. Prevent by breaking ≥1; common student
+answer: impose fixed global resource/lock acquisition order.</pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box m">
+    <h2>MLFQ — exact rules</h2>
+<pre>1 Higher priority runs first.
+2 Same priority uses RR.
+3 New jobs enter top priority.
+4 Quantum = max one CPU turn.
+5 Allotment = cumulative CPU time/job/level.
+6 Exhaust allotment while work remains → demote.
+7 I/O/yield does NOT reset used allotment.
+8 Periodic boost: all active jobs → top; prevents
+  starvation and adapts changed behavior.
+Gaming: run 99%, issue I/O, repeat. Fix: cumulative
+accounting across all pieces. MLFQ approximates SJF from
+observed behavior; favors interactive jobs.</pre>
+  </div>
+  <div class="box m">
+    <h2>Lottery / stride proportional share</h2>
+<pre>CPU share ≈ job tickets / total tickets (long run).
+Lottery: random winner [0,total−1], cumulative scan;
+first cumulative total &gt; winner runs. Short-term random.
+Currency: user divides own fixed share locally.
+Transfer: donor−x, named receiver+x; total unchanged.
+Inflation: create tickets; changes relative shares; trust.
+Ticket assignment is policy, not solved by mechanism.
+
+stride = BIG / tickets
+run job with minimum pass; then pass += stride.
+More tickets → smaller stride → runs more often.
+New job starts near current minimum pass, not 0.
+Lottery probabilistic/flexible; stride deterministic/stateful.
+Unfairness U=completion_first/completion_second; ideal →1.</pre>
+  </div>
+  <div class="box m">
+    <h2>Heap allocation / C traps</h2>
+<pre>int *a=malloc(n*sizeof(*a)); // sizeof(int) also valid
+malloc uninitialized: write before read.
+calloc(n,sizeof(*a)) zeroes bytes.
+tmp=realloc(a,newsize); if(tmp) a=tmp; // may move
+free(a); a=NULL;  free(NULL) safe.
+No cast needed for malloc void* in C (needed in C++).
+Errors: too small (+1 for '\0'), overflow, leak,
+use-after-free, double/invalid free, uninitialized read.
+Header before allocation stores size; free gets no size.</pre>
+  </div>
+  <div class="box m">
+    <h2>Base/bounds + segmentation</h2>
+<pre>Base/bounds: if VA &lt; bounds, PA=base+VA; else trap.
+Hardware MMU checks/translates; only kernel sets regs.
+OS alloc/free memory, save/restore regs, handle trap.
+
+Segmentation: own base/bounds for code, heap, stack;
+VA identifies segment+offset; PA=seg_base+offset.
+Stack grows down (negative offset); R/W/X protection;
+read-only code can be shared. Virtual gap remains but is
+not allocated physically. Variable segments → external
+fragmentation. Coarse=few/simple; fine=many/flexible.</pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box m">
+    <h2>Free-space management</h2>
+<pre>Internal fragmentation = waste inside allocated block.
+External = total free enough but split into holes.
+split: big free → allocation + smaller free
+coalesce: merge adjacent free blocks only
+compaction moves live blocks; normal C allocator cannot
+because existing pointers would become invalid.
+Free-list node in free block: current size + next pointer.
+
+first fit first adequate (fast)
+next fit continue from saved cursor
+best fit smallest adequate (full search/tiny holes)
+worst fit largest (full search)
+segregated lists: dedicated common-size pools
+buddy: split powers of 2; recursively merge free buddy;
+easy coalescing, internal fragmentation.
+Fit-list problems: choose adequate hole; replace H by
+H−request (remove at 0). Next Fit resumes after last chosen;
+Worst Fit repeats on current largest hole.</pre>
+  </div>
+  <div class="box m">
+    <h2>Paging translation (must know)</h2>
+<pre>Virtual memory fixed pages; RAM equal-size frames.
+Per-process page table maps VPN→PFN; offset unchanged.
+VPN = VA / page_size
+offset = VA % page_size
+PA = PFN*page_size + offset
+PTE_addr = PTBR + VPN*sizeof(PTE)
+No external fragmentation; possible internal (last page).
+Page tables in RAM: without cache, PTE read + data read.
+
+Example VA=250, page=100, PTBR=1000, PTE=4:
+VPN=2, off=50; PTE addr=1000+2*4=1008;
+if PFN=7 → PA=7*100+50=750.</pre>
+  </div>
+  <div class="box m">
+    <h2>PTE bits / page fault flow</h2>
+<pre>PTE: PFN + valid/present + R/W/X + reference + dirty.
+valid=0 → illegal virtual page; trap/usually terminate.
+valid=1,present=0 → legal but absent RAM; page fault.
+Present=0 does not always mean swap: backing may be file,
+swap, or recreated zeros. Dirty=1 means RAM copy changed;
+backing copy absent/stale → write before eviction.
+
+Fault: trap → process blocks → choose free/victim frame →
+if dirty write back → load requested page → set PFN,
+present=1 → restart exact faulting instruction.
+Page daemon: below low watermark evict until high mark.
+Demand load on access; prefetch predicts; clustering groups
+disk writes. Thrashing=working sets&gt;RAM → constant paging.</pre>
+  </div>
+  <div class="box m small">
+    <h2>AMAT / locality</h2>
+<pre>AMAT=P_hit*T_memory + P_miss*T_disk; P_hit+P_miss=1.
+Tiny miss rate hurts because disk ≫ RAM.
+Temporal locality: recent likely reused. Spatial: nearby
+likely used. RAM is cache for disk-backed virtual pages.</pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box m">
+    <h2>Replacement policies</h2>
+<pre>OPT/MIN: evict farthest next use; minimum faults; future
+unknown → benchmark only.
+FIFO: oldest loaded; simple; may show Belady anomaly
+(more frames can cause more faults).
+Random: low state; unpredictable.
+LRU: least recently used; exploits locality; exact tracking
+every access too costly. LFU: least frequently used.
+Clock approx LRU: circular hand; R=1 → clear/give second
+chance/advance; first R=0 → victim. Inspected 1 bits all
+become 0. Prefer clean victim (no write) over dirty.
+Looping sequential set larger than RAM can defeat LRU.
+Thrashing fix: reduce admitted/running processes or add RAM.</pre>
+  </div>
+  <div class="box f tight">
+    <h2>RAID comparison (N disks, B capacity, S seq, R random)</h2>
+<table>
+<tr><th>Level</th><th>Usable</th><th>Fail</th><th>Seq R/W</th><th>Rand R</th><th>Small Rand W</th></tr>
+<tr><td>0 stripe</td><td>N·B</td><td>0</td><td>N·S</td><td>N·R</td><td>N·R</td></tr>
+<tr><td>1 mirror</td><td>N·B/2</td><td>1 sure*</td><td>N·S/2</td><td>N·R</td><td>N·R/2</td></tr>
+<tr><td>4 fixed parity</td><td>(N−1)B</td><td>1</td><td>(N−1)S</td><td>(N−1)R</td><td>R/2</td></tr>
+<tr><td>5 rotating parity</td><td>(N−1)B</td><td>1</td><td>(N−1)S</td><td>N·R</td><td>N·R/4</td></tr>
+</table>
+<pre>*RAID1 may survive one failure per pair; both in same pair
+lose data. Stripe=full row; chunk=unit placed per disk.
+RAID0 no redundancy. RAID1 two copies. RAID4 one dedicated
+parity disk → bottleneck. RAID5 parity rotates.
+Parity XOR recovers one missing block. Small parity write:
+read old data+parity; write new data+parity = 4 physical I/O.
+RAID4: parity disk does 2 each write → R/2. RAID5: four I/O
+spread over N disks → N·R/4. Seq MB/s; random IOPS.</pre>
+  </div>
+  <div class="box f small">
+    <h2>Failure / rebuild</h2>
+<pre>Fail-stop: failed disk stops; detected. Redundant RAID runs
+degraded, slower; rebuild reconstructs replacement. Hot
+spare is installed unused replacement. RAID6: two parity,
+capacity (N−2)B, tolerates 2 failures, more write overhead.</pre>
+  </div>
+</td>
+
+<td class="col">
+  <div class="box f">
+    <h2>Inode / directory / location</h2>
+<pre>inode=index node; per-file metadata: type, size, owner/group,
+permissions, times, hard-link count, data-block pointers.
+Filename NOT in inode. Directory entry: name → inumber.
+Inumber indexes on-disk inode table.
+
+inode byte location = inode_table_start
+                      + inumber*sizeof(inode)
+inodes/block = block_size/inode_size
+inode-table block = inumber*inode_size/block_size
+Example start=12KB, inode=256B, inum=32:
+12KB+32*256B=20KB (first inode in table block 2).
+Superblock (older-model fallback): FS size/layout, block and
+inode counts/locations, free-space info, mount state.</pre>
+  </div>
+  <div class="box f">
+    <h2>Direct / indirect file size</h2>
+<pre>B=block size; A=pointer bytes; P=B/A pointers/block;
+D=number direct pointers (course example D=12).
+direct capacity = D*B
+single = P*B
+double = P²*B
+triple = P³*B
+max = (D+P+P²+P³)*B
+
+B=4KB,A=4B → P=1024:
+12 direct=48KB; single=4MB;
+direct+single=4144KB; double=4GB; triple=4TB.
+Paths: direct inode→data; single crosses 1 pointer block;
+double 2; triple 3. Small files use direct; levels allocated
+only as file grows. Extent=start block+consecutive length;
+compact, but fragmented file needs multiple extents.</pre>
+  </div>
+  <div class="box r">
+    <h2>Highest-value exam traps</h2>
+<pre>• valid≠present; dirty≠“no disk copy”.
+• Base/bounds: add base; paging: divide VA, map VPN→PFN.
+• Clock clears every inspected 1 before evicting first 0.
+• Page miss loads from disk; RAID reconstruction is failure.
+• I/O: RUN→BLOCKED→READY→RUNNING.
+• hard link same inode, not copy; symlink stores path.
+• malloc memory indeterminate; initialize before reading.
+• coalesce adjacent only; C heap cannot compact live ptrs.
+• RAID4 divide one parity disk R by 2; RAID5 divide total
+  N·R by 4 physical operations.
+• inode course example uses 12 direct pointers.
+• response uses first run; turnaround uses completion.
+• priority boost prevents starvation; cumulative allotment
+  prevents MLFQ gaming.</pre>
+  </div>
+  <div class="box r small">
+    <h2>60-minute written strategy</h2>
+<pre>0–3 scan: easy/medium/hard. 3–25 easy. 25–48 medium.
+48–56 hard/partial. 56–60 review. Max ≈3 min/question.
+For theory: definition → exact condition/formula → result.
+For code: trace descriptors/processes/locks before output.</pre>
+  </div>
+</td>
+
+</tr></table>
+</section>
+</body>
+</html>

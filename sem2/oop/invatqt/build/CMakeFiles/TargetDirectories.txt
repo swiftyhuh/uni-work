@@ -1,0 +1,5 @@
+/home/mibu/Documents/uni/oop/invatqt/build/CMakeFiles/invatqt_app.dir
+/home/mibu/Documents/uni/oop/invatqt/build/CMakeFiles/edit_cache.dir
+/home/mibu/Documents/uni/oop/invatqt/build/CMakeFiles/rebuild_cache.dir
+/home/mibu/Documents/uni/oop/invatqt/build/CMakeFiles/invatqt_app_autogen_timestamp_deps.dir
+/home/mibu/Documents/uni/oop/invatqt/build/CMakeFiles/invatqt_app_autogen.dir

@@ -1,0 +1,11 @@
+OOP in C++,Code School,18,5,1542,https://example.com/oop-cpp
+Pointers Explained,Memory Lab,20,40,1802,https://example.com/pointers
+STL Vectors,Template Guru,14,15,1670,https://example.com/stl-vectors
+STL Algorithms,Template Guru,16,50,1580,https://example.com/stl-algorithms
+Rule of Three,Cpp Mentor,10,20,1320,https://example.com/rule-three
+Operator Overload,Cpp Mentor,13,45,1190,https://example.com/operator-overload
+Templates Intro,Generic Dev,19,0,1460,https://example.com/templates
+Exceptions in C++,Safe Code,11,35,1240,https://example.com/exceptions
+Layered Architecture,Design Talks,17,10,981,https://www.youtube.com/watch?v=Ru3Rw6ulNxQ
+STL Vectors test,Template Guru,14,15,1670,https://example.com/stl-vectors-test
+Pointers Explained second,Memory Lab,20,40,1801,https://example.com/pointers

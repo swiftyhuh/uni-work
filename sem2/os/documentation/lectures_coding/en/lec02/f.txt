@@ -1,0 +1,10 @@
+ls: cannot access 'sadfousafd': No such file or directory
+.:
+a.txt
+b.txt
+c.txt
+d.txt
+e.txt
+f.txt
+stars
+stars.c

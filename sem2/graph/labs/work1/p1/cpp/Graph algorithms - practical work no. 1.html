@@ -1,0 +1,127 @@
+
+<!-- saved from url=(0053)https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/lab1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="StyleSheet" href="./Graph algorithms - practical work no. 1_files/normal-style.css" type="text/css">
+ <title>Graph algorithms - practical work no. 1</title>
+</head>
+<body>
+<address class="topnav">
+  <a href="https://www.cs.ubbcluj.ro/~rlupsa/index-en.html">home page</a> -&gt;
+  <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/index.html">teaching</a> -&gt;
+  <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/index.html">graph algorithms</a> -&gt;
+  <span class="selflink">practical work no. 1</span>
+</address>
+
+<h1><center>Graph algorithms - practical work no. 1</center></h1>
+
+<p>
+<b>Due:</b> week 5-6.
+
+</p><p>
+Design and implement an abstract data type <em>directed graph</em>
+and a function (either a member function or an external one, as your choice)
+for reading a directed graph from a text file.
+
+</p><p><ins>An implememtation is required in two distinct programming languages.</ins>
+
+</p><p>
+The vertices will be specified as integers from 0 to <i>n</i>-1, where
+<i>n</i> is the number of vertices.
+</p><p>
+Edges may be specified either by the two endpoints (that is, by the source and target),
+or by some abstract data type <i>Edge_id</i> (that data type may be
+a pointer or reference to the edge representation, but without
+exposing the implementation details of the graph).
+</p><p>
+Additionally, create a map that associates to an edge an integer value
+(for instance, a cost).
+
+</p><p><b>Required operations:</b>
+</p><ul>
+  <li>get the number of vertices;
+  </li><li>parse (iterate) the set of vertices;
+  </li><li>given two vertices, find out whether there is an edge from the first one to the
+second one, and
+retrieve the <em>Edge_id</em> if there is an edge (the latter is not required if
+an edge is represented simply as a pair of vertex identifiers);
+  </li><li>get the in degree and the out degree of a specified vertex;
+  </li><li>parse (iterate) the set of outbound edges of a specified vertex (that is, provide
+an iterator). For each outbound edge, the iterator shall provide the <em>Edge_id</em>
+of the curren edge (or the target vertex, if no <em>Edge_id</em> is used).
+  </li><li>parse the set of inbound edges of a specified vertex (as above);
+  </li><li>get the endpoints of an edge specified by an <em>Edge_id</em> (if applicable);
+  </li><li>retrieve or modify the information (the integer) attached to a specified edge.
+  </li><li>The graph shall be modifiable: it shall be possible to add and remove
+    an edge, and to add and remove a vertex. Think about what should happen
+    with the properties of existing edges and with the identification of
+    remaining vertices. You may use an abstract <tt>Vertex_id</tt> instead
+    of an <tt>int</tt> in order to identify vertices; in this case, provide
+    a way of iterating the vertices of the graph.
+  </li><li>The graph shall be copyable, that is, it should be possible to make an
+    exact copy of a graph, so that the original can be then modified
+    independently of its copy. Think about the desirable behaviour of an
+    <tt>Edge_property</tt> attached to the original graph, when a copy is made.
+  </li><li>Read the graph from a text file (as an external function); see the format below.
+  </li><li>Write the graph from a text file (as an external function); see the format below.
+  </li><li>Create a random graph with specified number of vertices and of edges (as an external function).
+</li></ul>
+<p>
+The operations must take no more than:</p><ul>
+  <li>O(deg(<i>x</i>)+deg(<i>y</i>)) for: verifying the existence of an edge
+and for retrieving the edge between two given vertices.
+  </li><li>O(1) for: getting the first or the next edge, inbound or outbound to a
+  given vertex; get the endpoints, get or set the attached integer
+  for an edge (given by an <i>Edge_id</i> or, if no <em>Edge_id</em> is defined,
+  then given by its source and target); get the total number of vertices or
+  edges; get the in-degree or the out-degree of a given vertex.
+</li></ul>
+<p>
+Other requirements:</p><ul>
+  <li>The object returned by the parse functions shall not allow modifying the graph
+    through its public functions. So, don't return sets by reference.
+    Return iterators.
+  </li><li>Generally, make sure the graph cannot be brought in an inconsistent state
+    by applying public functions on various accessible objects.
+</li></ul>
+<p>
+<b>Note:</b> You are allowed to use, from existing libraries, data
+structures such as linked lists, double-linked lists, maps, etc.
+However, you are
+not allowed to use already-implemented graphs (though, you are encouraged
+to take a look at them).
+</p><p>
+<b>Text file format:</b> the graph will be read from a text file
+having the following format:</p><ul>
+  <li>On the first line, the number <i>n</i> of vertices and the number <i>m</i>
+    of edges;
+  </li><li>On each of the following <i>m</i> lines, three numbers, <i>x</i>,
+    <i>y</i> and <i>c</i>, describing an edge: the origin, the target and the
+    cost of that edge.
+</li></ul>
+<a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/digraph-ex1.txt"><img src="./Graph algorithms - practical work no. 1_files/digraph-ex1.png">Example</a>
+<p>
+<a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/ex-lab1-doc.html">Sample (partial) documentation</a>
+</p><p>
+Random generator <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/samples/gen-digraph.cpp">gen-digraph.cpp</a>
+</p><p>
+Large input files:</p><ul>
+  <li>1k vertices, 4k edges: <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/graph1k.zip">graph1k.zip</a> or <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/graph1k.txt">graph1k.txt</a>;
+  </li><li>10k vertices, 40k edges: <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/graph10k.zip">graph10k.zip</a> or <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/graph10k.txt">graph10k.txt</a>;
+  </li><li>100k vertices, 400k edges: <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/graph100k.zip">graph100k.zip</a>;
+  </li><li>1m vertices, 4m edges: <a href="https://www.cs.ubbcluj.ro/~rlupsa/edu/grafe/graph1m.zip">graph1m.zip</a>;
+</li></ul>
+
+<p><b>Optional operations (bonus)</b>
+
+</p><ul>
+  <li>Do the implementation in C++ as one of the languages (~1p).
+  </li><li>Implement iterators (for parsing all vertices, in/out neighbors, etc)  (~2p).
+  </li><li>Integrate a random generator for a graph with specified number of vertices and of edges (~1p).
+</li></ul>
+
+<address class="signature">
+<a href="http://www.cs.ubbcluj.ro/~rlupsa/index-en.html">Radu-Lucian LUPŞA</a><br>
+2026-03-01
+</address>
+
+</body></html>

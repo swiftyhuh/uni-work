@@ -1,0 +1,2 @@
+grep -Ei "([aeiou]{3,}" test
+sed -E "s/([a-zA-Z])([0-9])/\1\1\2/" test1

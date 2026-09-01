@@ -1,0 +1,17 @@
+Details about the lab tests
+Hello, Object Oriented Programming 2026,
+ 
+Our lab tests are scheduled in the following weeks:
+test 1: Week 6
+test 2: Week 10
+test 3: Week 13
+The following are valid for all lab tests:
+•    You must start your application from scratch, you are not allowed to use any resource, except the following two sites for function documentation: https://en.cppreference.com/w/ and https://cplusplus.com/. You are not allowed to generate code using AI tools, and any AI/ML features in your IDE must be disabled (e.g., Copilot).
+•    Your program must be written in C++, use classes and a layered architecture.
+•    You must take the test with your own subgroup or with the subgroup you have been attending lab activities with.
+•    The test is a semester activity, it cannot be taken again during the exam session.
+•    During the test, or after you finish (at the end of the lab, the latest), you must commit and push your solution to GitHub (to the provided repository). Failure to do any of the above will result in a grade 0 for the test.
+ 
+Have a nice week!
+ 
+ 

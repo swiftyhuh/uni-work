@@ -1,0 +1,50 @@
+class Object {
+public:
+    virtual void print() = 0;
+    virtual ~Object() {}
+};
+
+
+class Character : public Object {
+private:
+    char value;
+public:
+    Character(char c) : value(c) {}
+    char operator*() const { return value; }
+    bool operator==(char c) const { return value == c; }
+    void print() override { cout << value << " "; }
+    ~Character() {}
+};
+
+
+class Double : public Object {
+private:
+    double value;
+public:
+    Double(double d) : value(d) {}
+    double operator*() const { return value; }
+    void print() override { cout << value << " "; }
+    ~Double() {}
+};
+
+
+class MyObjects {
+private:
+    vector<Object*> elems;
+public:
+    MyObjects(Object* first = nullptr) {
+        if (first) elems.push_back(first);
+    }
+    MyObjects& addBeginning(Object* obj) {
+        elems.insert(elems.begin(), obj);
+        return *this;
+    }
+    int size() const { return elems.size(); }
+    auto begin() { return elems.begin(); }
+    auto end()   { return elems.end(); }
+    ~MyObjects() {
+        for (auto o : elems) delete o;
+    }
+};
+
+

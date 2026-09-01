@@ -1,0 +1,486 @@
+
+<!-- saved from url=(0043)https://www.cs.ubbcluj.ro/~rares/course/os/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Operating Systems</title>
+
+    <link rel="shortcut icon" type="image/png" href="https://www.cs.ubbcluj.ro/~rares/favicon.png">
+    <link href="./Operating Systems_files/css" rel="stylesheet">
+    <link rel="stylesheet" href="./Operating Systems_files/font-awesome.min.css">
+    <link rel="stylesheet" href="./Operating Systems_files/style.css">
+    <script src="./Operating Systems_files/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style>
+</head>
+
+<!-- ĂÂÎȘȚ ăâîșț -->
+
+<body>
+<div class="Container">
+    <table>
+        <tbody><tr>
+            <td style="vertical-align: top"><a href="https://www.cs.ubbcluj.ro/~rares"><i class="fa fa-home fa-2x" aria-hidden="true" style="color: blue"></i></a></td>
+            <td style="vertical-align: top">
+                <span class="Title">Operating Systems</span><br><br>
+                <span class="Semester">2025-2026&nbsp;&nbsp;&nbsp;2<sup>nd</sup> Semester</span><br>
+                <span class="Year">1<sup>st</sup> Year Romanian/English</span><br>
+            </td>
+        </tr>
+    </tbody></table>
+
+    <br>
+    <span class="SectionTitle">TL;DR</span>
+    <ul>
+        <li>Practical tests/exams every three/four weeks</li>
+        <li>Strict grading policy</li>
+        <li>Insufficient attendance -&gt; No grade (i.e. ABSENT)</li>
+        <li>Less than 5 for certain grades -&gt; Re-examination</li>
+    </ul>
+
+    <span class="SectionTitle">Online Communication</span>
+    <ol>
+        <li>Login to Microsoft Teams using your university account</li>
+        <li>Join the <b>Operating Systems 2025/2026</b> team using code <b>biwoe06</b></li>
+        <li>For announcements watch <b>all the following</b>
+            <ul>
+                <li>University email <span class="lnk">@stud.ubbcluj.ro</span></li>
+                <li>Microsoft Teams General channel</li>
+            </ul>
+        </li>
+    </ol>
+
+    <span class="SectionTitle">Instructors</span>
+    <table>
+        <tbody><tr>
+            <td style="text-align: right"><span class="ProfLabel">Lecture:</span></td>
+            <td><span class="Prof">Conf. Dr. Rareș Boian</span></td>
+        </tr>
+        <tr>
+            <td><span class="ProfLabel">Seminar/Lab:</span></td>
+            <td>
+                <span class="Prof">Lect. Dr. Alina Călin</span><br>
+                <span class="Prof">Lect. Dr. Horea Greblă</span><br>
+                <span class="Prof">Lect. Dr. Bogdan Mursa</span><br>
+                <span class="Prof">Lect. Dr. Horea Mureșan</span><br>
+            </td>
+            <td>
+                <span class="Prof">Drd. Daniel Boța</span><br>
+                <span class="Prof">Drd. Alexandru Kiraly</span><br>
+                <span class="Prof">Drd. Ciprian Stupinean</span><br>
+                <span class="Prof">Drd. Tudor Jinga</span><br>
+            </td>
+            <td>
+                <span class="Prof">C.d.a. Cristian Brad</span><br>
+                <span class="Prof">C.d.a. Alexandru Cornea</span><br>
+                <span class="Prof">C.d.a. Tudor Lechințan</span><br>
+                <span class="Prof">C.d.a. Cristian Leonte</span><br>
+            </td>
+        </tr>
+    </tbody></table>
+
+    <span class="SectionTitle">Syllabus: </span><a href="https://www.cs.ubbcluj.ro/files/curricula/2024/syllabus/IR_sem2_MLR5007_ro_rares_2024_8557.pdf"><span class="SectionTitle">RO</span></a>, <a href="https://www.cs.ubbcluj.ro/files/curricula/2024/syllabus/IE_sem2_MLE5007_en_rares_2024_8558.pdf"><span class="SectionTitle">EN</span></a>
+    <br>
+    <br>
+
+    <span class="SectionTitle">Graded Work</span>
+    <br>
+    <br>
+    <table class="sched">
+        <tbody><tr>
+            <th></th>
+            <th class="b1">Practical tests/exams</th>
+            <th class="b1">Written exam</th>
+        </tr>
+        <tr>
+            <th class="b1">Duration</th>
+            <td class="b1">30-40 min</td>
+            <td class="b1">60 min</td>
+        </tr>
+        <tr>
+            <th class="b1">Requirements</th>
+            <td class="b1">Implement solution on the exam server</td>
+            <td class="b1">20 free-answer questions</td>
+        </tr>
+        <tr>
+            <th class="b1">Reference</th>
+            <td class="b1">Anything available in the exam account</td>
+            <td class="b1">A4, double-sided, handwritten cheat-sheet</td>
+        </tr>
+    </tbody></table>
+    <br>
+    <br>
+
+    <span class="SectionTitle">Grading policy for practical tests/exams</span><br>
+    <ul>
+        <li>&nbsp;&nbsp;0 = The student cannot answer questions about the code, or the solution solves a different problem</li>
+        <li>&nbsp;&nbsp;1 = Shell scripts have syntax errors or C code has compilation errors/warnings</li>
+        <li>&nbsp;&nbsp;4 = Runtime crash</li>
+        <li>&nbsp;&nbsp;7 = All of the above are OK but the implementation is not quite complete</li>
+        <li>10 = Complete implementation and correct execution.</li>
+    </ul>
+
+    <span class="SectionTitle">Final grade calculation</span><br>
+    <ul>
+        <li><u>In order to get a final grade</u>, the attendance requirements below <u>must</u> be met. Attendance can be accumulated <u>only</u> during the regular semester activities:
+            <br>
+            <br>
+            <table class="sched">
+                <tbody><tr>
+                    <th></th>
+                    <th class="b1">First year students</th>
+                    <th class="b1">Repeating students</th>
+                </tr>
+                <tr>
+                    <th class="b1">Required seminar attendances</th>
+                    <td class="b1">Minimum 5</td>
+                    <td class="b1">Minimum 4</td>
+                </tr>
+                <tr>
+                    <th class="b1">Required lab attendances</th>
+                    <td class="b1">Minimum 12</td>
+                    <td class="b1">Minimum 10</td>
+                </tr>
+            </tbody></table>
+            <br>
+        </li>
+        <li>Grade calculation formula (check the tooltips to understand the acronyms):<br><br>
+            <div class="Monospaced" style="margin-left: 0; font-weight: bold ; font-size: 0.9em">
+                <span class="const">Grade</span> =
+                <div class="tooltip const">Sa<span class="tooltiptext" style="width: 10em">Seminar attendances</span></div> &lt;
+                <div class="tooltip const">SaReq<span class="tooltiptext" style="width: 14.5em">Required seminar attendances</span></div> ||
+                <div class="tooltip const">La<span class="tooltiptext" style="width: 8em">Lab attendances</span></div> &lt;
+                <div class="tooltip const">LaReq<span class="tooltiptext" style="width: 12em">Required lab attendances</span></div> ? <span class="num">ABSENT</span>
+                <br>
+                <span style="margin-left: 16.5em">: floor</span>(<span class="num">0.5</span> + <span class="num">1</span> +
+                <span class="num">0.05</span>*<div class="tooltip const">Tc<span class="tooltiptext" style="width: 11em">UNIX C programming test grade</span></div> +
+                <span class="num">0.05</span>*<div class="tooltip const">Tpr<span class="tooltiptext" style="width: 11em">UNIX processes test grade</span></div> +
+                <br>
+                <span style="margin-left: 20.5em" class="num">0.3</span>*max(<div class="tooltip const">Ew<span class="tooltiptext" style="width: 10em">Written exam grade</span></div>,
+                <div class="tooltip const">Rw<span class="tooltiptext" style="width: 11em">Written re-exam grade</span></div>) +
+
+                <span class="num">0.2</span>*max(<div class="tooltip const">Esh<span class="tooltiptext" style="width: 15em">UNIX Shell practical exam grade</span></div>,
+                <div class="tooltip const">Rsh<span class="tooltiptext" style="width: 16em">UNIX Shell practical re-exam grade</span></div>) +
+
+                <span class="num">0.3</span>*max(<div class="tooltip const">Ept<span class="tooltiptext" style="width: 13em">UNIX processes and threads practical exam grade</span></div>,
+                <div class="tooltip const">Rpt<span class="tooltiptext" style="width: 13em">UNIX processes and threads practical re-exam grade</span></div>))
+                <br>
+                <svg style="margin-left: 22.4em" xmlns="http://www.w3.org/2000/svg" width="5.7em" height="1em" viewBox="0 0 1000 65"><polyline stroke="blue" stroke-width="17" fill="none" points="5,0 5,25 10,35 20,40 475,40 485,45 490,55 500,85 510,55 515,45 525,40 980,40 990,35 995,25 995,0"></polyline></svg>
+                <svg style="margin-left: 2.9em" xmlns="http://www.w3.org/2000/svg" width="6.7em" height="1em" viewBox="0 0 1000 65"><polyline stroke="blue" stroke-width="15.5" fill="none" points="5,0 5,25 10,35 20,40 475,40 485,45 490,55 500,85 510,55 515,45 525,40 980,40 990,35 995,25 995,0"></polyline></svg>
+                <svg style="margin-left: 2.7em" xmlns="http://www.w3.org/2000/svg" width="6.7em" height="1em" viewBox="0 0 1000 65"><polyline stroke="blue" stroke-width="17" fill="none" points="5,0 5,25 10,35 20,40 475,40 485,45 490,55 500,85 510,55 515,45 525,40 980,40 990,35 995,25 995,0"></polyline></svg>
+                <br>
+                <span style="margin-left: 22.4em; font-weight: normal">Must be ≥ 5</span>
+                <span style="margin-left: 3.6em; font-weight: normal">Must be ≥ 5</span>
+                <span style="margin-left: 3.7em; font-weight: normal">Must be ≥ 5</span>
+            </div>
+        </li>
+    </ul>
+
+    <span class="SectionTitle">Weekly Schedule</span><br><br>
+    <table class="sched">
+        <colgroup>
+            <col style="width: 8em">
+            <col style="width: 17em">
+            <col style="width: 10em">
+            <col style="width: 17em">
+            <col style="width: 10em">
+            <col style="width: 5em">
+            <col style="width: 8em">
+        </colgroup>
+        <tbody><tr>
+            <td class="hdat" rowspan="2">Week</td>
+            <td class="hlec" rowspan="2">Lecture</td>
+            <td class="hsem" rowspan="2">Seminar</td>
+            <td class="hlab" colspan="3" style="text-align: center">Laboratory</td>
+        </tr>
+        <tr>
+            <td class="hlab">Practice</td>
+            <td class="htst">Test</td>
+            <td class="hpex"><span style="white-space: nowrap;">Practical-Exam</span></td>
+        </tr>
+        <tr>
+            <td class="dat">1: Feb 23</td>
+            <td class="lec">Environment setup. UNIX command line introduction. C programming in the UNIX command line.</td>
+            <td class="sem" rowspan="2">UNIX command line introduction. <span class="tip taught">Regular expressions. Basics of grep, sed, awk.<span class="tiptext" style="width: 14.5em">Presented only in the seminar</span></span></td>
+            <td class="lab">Environment setup. UNIX command line introduction. C programming in the UNIX command line.</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">2: Mar 2</td>
+            <td class="lec">UNIX Shell programming</td>
+            <td class="lab">C programming in the UNIX command line. Detecting memory problems with valgrind.</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">3: Mar 9</td>
+            <td class="lec">UNIX Shell programming. Windows command line.</td>
+            <td class="sem" rowspan="2">UNIX Shell programming</td>
+            <td class="lab">Basics of grep, sed, awk, find, sort, uniq, cut, cat, etc</td>
+            <td class="tst">C programming in the UNIX command line (<span class="MonospacedBold">Tc</span>)</td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">4: Mar 16</td>
+            <td class="lec">UNIX file I/O. UNIX file system structure. UNIX Processes: fork, wait, exit</td>
+            <td class="lab">Basics of grep, sed, awk, find, sort, uniq, cut, cat, etc. UNIX Shell programming</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">5: Mar 23</td>
+            <td class="lec">UNIX Processes: exec. UNIX Signals. UNIX inter-process communication: pipe</td>
+            <td class="sem" rowspan="2">UNIX Processes: fork, wait, exit, exec, signal, kill</td>
+            <td class="lab">UNIX Shell programming</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">6: Mar 30</td>
+            <td class="lec">UNIX inter-process communication: FIFO, dup, dup2, popen</td>
+            <td class="non"></td>
+            <td class="non"></td>
+            <td class="pex">UNIX Shell Programming (<span class="MonospacedBold">Esh</span>)</td>
+        </tr>
+        <tr>
+            <td class="dat">7: Apr 6<div class="off">(Fri)</div></td>
+            <td class="lec">UNIX IPC: shared memory. POSIX threads, mutexes</td>
+            <td class="sem">UNIX pipe, FIFO, popen</td>
+            <td class="lab">UNIX Processes: fork, wait, exit, exec, signal, kill</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="vdt">-: Apr 13</td>
+            <td class="vac">Vacation</td>
+            <td class="vac">Vacation</td>
+            <td class="vac">Vacation</td>
+            <td class="vac">Vacation</td>
+            <td class="vac">Vacation</td>
+        </tr>
+        <tr>
+            <td class="dat">8: Apr 20</td>
+            <td class="lec">POSIX RW Locks, conditional variables, semaphores, barriers</td>
+            <td class="sem"></td>
+            <td class="lab">UNIX inter-process communication: pipe, FIFO</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">9: April 27<div class="off">(Fri)</div></td>
+            <td class="lec">Thread programming examples with synchronization and deadlock prevention</td>
+            <td class="sem" rowspan="2">POSIX threads, mutexes, conditional variables, RW locks</td>
+            <td class="lab">POSIX Threads, mutexes, RW locks</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">10: May 4</td>
+            <td class="lec">OS architecture and processes</td>
+            <td class="lab">POSIX conditional variables, barriers</td>
+            <td class="tst">UNIX Processes (<span class="MonospacedBold">Tpr</span>)</td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">11: May 11</td>
+            <td class="lec">Memory management</td>
+            <td class="sem" rowspan="2">POSIX semaphores, barriers, <span class="tip taught">inter-process semaphore (sem_init) with shared memory<span class="tiptext" style="width: 14.5em">Presented only in the seminar</span></span></td>
+            <td class="lab">POSIX threads, mutexes, conditional variables, RW locks, barriers</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">12: May 18</td>
+            <td class="lec">Memory management, physical I/O, devices and drivers</td>
+            <td class="lab" rowspan="3">Recapitulation and practical exam preparation</td>
+            <td class="non"></td>
+            <td class="non"></td>
+        </tr>
+        <tr>
+            <td class="dat">13: May 25</td>
+            <td class="lec">Bootstrap. Linux kernel programming.</td>
+            <td class="sem" rowspan="2"><span class="tip taught">File systems and concepts: NTFS, ZFS, journaling, copy-on-write<span class="tiptext" style="width: 14.5em">Presented only in the seminar</span></span></td>
+            <td class="non"></td>
+            <td class="pex" rowspan="2">UNIX Processes and Threads (<span class="MonospacedBold">Ept</span>)</td>
+        </tr>
+        <tr>
+            <td class="dat">14: Jun 1<div class="off">(Mon)</div></td>
+            <td class="lec">Windows kernel. Mobile operating systems.</td>
+            <td class="non"></td>
+        </tr>
+    </tbody></table>
+    <br>
+
+    <span class="SectionTitle">Re-examination Info</span>
+    <ul>
+        <li>Re-exam options
+            <ul>
+                <li><b>Rw</b> - Written re-exam. This has the same format as the written exams that you took in the
+                    normal examination period.
+                </li>
+                <li><b>Rsh</b> - UNIX Shell practical re-exam.</li>
+                <li><b>Rtp</b> - UNIX Processes and threads practical re-exam.</li>
+            </ul>
+        </li>
+        <li>Who should/can take which re-exams:
+            <ul>
+                <li>If you have <b>insufficient attendances</b>, you <u>cannot</u> take any of these re-exams. You need to
+                    take the class again next year.
+                </li>
+                <li>If you have <b>sufficient attendances, but no final grade</b>, it means that some of your grades
+                    were too low or missing, so you <u>must</u> take those <u>respective re-exams</u>, and any others that you choose
+                    (you can take multiple exams on the same day).
+                </li>
+                <li>If you have a <b>final grade</b> and want to improve it, you can take any of the exams you choose
+                    (you can take multiple exams on the same day).
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+
+    <span class="SectionTitle">Grade Statistics</span>
+    <div id="gstats" class="js-plotly-plot"><div class="plot-container plotly"><div class="user-select-none svg-container" style="position: relative; width: 1080px; height: 450px;"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="450" style="background: rgb(255, 255, 255);"><defs id="defs-49b9a8"><g class="clips"><clippath id="clip49b9a8xyplot" class="plotclip"><rect width="879" height="370"></rect></clippath><clippath class="axesclip" id="clip49b9a8x"><rect x="80" y="0" width="879" height="450"></rect></clippath><clippath class="axesclip" id="clip49b9a8y"><rect x="0" y="0" width="1080" height="370"></rect></clippath><clippath class="axesclip" id="clip49b9a8xy"><rect x="80" y="0" width="879" height="370"></rect></clippath></g><g class="gradients"></g></defs><g class="bglayer"></g><g class="draglayer cursor-crosshair"><g class="xy"><rect class="nsewdrag drag" data-subplot="xy" x="80" y="0" width="879" height="370" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="nwdrag drag cursor-nw-resize" data-subplot="xy" x="60" y="-20" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="nedrag drag cursor-ne-resize" data-subplot="xy" x="959" y="-20" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="swdrag drag cursor-sw-resize" data-subplot="xy" x="60" y="370" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="sedrag drag cursor-se-resize" data-subplot="xy" x="959" y="370" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="ewdrag drag cursor-ew-resize" data-subplot="xy" x="167.9" y="370.5" width="703.2" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="wdrag drag cursor-w-resize" data-subplot="xy" x="80" y="370.5" width="87.9" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="edrag drag cursor-e-resize" data-subplot="xy" x="871.1" y="370.5" width="87.9" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="nsdrag drag cursor-ns-resize" data-subplot="xy" x="59.5" y="37" width="20" height="296" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="sdrag drag cursor-s-resize" data-subplot="xy" x="59.5" y="333" width="20" height="37" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="ndrag drag cursor-n-resize" data-subplot="xy" x="59.5" y="0" width="20" height="37" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect></g></g><g class="layer-below"><g class="imagelayer"></g><g class="shapelayer"></g></g><g class="cartesianlayer"><g class="subplot xy"><g class="layer-subplot"><g class="shapelayer"></g><g class="imagelayer"></g></g><g class="gridlayer"><g class="x"><path class="xgrid crisp" transform="translate(127.7,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(225.65,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(323.6,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(421.55,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(519.5,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(617.45,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(715.4,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(813.35,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(911.3,0)" d="M0,0v370" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path></g><g class="y"><path class="ygrid crisp" transform="translate(0,304.25)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,260.74)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,217.24)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,173.73)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,130.23)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,86.72)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,43.22)" d="M80,0h879" style="stroke: rgb(238, 238, 238); stroke-opacity: 1; stroke-width: 1px;"></path></g></g><g class="zerolinelayer"><path class="yzl zl crisp" transform="translate(0,347.75)" d="M80,0h879" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"></path></g><path class="xlines-below"></path><path class="ylines-below"></path><g class="overlines-below"></g><g class="xaxislayer-below"></g><g class="yaxislayer-below"></g><g class="overaxes-below"></g><g class="plot" transform="translate(80,0)" clip-path="url(&#39;#clip49b9a8xyplot&#39;)"><g class="scatterlayer mlayer"><g class="trace scatter tracebf4128" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,238.34L145.65,253.97L243.6,332.12L341.55,321.7L439.5,300.86L537.45,264.39L635.4,222.71L733.35,160.19L831.3,165.4" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(31, 119, 180); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,238.34)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,253.97)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,332.12)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,321.7)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,300.86)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,264.39)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,222.71)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,160.19)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,165.4)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter tracee45fb5" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,330.3L145.65,251.8L243.6,317.22L341.55,339.03L439.5,301.96L537.45,238.72L635.4,201.65L733.35,168.94L831.3,110.06" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(255, 127, 14); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,330.3)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,251.8)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,317.22)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,339.03)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,301.96)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,238.72)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,201.65)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,168.94)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,110.06)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter trace96130e" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,255.72L145.65,312.19L243.6,341.48L341.55,264.09L439.5,251.54L537.45,213.89L635.4,199.25L733.35,190.88L831.3,230.62" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(44, 160, 44); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,255.72)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,312.19)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,341.48)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,264.09)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,251.54)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,213.89)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,199.25)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,190.88)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,230.62)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter trace2c1abf" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,264.69L145.65,337.37L243.6,320.75L341.55,302.07L439.5,248.07L537.45,214.85L635.4,162.93L733.35,183.7L831.3,225.23" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(214, 39, 40); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,264.69)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,337.37)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,320.75)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,302.07)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,248.07)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,214.85)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,162.93)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,183.7)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,225.23)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter trace782341" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,259.96L145.65,332.14L243.6,234.6L341.55,345.8L439.5,304.83L537.45,205.34L635.4,174.12L733.35,207.29L831.3,195.58" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(148, 103, 189); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,259.96)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,332.14)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,234.6)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,345.8)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,304.83)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,205.34)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,174.12)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,207.29)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,195.58)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter traceddf23b" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,240.51L145.65,331.56L243.6,309.3L341.55,339.66L439.5,295.14L537.45,198.01L635.4,143.38L733.35,195.99L831.3,206.11" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(140, 86, 75); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,240.51)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,331.56)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,309.3)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,339.66)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,295.14)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,198.01)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,143.38)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,195.99)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,206.11)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter trace9789f1" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,347.75L145.65,306.73L243.6,319.68L341.55,326.16L439.5,276.5L537.45,185.82L635.4,159.91L733.35,153.44L831.3,183.66" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(227, 119, 194); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,347.75)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,306.73)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,319.68)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,326.16)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,276.5)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,185.82)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,159.91)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,153.44)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,183.66)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter trace0421ce" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,295.59L145.65,339.4L243.6,278.89L341.55,347.75L439.5,335.23L537.45,262.2L635.4,149.53L733.35,22.25L831.3,228.82" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(127, 127, 127); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,295.59)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,339.4)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,278.89)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,347.75)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,335.23)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,262.2)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,149.53)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,22.25)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,228.82)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter tracee50735" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,255.27L145.65,336.43L243.6,315.66L341.55,338.31L439.5,294.9L537.45,242.06L635.4,179.77L733.35,149.57L831.3,147.69" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(188, 189, 34); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,255.27)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,336.43)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,315.66)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,338.31)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,294.9)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,242.06)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,179.77)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,149.57)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,147.69)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter traceeefa20" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,288.02L145.65,325.85L243.6,295.98L341.55,339.79L439.5,274.08L537.45,130.73L635.4,76.97L733.35,210.37L831.3,317.88" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(23, 190, 207); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,288.02)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,325.85)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,295.98)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,339.79)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,274.08)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,130.73)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,76.97)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,210.37)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,317.88)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter tracebb8dc8" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,297.86L145.65,325.8L243.6,243.98L341.55,347.75L439.5,321.81L537.45,226.02L635.4,90.32L733.35,100.29L831.3,305.84" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(31, 119, 180); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,297.86)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,325.8)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,243.98)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,347.75)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,321.81)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,226.02)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,90.32)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,100.29)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,305.84)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter tracec61a18" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,263.61L145.65,336.28L243.6,263.61L341.55,328.63L439.5,278.91L537.45,160.35L635.4,108.72L733.35,190.94L831.3,328.63" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(255, 127, 14); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,263.61)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,336.28)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,263.61)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,328.63)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,278.91)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,160.35)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,108.72)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,190.94)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,328.63)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path></g><g class="text"></g></g><g class="trace scatter trace557441" style="stroke-miterlimit: 2; opacity: 0.5;"><g class="fills"></g><g class="errorbars"></g><g class="lines"><path class="js-line" d="M47.7,279.37L145.65,319.79L243.6,295.22L341.55,329.05L439.5,289.87L537.45,208.67L635.4,151.51L733.35,161.66L831.3,224.52" style="vector-effect: non-scaling-stroke; fill: none; stroke: rgb(44, 160, 44); stroke-opacity: 1; stroke-width: 10px; opacity: 1;"></path></g><g class="points"><path class="point" transform="translate(47.7,279.37)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(145.65,319.79)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(243.6,295.22)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(341.55,329.05)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(439.5,289.87)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(537.45,208.67)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(635.4,151.51)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(733.35,161.66)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path><path class="point" transform="translate(831.3,224.52)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path></g><g class="text"></g></g></g></g><g class="overplot"></g><path class="xlines-above crisp" style="fill: none;" d="M0,0"></path><path class="ylines-above crisp" style="fill: none;" d="M0,0"></path><g class="overlines-above"></g><g class="xaxislayer-above"><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="Insufficient&lt;br&gt;Attendance" data-math="N" transform="translate(127.7,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;"><tspan class="line" dy="0em" x="0" y="383">Insufficient</tspan><tspan class="line" dy="1.3em" x="0" y="383">Attendance</tspan></text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="Missing&lt;br&gt;Grades" data-math="N" transform="translate(225.65,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;"><tspan class="line" dy="0em" x="0" y="383">Missing</tspan><tspan class="line" dy="1.3em" x="0" y="383">Grades</tspan></text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="Grades&lt;br&gt;Too Low" data-math="N" transform="translate(323.6,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;"><tspan class="line" dy="0em" x="0" y="383">Grades</tspan><tspan class="line" dy="1.3em" x="0" y="383">Too Low</tspan></text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="5" data-math="N" transform="translate(421.55,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">5</text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="6" data-math="N" transform="translate(519.5,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">6</text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="7" data-math="N" transform="translate(617.45,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">7</text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="8" data-math="N" transform="translate(715.4,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">8</text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="9" data-math="N" transform="translate(813.35,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">9</text></g><g class="xtick"><text text-anchor="middle" x="0" y="383" data-unformatted="10" data-math="N" transform="translate(911.3,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">10</text></g></g><g class="yaxislayer-above"><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="0%" data-math="N" transform="translate(0,347.75)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">0%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="5%" data-math="N" transform="translate(0,304.25)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">5%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="10%" data-math="N" transform="translate(0,260.74)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">10%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="15%" data-math="N" transform="translate(0,217.24)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">15%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="20%" data-math="N" transform="translate(0,173.73)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">20%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="25%" data-math="N" transform="translate(0,130.23)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">25%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="30%" data-math="N" transform="translate(0,86.72)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">30%</text></g><g class="ytick"><text text-anchor="end" x="79" y="4.199999999999999" data-unformatted="35%" data-math="N" transform="translate(0,43.22)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">35%</text></g></g><g class="overaxes-above"></g></g></g><g class="polarlayer"></g><g class="ternarylayer"></g><g class="geolayer"></g><g class="funnelarealayer"></g><g class="pielayer"></g><g class="treemaplayer"></g><g class="sunburstlayer"></g><g class="glimages"></g></svg><div class="gl-container"></div><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="450"><defs id="topdefs-49b9a8"><g class="clips"></g><clippath id="legend49b9a8"><rect width="103" height="257" x="0" y="0"></rect></clippath></defs><g class="indicatorlayer"></g><g class="layer-above"><g class="imagelayer"></g><g class="shapelayer"></g></g><g class="infolayer"><g class="legend" pointer-events="all" transform="translate(976.58,0)"><rect class="bg" shape-rendering="crispEdges" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 255, 255); fill-opacity: 1; stroke-width: 0px;" width="103" height="257" x="0" y="0"></rect><g class="scrollbox" transform="" clip-path="url(&#39;#legend49b9a8&#39;)"><g class="groups"><g class="traces" style="opacity: 1;" transform="translate(0,14.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2013-2014" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2013-2014</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(31, 119, 180); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,33.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2014-2015" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2014-2015</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(255, 127, 14); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,52.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2015-2016" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2015-2016</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(44, 160, 44); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,71.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2016-2017" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2016-2017</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(214, 39, 40); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(214, 39, 40); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,90.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2017-2018" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2017-2018</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(148, 103, 189); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(148, 103, 189); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,109.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2018-2019" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2018-2019</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(140, 86, 75); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(140, 86, 75); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,128.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2019-2020" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2019-2020</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(227, 119, 194); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(227, 119, 194); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,147.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2020-2021" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2020-2021</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(127, 127, 127); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(127, 127, 127); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,166.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2021-2022" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2021-2022</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(188, 189, 34); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(188, 189, 34); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,185.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2022-2023" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2022-2023</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(23, 190, 207); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(23, 190, 207); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,204.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2023-2024" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2023-2024</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(31, 119, 180); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(31, 119, 180); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,223.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="2024-2025" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">2024-2025</text><g class="layers" style="opacity: 1;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(255, 127, 14); stroke-opacity: 1; stroke-width: 2px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(255, 127, 14); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g><g class="traces" style="opacity: 1;" transform="translate(0,242.5)"><text class="legendtext" text-anchor="start" x="40" y="4.680000000000001" data-unformatted="Overall" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Overall</text><g class="layers" style="opacity: 0.5;"><g class="legendfill"></g><g class="legendlines"><path class="js-line" d="M5,0h30" style="fill: none; stroke: rgb(44, 160, 44); stroke-opacity: 1; stroke-width: 10px;"></path></g><g class="legendsymbols"><g class="legendpoints"><path class="scatterpts" transform="translate(20,0)" d="M3,0A3,3 0 1,1 0,-3A3,3 0 0,1 3,0Z" style="opacity: 1; stroke-width: 0px; fill: rgb(44, 160, 44); fill-opacity: 1;"></path></g></g></g><rect class="legendtoggle" pointer-events="all" x="0" y="-9.5" width="97.712890625" height="19" style="cursor: pointer; fill: rgb(0, 0, 0); fill-opacity: 0;"></rect></g></g></g><rect class="scrollbar" rx="20" ry="3" width="0" height="0" style="fill: rgb(128, 139, 164); fill-opacity: 1;" x="0" y="0"></rect></g><g class="g-gtitle"></g><g class="g-xtitle"></g><g class="g-ytitle"></g></g><g class="menulayer"></g><g class="zoomlayer"></g></svg><div class="modebar-container" style="position: absolute; top: 0px; right: 0px; width: 100%;"></div><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="450"><g class="hoverlayer"></g></svg></div></div></div>
+    <script>
+        let x = ['Insufficient<br>Attendance', 'Missing<br>Grades', 'Grades<br>Too Low', '5', '6', '7', '8', '9', '10'];
+        let data = { //   I/A  M/G  G/TL   5    6    7    8    9   10
+            '2013-2014': [ 21,  18,   3,   5,   9,  16,  24,  36,  35],
+            '2014-2015': [  8,  44,  14,   4,  21,  50,  67,  82, 109],
+            '2015-2016': [ 44,  17,   3,  40,  46,  64,  71,  75,  56],
+            '2016-2017': [ 40,   5,  13,  22,  48,  64,  89,  79,  59],
+            '2017-2018': [ 45,   8,  58,   1,  22,  73,  89,  72,  78],
+            '2018-2019': [ 53,   8,  19,   4,  26,  74, 101,  75,  70],
+            '2019-2020': [  0,  19,  13,  10,  33,  75,  87,  90,  76],
+            '2020-2021': [ 25,   4,  33,   0,   6,  41,  95, 156,  57],
+            '2021-2022': [ 49,   6,  17,   5,  28,  56,  89, 105, 106],
+            '2022-2023': [ 30,  11,  26,   4,  37, 109, 136,  69,  15],
+            '2023-2024': [ 25,  11,  52,   0,  13,  61, 129, 124,  21],
+            '2024-2025': [ 44,   6,  44,  10,  36,  98, 125,  82,  10],
+        };
+
+        let overall = new Array(x.length).fill(0);
+        let overallTotal = 0;
+        let total = {};
+        for(let i in x) {
+            for(let [k, v] of Object.entries(data)) {
+                if(!total.hasOwnProperty(k)) {
+                    total[k] = 0;
+                }
+                overall[i] += v[i];
+                total[k] += v[i];
+                overallTotal += v[i];
+            }
+        }
+
+        let percentage = {};
+        for(let [k, v] of Object.entries(data)) {
+            if(!percentage.hasOwnProperty(k)) {
+                percentage[k] = new Array(x.length);
+            }
+            for(let [i, n] of Object.entries(v)) {
+                percentage[k][i] = n/total[k];
+            }
+        }
+
+        let overallPercentage = new Array(overall.length);
+        for(let i in overall) {
+            overallPercentage[i] = overall[i]/overallTotal;
+        }
+
+        let plot = [];
+        for(let [k, v] of Object.entries(percentage)) {
+            plot.push({
+                name: k,
+                mode: 'markers+lines',
+                type: 'scatter',
+                x: x,
+                y: v
+            });
+        }
+        plot.push({
+            name: 'Overall',
+            mode: 'markers+lines',
+            type: 'scatter',
+            x: x,
+            y: overallPercentage,
+            opacity: 0.5,
+            line: {
+                width: '10'
+            }
+        });
+
+        let layout = {
+            margin: {
+                't': 0
+            },
+            xaxis: {
+                type: 'category'
+            },
+            yaxis: {
+                tickformat: ',.0%'
+            }
+        };
+        Plotly.newPlot('gstats', plot, layout, {displayModeBar: false});
+    </script>
+
+    <span class="SectionTitle">Resources</span>
+    <ul>
+        <li>Environment setup
+            <ul>
+                <li>Windows Subsystem Linux: <a href="https://apps.microsoft.com/detail/9p5rwlm70sn9?hl=en-US&amp;gl=RO">Alma Linux OS 9</a>, <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL2 Installation Instructions</a></li>
+                <li><a href="https://www.cs.ubbcluj.ro/~rares/course/os/res/setup/virtualbox/index.html">VirtualBox</a></li>
+            </ul>
+        </li>
+        <li>Reference materials
+            <ul>
+                <li><a href="https://www.cs.ubbcluj.ro/~rares/course/os/res/teaching/teaching-notes.pdf">Teaching notes</a></li>
+                <li>Books:
+                    <ul>
+                        <li><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/">Operating Systems: Three Easy Pieces</a>, Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau, Arpaci-Dusseau Books, November 2023 (Version 1.10)</li>
+                        <li><a href="https://linuxcommand.org/tlcl.php">The Linux Command Line - A Complete Introduction</a>, William Shotts, 7th Internet Edition</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Tutorials
+            <ul>
+                <li>C programming
+                    <ul>
+                        <li><a href="https://www.cprogramming.com/tutorial.html#ctutorial">C Made Easy</a></li>
+                        <li><a href="https://www.lysator.liu.se/c/bwk-tutor.html">C Tutorial by Brian W. Kernighan</a>. Use this tutorial for a more detailed presentation of the C programming languge.</li>
+                        <li><a href="https://www.learn-c.org/">Learn-C.org</a></li>
+                        <li><a href="https://www.eskimo.com/~scs/cclass/notes/sx10f.html">C Arrays and Pointers as Function Arguments</a></li>
+                    </ul>
+                </li>
+                <li>UNIX Editors:
+                    <a href="https://opensource.com/article/19/3/getting-started-vim">vi</a>,
+                    <a href="https://www.digitalocean.com/community/tutorials/how-to-use-the-emacs-editor-in-linux">emacs</a>,
+                    <a href="https://www.howtogeek.com/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/">nano</a>,
+                    <a href="https://heather.cs.ucdavis.edu/~matloff/Joe/NotesJoe.NM.html">joe</a>
+                </li>
+                <li>Sed: <a href="https://www.grymoire.com/Unix/Sed.html">(1)</a>, <a href="https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor-to-manipulate-text-in-linux">(2)</a></li>
+                <li>Awk: <a href="https://www.grymoire.com/Unix/Awk.html">(1)</a>, <a href="https://learnxinyminutes.com/docs/awk/">(2)</a></li>
+                <li>Shell Programming: <a href="https://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html">(1)</a>, <a href="https://steve-parker.org/sh/sh.shtml">(2)</a></li>
+            </ul>
+        </li>
+        <li>Screencast by our colleague Lect. Dr. Radu Dragoș (narrated in Romanian)
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=AmcSFr8wVt4">Linux commands</a></li>
+                <li><a href="https://www.youtube.com/watch?v=0R3PeEtTcgA">Grep</a></li>
+                <li><a href="https://www.youtube.com/watch?v=GCtPmr2WEVw">Sed</a></li>
+                <li><a href="https://www.youtube.com/watch?v=0_Up81UAeJA">Awk</a></li>
+                <li><a href="https://www.youtube.com/watch?v=WWCJJgQp3VI">Shell programming</a></li>
+            </ul>
+        </li>
+        <li>Practice problems
+            <ul>
+                <li><a href="https://www.cs.ubbcluj.ro/~rares/course/os/res/practice/c-test/index.html">C programming in the UNIX command line</a></li>
+                <li><a href="https://www.cs.ubbcluj.ro/~rares/course/os/res/practice/gsa/index.html">Grep/Sed/Awk</a></li>
+                <li><a href="https://www.cs.ubbcluj.ro/~rares/course/os/res/practice/shell/index.html">UNIX Shell programming</a></li>
+                <li><a href="https://www.cs.ubbcluj.ro/~horea.muresan/os/problems-c">UNIX Processes/PIPE/FIFO/Threads programming (Drd. Horea Mureșan)</a></li>
+                <li><a href="https://www.cs.ubbcluj.ro/~rares/course/os/res/practice/bradut.html">Grep/Sed/Awk/Processes problems (C.d.a. Cristian Brad)</a></li>
+            </ul>
+        </li>
+    </ul>
+</div><svg id="js-plotly-tester" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; left: -10000px; top: -10000px; width: 9000px; height: 9000px; z-index: 1;"><path class="js-reference-point" d="M0,0H1V1H0Z" style="stroke-width: 0; fill: black;"></path></svg>
+
+
+</body></html>

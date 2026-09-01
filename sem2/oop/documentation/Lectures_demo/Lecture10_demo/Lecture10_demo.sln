@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37012.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lecture10_demo", "Lecture10_demo\Lecture10_demo.vcxproj", "{C98F9CA2-A337-4FB6-843F-7C96F1624AE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lecture10_Drawing", "Lecture10_Drawing\Lecture10_Drawing.vcxproj", "{834FEF7F-AF05-4F29-A380-0F692DBD5DA7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lecture10_genes_demo", "Lecture10_genes_demo\Lecture10_genes_demo.vcxproj", "{17346048-C5BF-4BA0-BCFE-0D94381F0B19}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lecture10_Notepad_example", "Lecture10_Notepad_example\Lecture10_Notepad_example.vcxproj", "{79F67C73-FB8D-4095-972D-BF065E3517FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C98F9CA2-A337-4FB6-843F-7C96F1624AE1}.Debug|x64.ActiveCfg = Debug|x64
+		{C98F9CA2-A337-4FB6-843F-7C96F1624AE1}.Debug|x64.Build.0 = Debug|x64
+		{C98F9CA2-A337-4FB6-843F-7C96F1624AE1}.Release|x64.ActiveCfg = Release|x64
+		{C98F9CA2-A337-4FB6-843F-7C96F1624AE1}.Release|x64.Build.0 = Release|x64
+		{834FEF7F-AF05-4F29-A380-0F692DBD5DA7}.Debug|x64.ActiveCfg = Debug|x64
+		{834FEF7F-AF05-4F29-A380-0F692DBD5DA7}.Debug|x64.Build.0 = Debug|x64
+		{834FEF7F-AF05-4F29-A380-0F692DBD5DA7}.Release|x64.ActiveCfg = Release|x64
+		{834FEF7F-AF05-4F29-A380-0F692DBD5DA7}.Release|x64.Build.0 = Release|x64
+		{17346048-C5BF-4BA0-BCFE-0D94381F0B19}.Debug|x64.ActiveCfg = Debug|x64
+		{17346048-C5BF-4BA0-BCFE-0D94381F0B19}.Debug|x64.Build.0 = Debug|x64
+		{17346048-C5BF-4BA0-BCFE-0D94381F0B19}.Release|x64.ActiveCfg = Release|x64
+		{17346048-C5BF-4BA0-BCFE-0D94381F0B19}.Release|x64.Build.0 = Release|x64
+		{79F67C73-FB8D-4095-972D-BF065E3517FE}.Debug|x64.ActiveCfg = Debug|x64
+		{79F67C73-FB8D-4095-972D-BF065E3517FE}.Debug|x64.Build.0 = Debug|x64
+		{79F67C73-FB8D-4095-972D-BF065E3517FE}.Release|x64.ActiveCfg = Release|x64
+		{79F67C73-FB8D-4095-972D-BF065E3517FE}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1202981A-65B9-41A0-8198-662776EBD5BE}
+	EndGlobalSection
+EndGlobal

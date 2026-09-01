@@ -1,0 +1,5 @@
+lecture01
+lecture02
+a.txt
+stars
+stars.c

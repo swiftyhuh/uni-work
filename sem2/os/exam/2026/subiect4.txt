@@ -1,0 +1,132 @@
+1. Dați o expresie regulară care acceptă stringuri formate doar din caracterele 1 și 0 și care, dacă sunt interpretate ca numere binare, sunt divizibile cu 4 și nu încep cu cifre 0 redundante.
+
+2. Dați o comandă GREP care afișează liniile dintr-un fișier text care conțin cel puțin trei vocale mari sau mici, nu neapărat consecutive, între care însă nu apar cifre. De exemplu: 123abcdefghij78 sau aaa.
+
+3. Se consideră un fișier text care conține pe fiecare linie secvențe nevide de litere mici și/sau cifre separate prin SPAȚII. Scrieți două comenzi SED care să șteargă TOATE secvențele care conțin cel puțin o cifră de pe fiecare linie a acestui fișier.
+
+4. Scrieți o comandă AWK care afișează numele utilizatorilor, primul câmp, al căror UID, al treilea câmp, este mai mare decât 1000. Fișierul are câmpuri separate prin caracterul :.
+
+5. Scrieți o linie de comandă în care programul C se execută doar dacă ambele programe A și B s-au terminat cu cod de eroare.
+
+6. Se dă un fișier a.txt care conține pe fiecare linie trei nume de fișiere separate prin spațiu. Scrieți un script Shell care pentru fiecare linie concatenează primele două fișiere într-al treilea, doar dacă al treilea fișier nu este unul dintre primele două.
+
+7. Considerând că apelul fork se execută cu succes, câte procese va crea programul de mai jos, excluzând procesul părinte inițial? Justificați răspunsul.
+int main() {
+    if(fork() > 0) {
+        exit(0);
+    }
+    while(wait(NULL) != -1)
+        if(fork() > 0) {
+            exit(0);
+        }
+    return 0;
+}
+
+8. Scrieți o instrucțiune execv care execută comanda:
+gcc -Wall -Wextra -Werror -g -o a a.c
+Considerați că gcc se află în directorul /usr/bin.
+
+9. Redirecționați ieșirea standard a programului curent către fișierul output.txt astfel încât instrucțiunea printf de mai jos să scrie în acel fișier, suprascriind conținutul existent.
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+// Add your code here
+// ...
+printf("This text should overwrite output.txt\n");
+// ...
+
+10. Descrieți pe scurt cum ați putea folosi un pipe pe post de semafor pentru a sincroniza două procese.
+
+11. Un proces deschide un FIFO pentru scriere și apoi încearcă imediat să scrie 100 de octeți în el. Dacă niciun alt proces nu a deschis FIFO-ul pentru citire, ce se va întâmpla cu apelul write()? Va reuși, se va bloca sau va eșua și de ce?
+
+12. Protejați secțiunea critică din programul de mai jos, fără a folosi mutex sau semafor.
+int n = 0;
+void* f(void* v){
+    if(n < 500) {
+        n++;
+    }
+    if(n > 600) {
+        n = 0;
+    }
+    return NULL;
+}
+int main(){
+    pthread_t t;
+    pthread_create(&t, NULL, f, NULL);
+    pthread_join(t, NULL);
+    return 0;
+}
+
+13. Completați argumentul lipsă din inițializarea semafoarelor încât thread-urile să scrie alternativ în consolă.
+sem_t sa, sb;
+void* fa(void* args){
+    for(int i=0; i<10; i++) {
+        sem_wait(&sa);
+        printf("a\n");
+        sem_post(&sb);
+    }
+    return NULL;
+}
+void* fb(void* args){
+    for(int i=0; i<10; i++) {
+        sem_wait(&sb);
+        printf("b\n");
+        sem_post(&sa);
+    }
+    return NULL;
+}
+int main(){
+    pthread_t ta, tb;
+    sem_init(&sa, 0, );
+    sem_init(&sb, 0, );
+    pthread_create(&ta, NULL, fa, NULL);
+    pthread_create(&tb, NULL, fb, NULL);
+    pthread_join(ta, NULL);
+    pthread_join(tb, NULL);
+    sem_destroy(&sa);
+    sem_destroy(&sb);
+    return 0;
+}
+
+14. Ce face funcția pthread_cond_wait cu mutexul primit ca argument?
+
+15. Cum ar fi afectată funcționarea unui program dacă toate rwlock-urile s-ar înlocui cu semafoare binare și toate apelurile rwlock_wrlock și rwlock_rdlock s-ar înlocui cu sem_wait? Justificați răspunsul.
+
+16. Dați valori strict pozitive pentru T, N1, N2 pentru care programul de mai jos se termină corect, și orice apel la pthread_barrier_wait(&b1) se deblochează imediat sau cât mai rapid posibil, fără a aștepta alte fire.
+#include <pthread.h>
+pthread_barrier_t b1, b2;
+void* f1(void* a) {
+    pthread_barrier_wait(&b1);
+    return NULL;
+}
+void* f2(void* a) {
+    pthread_barrier_wait(&b2);
+    return NULL;
+}
+int main() {
+    int T, N1, N2;
+    pthread_t t[T][2];
+    pthread_barrier_init(&b1, NULL, N1);
+    pthread_barrier_init(&b2, NULL, N2);
+    for(int i=0; i<T; i++) {
+        pthread_create(&t[i][0], NULL, f1, NULL);
+        pthread_create(&t[i][1], NULL, f2, NULL);
+    }
+    for(int i=0; i<T; i++) {
+        pthread_join(t[i][0], NULL);
+        pthread_join(t[i][1], NULL);
+    }
+    pthread_barrier_destroy(&b1);
+    pthread_barrier_destroy(&b2);
+    return 0;
+}
+
+17. Ce puteți face ca programator pentru a preveni deadlock-urile? Justificați răspunsul.
+
+18. Descrieți politica de planificare Round Robin.
+
+19. Un proces are următoarea listă de zone de memorie nealocată:
+32, 98, 99, 62
+Cum va arăta lista după cinci apeluri malloc(37), știind că se folosește algoritmul Worst Fit?
+
+20. Ce se întâmplă cu un link simbolic care punctează spre un link hard care punctează spre un fișier, când fișierul este șters?

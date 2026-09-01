@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OS Exam Cheat Sheet</title>
+<style>
+@page { size: A4; margin: 7mm; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "DejaVu Sans", Arial, sans-serif;
+  font-size: 8.4px;
+  line-height: 1.18;
+  color: #111;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 7mm;
+  page-break-after: always;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.wide { grid-column: span 2; }
+.full { grid-column: 1 / -1; }
+.box {
+  border: 1px solid #888;
+  padding: 3px;
+  break-inside: avoid;
+}
+h1 {
+  font-size: 13px;
+  margin: 0 0 4px;
+  text-align: center;
+}
+h2 {
+  font-size: 9.5px;
+  margin: 0 0 2px;
+  padding: 1px 3px;
+  background: #ddd;
+}
+h3 {
+  font-size: 8.6px;
+  margin: 3px 0 1px;
+}
+pre {
+  margin: 1px 0;
+  white-space: pre-wrap;
+  font-family: "DejaVu Sans Mono", Consolas, monospace;
+  font-size: 7.6px;
+  line-height: 1.12;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 7.8px;
+}
+td, th {
+  border: 1px solid #bbb;
+  padding: 1px 2px;
+  vertical-align: top;
+}
+.trap { background: #fff2cc; }
+.syn { background: #d9ead3; }
+.theory { background: #d9eaf7; }
+.warn { color: #a00000; font-weight: 700; }
+.small { font-size: 7.4px; }
+</style>
+</head>
+<body>
+
+<section class="page">
+<h1>OS Written Exam Cheat Sheet - UNIX + Processes + IPC</h1>
+<div class="grid">
+
+<div class="box syn">
+<h2>Regex</h2>
+<pre>. any char
+\ escape special char
+[abc] one from set
+[^abc] not from set
+[a-z] range
+^ line begin
+$ line end
+\< word begin
+\> word end
+* 0 or more
++ 1 or more
+? 0 or 1
+{m,n} between m and n
+(...) group
+\1,\2 saved groups</pre>
+<div class="trap">Trap: in sed replacement, <b>\1</b> means “print group 1”, not “replace group 1”.</div>
+</div>
+
+<div class="box syn">
+<h2>grep / sort / uniq</h2>
+<pre>grep -E "regex" file
+grep -i "x" file     case insensitive
+grep -v "x" file     inverse
+grep -c "x" file     count lines
+grep -o "x" file     only match
+grep -q "x" file     quiet status
+
+sort file
+sort -n file          numeric
+sort -r file          reverse
+sort | uniq -c       count adjacent duplicates</pre>
+</div>
+
+<div class="box syn">
+<h2>sed</h2>
+<pre>sed -E 's/old/new/' file
+sed -E 's/old/new/g' file
+sed -E '/regex/d' file
+sed -n -E '/regex/p' file
+sed 'y/abc/ABC/' file
+
+swap ab and ba:
+sed -E 's/((a)(b))|((b)(a))/\3\2\6\5/g'
+
+duplicate numbers:
+sed -E 's/([0-9]+)/\1\1/g'</pre>
+<div class="trap">Use single quotes when regex has <b>()</b>, <b>$</b>, <b>\</b>.</div>
+</div>
+
+<div class="box syn">
+<h2>awk</h2>
+<pre>awk -F: 'cond {action} END {print}' file
+
+NR current line
+NF nr fields
+$0 whole line
+$1 first field
+FS field separator
+
+$0 ~ /regex/      matches
+$1 !~ /regex/     does not match
+length($1)
+arr[key] += val
+
+sum 3rd field if 1st > 2nd:
+awk -F: '$1>$2{s+=$3}END{print s}' a.txt</pre>
+</div>
+
+<div class="box syn">
+<h2>Shell</h2>
+<pre>#!/bin/bash
+$0 script name
+$1 first arg
+$# nr args
+"$@" all args safely
+$? last exit code
+$(cmd) command output
+$((a+b)) arithmetic
+
+for x in "$@"; do ... done
+while [ cond ]; do ... done
+if [ cond ]; then ... fi</pre>
+</div>
+
+<div class="box syn">
+<h2>Shell Tests</h2>
+<pre>[ -f "$x" ] regular file
+[ -d "$x" ] directory
+[ -e "$x" ] exists
+[ -r "$x" ] readable
+[ -w "$x" ] writable
+[ -x "$x" ] executable
+[ -z "$s" ] empty string
+[ -n "$s" ] non-empty string
+[ "$a" = "$b" ]
+[ "$a" != "$b" ]
+[ "$n" -eq 0 ] -ne -lt -le -gt -ge</pre>
+</div>
+
+<div class="box syn">
+<h2>Useful Commands</h2>
+<pre>find dir -type f -name "*.c"
+find dir -maxdepth 1 -type f
+wc -l file
+cut -d: -f5 /etc/passwd
+tr 'a-z' 'A-Z'
+ps -ef
+file x
+stat x
+chmod +x script.sh</pre>
+</div>
+
+<div class="box trap">
+<h2>Command Traps</h2>
+<pre>0 exit code = success
+0 in C condition = false
+
+ps -ef has header UID:
+ps -ef | grep -Ev "^UID"
+
+uniq counts only adjacent duplicates:
+sort first, then uniq -c</pre>
+</div>
+
+<div class="box theory">
+<h2>UNIX Basics</h2>
+<pre>Kernel mode: privileged, hardware access.
+User mode: normal programs.
+System call: user program asks kernel service.
+
+File descriptors:
+0 stdin
+1 stdout
+2 stderr</pre>
+</div>
+
+<div class="box syn">
+<h2>fork / wait / exit</h2>
+<pre>pid_t f = fork();
+if (f < 0) perror("fork");
+else if (f == 0) {
+    // child
+    exit(0);
+} else {
+    // parent, f = child PID
+    wait(0);
+}</pre>
+<pre>wait(&status);
+WIFEXITED(status)
+WEXITSTATUS(status)</pre>
+</div>
+
+<div class="box trap">
+<h2>fork Traps</h2>
+<pre>fork returns:
+0 in child
+child PID in parent
+-1 on error
+
+After fork, both continue after fork line.
+Memory is copied, not shared like threads.
+Zombie = child ended, parent not wait.
+Orphan = parent died, child adopted.</pre>
+</div>
+
+<div class="box syn">
+<h2>exec*</h2>
+<pre>execl(path, argv0, arg1, ..., NULL);
+execlp(prog, argv0, arg1, ..., NULL);
+execv(path, argv_array);
+execvp(prog, argv_array);
+
+execlp("ls","ls","-l",NULL);
+execvp(argv[1], argv+1);</pre>
+<div class="trap">Success: same PID, old code replaced, code after exec not run. Failure: returns -1.</div>
+</div>
+
+<div class="box syn">
+<h2>pipe</h2>
+<pre>int p[2];
+pipe(p);
+p[0] read end
+p[1] write end
+
+write(p[1], &x, sizeof x);
+read(p[0], &x, sizeof x);</pre>
+<div class="trap">Create pipe before fork. Close unused ends.</div>
+</div>
+
+<div class="box trap">
+<h2>pipe Behavior</h2>
+<pre>read empty pipe:
+- writer open => blocks
+- all writers closed => returns 0 EOF
+
+write pipe:
+- no reader => SIGPIPE / error
+- full pipe => blocks</pre>
+</div>
+
+<div class="box syn">
+<h2>FIFO</h2>
+<pre>#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+
+mkfifo("f", 0600);
+int r = open("f", O_RDONLY);
+int w = open("f", O_WRONLY);
+read(r, &x, sizeof x);
+write(w, &x, sizeof x);
+close(r); close(w);
+unlink("f");</pre>
+</div>
+
+<div class="box trap">
+<h2>FIFO Traps</h2>
+<pre>FIFO = named pipe.
+Works for unrelated processes.
+Data not stored on disk; kernel buffer.
+
+open(O_RDONLY) waits for writer.
+open(O_WRONLY) waits for reader.
+Use 2 FIFOs for bidirectional.
+One FIFO both ways = same stream/confusion.</pre>
+</div>
+
+<div class="box syn">
+<h2>dup / dup2</h2>
+<pre>dup(fd) duplicates fd to lowest free fd.
+dup2(oldfd, newfd):
+newfd now points where oldfd points.
+
+dup2(fd, 1);     stdout -> file
+dup2(p[1], 1);   stdout -> pipe write
+dup2(p[0], 0);   stdin <- pipe read
+
+int saved = dup(1);
+dup2(saved, 1);</pre>
+</div>
+
+<div class="box syn">
+<h2>popen</h2>
+<pre>FILE *fp = popen("ps -ef", "r");
+char line[256];
+while (fgets(line, sizeof line, fp))
+    printf("%s", line);
+pclose(fp);</pre>
+<div class="trap">Use pclose, not fclose: command is child process, status must be collected.</div>
+</div>
+
+<div class="box syn">
+<h2>Signals</h2>
+<pre>#include &lt;signal.h&gt;
+void h(int sig) { ... }
+signal(SIGUSR1, h);
+kill(pid, SIGUSR1);
+
+SIGINT  Ctrl+C
+SIGKILL cannot catch/ignore
+SIGCHLD child ended
+SIGUSR1/SIGUSR2 user signals</pre>
+</div>
+
+<div class="box trap">
+<h2>Redirection</h2>
+<pre>stdout to file: cmd > out
+stderr to file: cmd 2> err
+stdout+stderr: cmd > out 2>&1
+stderr through pipe:
+cmd 2>&1 | other
+
+stdin from file:
+cmd < in</pre>
+</div>
+
+</div>
+</section>
+
+<section class="page">
+<h1>OS Written Exam Cheat Sheet - Threads + OS Theory</h1>
+<div class="grid">
+
+<div class="box syn">
+<h2>pthread create/join</h2>
+<pre>#include &lt;pthread.h&gt;
+
+void *f(void *arg) {
+    return NULL;
+}
+
+pthread_t th;
+pthread_create(&th, NULL, f, arg);
+pthread_join(th, NULL);</pre>
+<div class="trap">Thread function returns <b>void *</b>. Args passed as <b>void *</b>.</div>
+</div>
+
+<div class="box syn">
+<h2>Passing Args</h2>
+<pre>int id[N];
+pthread_t th[N];
+
+for (int i=0;i&lt;N;i++) {
+    id[i] = i;
+    pthread_create(&th[i], NULL, f, &id[i]);
+}
+
+void *f(void *arg) {
+    int id = *(int *)arg;
+    return NULL;
+}</pre>
+<div class="trap">Do not pass <b>&i</b> in loop if all threads share same i.</div>
+</div>
+
+<div class="box syn">
+<h2>Mutex</h2>
+<pre>pthread_mutex_t m;
+pthread_mutex_init(&m, NULL);
+
+pthread_mutex_lock(&m);
+// critical section
+pthread_mutex_unlock(&m);
+
+pthread_mutex_destroy(&m);</pre>
+<div class="trap">Lock only important zone, not whole function. Protect shared writes/read+write.</div>
+</div>
+
+<div class="box syn">
+<h2>Condition Variable</h2>
+<pre>pthread_cond_t c;
+pthread_cond_init(&c, NULL);
+
+pthread_mutex_lock(&m);
+while (condition_bad)
+    pthread_cond_wait(&c, &m);
+// do work
+pthread_cond_signal(&c);
+pthread_mutex_unlock(&m);</pre>
+<div class="trap">cond_wait unlocks mutex while sleeping, then re-locks before returning. Always use while.</div>
+</div>
+
+<div class="box syn">
+<h2>Semaphore</h2>
+<pre>#include &lt;semaphore.h&gt;
+sem_t s;
+sem_init(&s, 0, value);
+
+sem_wait(&s); // decrement or block
+// inside
+sem_post(&s); // increment / wake
+
+sem_destroy(&s);</pre>
+<div class="trap">Value = how many may enter simultaneously.</div>
+</div>
+
+<div class="box syn">
+<h2>Barrier</h2>
+<pre>pthread_barrier_t b;
+pthread_barrier_init(&b, NULL, N);
+
+pthread_barrier_wait(&b);
+
+pthread_barrier_destroy(&b);</pre>
+<div class="trap">All N threads must arrive before any passes. Count 1 = no real wait.</div>
+</div>
+
+<div class="box syn">
+<h2>RW Lock</h2>
+<pre>pthread_rwlock_t rw;
+pthread_rwlock_init(&rw, NULL);
+
+pthread_rwlock_rdlock(&rw); // many readers
+pthread_rwlock_wrlock(&rw); // one writer
+pthread_rwlock_unlock(&rw);
+
+pthread_rwlock_destroy(&rw);</pre>
+<div class="trap">If code modifies data, use write lock, not read lock.</div>
+</div>
+
+<div class="box trap">
+<h2>Thread Traps</h2>
+<pre>Race condition = result depends on scheduling.
+Critical section = shared data access needing protection.
+Deadlock possible if locks acquired in different order.
+Mutex gives mutual exclusion, not ordering.
+Cond gives wait-for-condition ordering.
+Barrier gives all-wait-here synchronization.
+Semaphore can count resources or order events.</pre>
+</div>
+
+<div class="box theory">
+<h2>Process States</h2>
+<pre>NEW -> READY -> RUNNING -> TERMINATED
+RUNNING -> READY: preemption/time slice over
+RUNNING -> WAITING: blocking I/O/read/wait/sleep
+WAITING -> READY: event/I/O done</pre>
+<table><tr><td>READY</td><td>can run, waits CPU</td></tr>
+<tr><td>RUNNING</td><td>on CPU</td></tr>
+<tr><td>WAITING</td><td>blocked for event</td></tr></table>
+</div>
+
+<div class="box theory">
+<h2>Scheduling Metrics</h2>
+<pre>turnaround = finish - arrival
+response = first_run - arrival
+waiting = turnaround - runtime</pre>
+<table><tr><td>FIFO</td><td>simple, convoy effect</td></tr>
+<tr><td>SJF</td><td>best avg turnaround if all jobs known</td></tr>
+<tr><td>STCF</td><td>preemptive shortest remaining</td></tr>
+<tr><td>RR</td><td>fair, good response, context overhead</td></tr>
+<tr><td>MLFQ</td><td>priority queues, approximates job length</td></tr></table>
+</div>
+
+<div class="box theory">
+<h2>MLFQ Rules</h2>
+<pre>Higher priority runs first.
+Same priority: round-robin.
+New job starts high.
+Uses whole time slice => priority down.
+Periodic priority boost prevents starvation.</pre>
+</div>
+
+<div class="box theory">
+<h2>Deadlock</h2>
+<pre>Deadlock = processes/threads wait forever for each other's resources.</pre>
+<table><tr><td>1</td><td>mutual exclusion</td></tr>
+<tr><td>2</td><td>hold and wait</td></tr>
+<tr><td>3</td><td>no preemption</td></tr>
+<tr><td>4</td><td>circular wait</td></tr></table>
+<pre>Prevent: break one condition.
+Common: always lock resources same order.</pre>
+</div>
+
+<div class="box theory">
+<h2>Address Translation</h2>
+<pre>Virtual address translated to physical address.
+Goal: protection + illusion of private memory.
+
+Base+bounds:
+if VA &lt; bounds: PA = base + VA
+else trap/segmentation fault</pre>
+</div>
+
+<div class="box theory">
+<h2>Segmentation</h2>
+<pre>Memory split into variable-size segments:
+code, heap, stack.
+Each segment has base + bounds.
+
+Pros: protection, sharing, less waste inside segment.
+Cons: external fragmentation.</pre>
+</div>
+
+<div class="box theory">
+<h2>Paging</h2>
+<pre>Virtual memory split into pages.
+Physical memory split into frames.
+Page table maps VPN -> PFN.
+
+VPN = VA / page_size
+offset = VA % page_size
+PA = PFN * page_size + offset</pre>
+<div class="trap">Paging removes external fragmentation, but creates page table memory cost.</div>
+</div>
+
+<div class="box theory">
+<h2>TLB</h2>
+<pre>TLB = cache for address translations.
+Hit: fast translation.
+Miss: must consult page table.
+
+Effective access roughly:
+hit_rate * fast + miss_rate * slow</pre>
+</div>
+
+<div class="box theory">
+<h2>Replacement Policies</h2>
+<table>
+<tr><td>OPT</td><td>evict page used farthest in future; theoretical best</td></tr>
+<tr><td>FIFO</td><td>evict oldest loaded page; simple, can be bad</td></tr>
+<tr><td>LRU</td><td>evict least recently used; locality</td></tr>
+<tr><td>Clock</td><td>approx LRU with reference bit</td></tr>
+<tr><td>NRU</td><td>uses R/M bits classes</td></tr>
+</table>
+</div>
+
+<div class="box theory">
+<h2>Free Space</h2>
+<table>
+<tr><td>First-fit</td><td>first big enough; fast, simple</td></tr>
+<tr><td>Best-fit</td><td>smallest big enough; can create tiny holes</td></tr>
+<tr><td>Worst-fit</td><td>largest hole; leaves medium holes</td></tr>
+</table>
+<pre>Coalescing = merge adjacent free blocks.
+Splitting = divide bigger free block.</pre>
+</div>
+
+<div class="box theory">
+<h2>Cache</h2>
+<pre>Direct mapped:
+slot = block_address % cache_size
+fast/simple, collision possible.
+
+Fully associative:
+block anywhere, needs search.
+
+Set associative:
+set = block_address % nr_sets
+block placed in one set.</pre>
+<div class="trap">Locality: recently/nearby used data likely used again.</div>
+</div>
+
+<div class="box theory">
+<h2>Filesystem</h2>
+<pre>File = array of bytes.
+Directory = mapping name -> inode number.
+inode = metadata + pointers to data blocks.
+Metadata: size, owner, permissions, times, block pointers.</pre>
+</div>
+
+<div class="box theory">
+<h2>inode / Links</h2>
+<pre>Hard link: another name for same inode.
+Cannot hard-link directories normally.
+Cannot hard-link across filesystems.
+
+Symbolic link: separate file containing path.
+Can cross filesystems; can dangle.
+
+unlink removes directory entry.
+Data deleted when link count=0 and no open fd.</pre>
+</div>
+
+<div class="box theory">
+<h2>inode Blocks Formula</h2>
+<pre>If block size B, pointer size P:
+pointers_per_block = B / P
+
+direct capacity = D * B
+single indirect = (B/P) * B
+double indirect = (B/P)^2 * B
+triple indirect = (B/P)^3 * B</pre>
+</div>
+
+<div class="box theory">
+<h2>RAID</h2>
+<table>
+<tr><td>RAID 0</td><td>striping; fast; no redundancy</td></tr>
+<tr><td>RAID 1</td><td>mirroring; redundancy; 50% usable capacity</td></tr>
+<tr><td>RAID 4</td><td>dedicated parity disk; parity bottleneck</td></tr>
+<tr><td>RAID 5</td><td>distributed parity; tolerates 1 disk failure</td></tr>
+</table>
+</div>
+
+<div class="box trap full">
+<h2>Highest-Frequency Written Exam Traps</h2>
+<pre>exec success => no code after it; PID unchanged.
+fork memory copied; threads share memory.
+read empty pipe blocks if writer still open.
+FIFO open blocks until other side opens opposite direction.
+pipe created in child cannot be used by parent if parent did not inherit it.
+popen must be closed with pclose.
+cond_wait releases mutex while waiting and re-locks before returning.
+cond_wait must be inside while, not if.
+barrier count must equal threads that reach it.
+read lock cannot protect writes.
+deadlock prevented by fixed lock order.
+RUNNING->READY = preemption; RUNNING->WAITING = blocking call.
+hard link same inode; symlink path file.</pre>
+</div>
+
+</div>
+</section>
+
+</body>
+</html>

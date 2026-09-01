@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OS Final Cheat Sheet</title>
+<style>
+@page { size: A4 landscape; margin: 6mm; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: #111;
+  font-family: "DejaVu Sans", Arial, sans-serif;
+  font-size: 7.1px;
+  line-height: 1.12;
+}
+.page {
+  width: 297mm;
+  min-height: 210mm;
+  padding: 6mm;
+  page-break-after: always;
+}
+h1 {
+  text-align: center;
+  font-size: 12px;
+  margin: 0 0 3px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+.box {
+  border: 1px solid #777;
+  padding: 2px 3px;
+  break-inside: avoid;
+}
+.wide { grid-column: span 2; }
+.full { grid-column: 1 / -1; }
+h2 {
+  font-size: 8.3px;
+  margin: 0 0 1px;
+  padding: 1px 2px;
+  background: #d9d9d9;
+}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "DejaVu Sans Mono", Consolas, monospace;
+  font-size: 6.55px;
+  line-height: 1.08;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 6.65px;
+}
+td, th {
+  border: 1px solid #aaa;
+  padding: 1px;
+  vertical-align: top;
+}
+.gsa { background: #eef7e8; }
+.proc { background: #eaf2ff; }
+.thr { background: #fff3d8; }
+.theory { background: #f2ecff; }
+.hot { background: #ffe5e5; }
+.tiny { font-size: 6.1px; }
+</style>
+</head>
+<body>
+
+<section class="page">
+<h1>OS Cheat Sheet 1/2 - UNIX, Processes, IPC, Threads</h1>
+<div class="grid">
+
+<div class="box gsa">
+<h2>Regex</h2>
+<pre>. any char      \ escape
+[abc] one       [^abc] not
+[a-z] range     ^ line start
+$ line end      \< word start
+\> word end
+* 0+ prev       + 1+ prev
+? 0/1 prev      {m,n}
+(...) group     \1 saved group
+shell * != regex *
+regex any string = .*</pre>
+</div>
+
+<div class="box gsa">
+<h2>grep / sort</h2>
+<pre>grep -E "re" f
+grep -Ei "re" f
+grep -Ev "re" f
+grep -Eo "re" f
+
+sort | uniq -c
+sort -n | sort -r
+uniq -u</pre>
+</div>
+
+<div class="box gsa">
+<h2>sed</h2>
+<pre>sed -E 's/re/rep/' f
+sed -E 's/re/rep/g' f
+sed -n -E '/re/p' f
+sed -E '/re/d' f
+sed 'y/abc/ABC/' f
+
+swap digit pairs:
+sed -E 's/([0-9])([0-9])/\2\1/g'
+
+duplicate letter before digit:
+sed -E 's/([A-Za-z])([0-9])/\1\1\2/g'</pre>
+</div>
+
+<div class="box gsa">
+<h2>awk</h2>
+<pre>awk -F: 'cond{act}END{print}' f
+NR = current line
+NF = number fields
+$NF = last field
+$(NF-1) = previous field
+$0 ~ /re/    matches
+$0 !~ /re/   not match
+arr[key] += val
+
+awk -F: '$1>$2{s+=$3}END{print s}'</pre>
+</div>
+
+<div class="box gsa">
+<h2>Shell</h2>
+<pre>$0 script       $1 arg1
+$# nr args      "$@" all safe
+$? last status  $$ PID
+$(cmd) output   $((x+1))
+0 exit = success/true
+nonzero = fail/false
+quote vars in tests: [ "$A" = "yes" ]
+
+for x in "$@"; do ... done
+while [ $# -gt 0 ]; do
+  echo "$1"; shift
+done</pre>
+</div>
+
+<div class="box gsa">
+<h2>Useful Cmd</h2>
+<pre>find . -type f -name "*.c"
+find . -maxdepth 1 -type f
+wc -l f
+cut -d: -f5 /etc/passwd
+tr 'a-z' 'A-Z'
+file x
+stat x
+ps -ef
+touch f
+echo "txt" > f
+chmod +x script.sh</pre>
+</div>
+
+<div class="box proc">
+<h2>FD / Redirection</h2>
+<pre>man 1 cmd | man 2 syscall | man 3 libc
+0 stdin, 1 stdout, 2 stderr
+
+stderr through pipe:
+cmd 2>&1 | other
+
+stdout+stderr to file:
+cmd >out 2>&1</pre>
+</div>
+
+<div class="box proc">
+<h2>fork / wait</h2>
+<pre>fork returns:
+child: 0
+parent: child PID
+error: -1
+
+After fork, both continue after same line.
+Memory copied, not shared.
+wait/waitpid collects child status.
+zombie = child ended, parent not wait.
+orphan = parent died, child adopted.</pre>
+</div>
+
+<div class="box proc">
+<h2>exec</h2>
+<pre>execl(path, arg0, arg1, ..., NULL)
+execlp(prog, arg0, arg1, ..., NULL)
+execv(path, argv_array)
+execvp(prog, argv_array)
+
+execlp("ls","ls","-l",NULL);
+execvp(argv[1], argv+1);
+
+success: same PID, old image replaced,
+no code after exec.
+fail: returns -1, old process continues.</pre>
+</div>
+
+<div class="box proc">
+<h2>pipe</h2>
+<pre>int p[2]; pipe(p);
+p[0] read, p[1] write
+create before fork; close unused
+
+parent cannot use pipe created only in child.
+read empty pipe:
+- writer open => blocks
+- all writers closed => 0 EOF
+write no reader => SIGPIPE/error
+read/write return bytes processed, may be partial.</pre>
+</div>
+
+<div class="box proc">
+<h2>FIFO</h2>
+<pre>mkfifo("f",0600); unlink("f");
+FIFO = named pipe; unrelated processes.
+data in kernel buffer, not disk file.
+
+open(O_RDONLY) waits for writer.
+open(O_WRONLY) waits for reader.
+one FIFO = one stream; 2-way use two FIFOs.
+FIFO not auto-deleted.</pre>
+</div>
+
+<div class="box proc">
+<h2>dup2 / open / popen</h2>
+<pre>int fd=open("b.txt",O_WRONLY|O_CREAT|O_TRUNC,0600);
+dup2(fd,1); // stdout -> fd
+execlp("cat","cat","a.txt",NULL);
+
+dup2(p[1],1); stdout -> pipe
+dup2(p[0],0); stdin <- pipe
+
+FILE *fp=popen("ps -ef","r");
+pclose(fp); // closes + wait child</pre>
+</div>
+
+<div class="box proc">
+<h2>Signals</h2>
+<pre>#include &lt;signal.h&gt;
+void h(int sig){...}
+signal(SIGUSR1,h);
+kill(pid,SIGUSR1);
+
+SIGINT Ctrl-C
+SIGKILL cannot catch/ignore
+SIGCHLD child ended
+SIGUSR1/SIGUSR2 user-defined
+handler arg = signal number</pre>
+</div>
+
+<div class="box thr">
+<h2>pthread</h2>
+<pre>void *f(void *arg){ return NULL; }
+pthread_t th[N];
+pthread_create(&th[i],NULL,f,arg);
+pthread_join(th[i],NULL);
+
+pass id safely:
+int id[N]; id[i]=i;
+pthread_create(&th[i],NULL,f,&id[i]);
+
+threads share globals+heap;
+own stack+registers.</pre>
+</div>
+
+<div class="box thr">
+<h2>Mutex / Critical</h2>
+<pre>pthread_mutex_t m;
+pthread_mutex_init(&m,NULL);
+pthread_mutex_lock(&m);
+pthread_mutex_unlock(&m);
+pthread_mutex_destroy(&m);
+
+critical section = shared data access.
+race = result depends on scheduling.
+trap: lock only small critical zone.
+trap: different mutexes do not protect same data.</pre>
+</div>
+
+<div class="box thr">
+<h2>Condition Var</h2>
+<pre>pthread_cond_t c;
+pthread_cond_init(&c,NULL);
+pthread_cond_wait(&c,&m);
+pthread_cond_signal(&c);
+pthread_cond_broadcast(&c);
+pthread_cond_destroy(&c);
+
+cond_wait unlocks m while sleeping,
+then re-locks before return.
+trap: always while(condition_bad), not if.</pre>
+</div>
+
+<div class="box thr">
+<h2>Sem / Barrier</h2>
+<pre>sem_t s;
+sem_init(&s,0,value);
+sem_wait(&s);
+sem_post(&s);
+sem_destroy(&s);
+
+pthread_barrier_init(&b,NULL,N);
+pthread_barrier_wait(&b);
+pthread_barrier_destroy(&b);
+
+sem_wait on 0 => blocks.
+sem_post => increments/wakes one.
+barrier count = threads that must arrive.
+count 1 => passes immediately.</pre>
+</div>
+
+<div class="box thr">
+<h2>RWLock / Deadlock</h2>
+<pre>pthread_rwlock_rdlock(&rw);
+pthread_rwlock_wrlock(&rw);
+pthread_rwlock_unlock(&rw);
+rdlock = many readers only.
+wrlock = one writer.
+trap: rdlock while modifying => race.
+
+Deadlock conditions:
+mutual exclusion
+hold and wait
+no preemption
+circular wait
+Prevent: same global lock order.</pre>
+</div>
+
+<div class="box hot full">
+<h2>High-Frequency Traps</h2>
+<pre>sed needs g for all matches on line. | shell * differs from regex *
+exec success => no following code; exec fail => following code runs.
+pipe made in child cannot be used by parent if parent did not inherit it.
+FIFO single stream not good for bidirectional communication.
+different mutexes do not protect same shared variable.
+cond_wait signal is only hint; condition can change before waiter resumes.
+sem_wait on 0 => RUNNING -> WAITING; sem_post wakes.
+barrier N must divide/fit number of threads reaching it, else hang.</pre>
+</div>
+
+</div>
+</section>
+
+<section class="page">
+<h1>OS Cheat Sheet 2/2 - Theory, Memory, FS, Cache</h1>
+<div class="grid">
+
+<div class="box theory">
+<h2>Process Core</h2>
+<pre>process = running program abstraction
+CPU virtualization = time-sharing
+PCB = state, registers, PID, memory, sched info
+
+user mode = restricted
+kernel mode = privileged
+syscall/trap = user -> kernel
+timer interrupt = OS regains CPU
+context switch = save old, restore next</pre>
+</div>
+
+<div class="box theory">
+<h2>Process States</h2>
+<pre>RUNNING = on CPU
+READY = can run, waits CPU
+WAIT/BLOCKED = waits I/O/event
+SWAP = removed from RAM to disk
+
+READY -> RUNNING: scheduled
+RUNNING -> READY: preempted/timer
+RUNNING -> WAIT: blocking call/read/wait/sleep/I/O
+WAIT -> READY: event done
+RUN -> SWAP: not enough RAM / swapped out
+I/O path: RUN -> WAIT -> READY -> RUN</pre>
+</div>
+
+<div class="box theory">
+<h2>Scheduling</h2>
+<pre>turnaround = completion - arrival
+response = first_run - arrival
+waiting = turnaround - runtime
+
+FIFO: simple, convoy effect.
+SJF: best avg turnaround if lengths known.
+STCF: preemptive shortest remaining.
+RR: good response, worse turnaround, ctx overhead.
+MLFQ: priority queues, learns behavior.</pre>
+</div>
+
+<div class="box theory">
+<h2>MLFQ / Deadlock</h2>
+<pre>MLFQ:
+higher priority runs first
+same priority => RR
+new jobs start top
+use full allotment => move down
+periodic boost to top => no starvation
+
+deadlock = wait forever cycle
+4 cond: mutex, hold&wait, no preempt, circular wait
+fix: lock resources same order everywhere</pre>
+</div>
+
+<div class="box theory">
+<h2>Memory Basics</h2>
+<pre>address space = process view of memory
+translation: virtual addr -> physical addr
+
+base+bounds:
+if VA < bounds => PA = base + VA
+else trap/protection fault
+
+code = instructions, r/x
+heap = malloc/calloc/realloc, grows up
+stack = calls/local vars/params/ret addr, grows down</pre>
+</div>
+
+<div class="box theory">
+<h2>Virtual Memory Types</h2>
+<pre>real allocation:
+fixed partitions: absolute, relocatable
+variable partitions
+
+virtual allocation:
+paged
+segmented
+paged-segmented
+
+segmented-paged:
+segment table + page table per segment</pre>
+</div>
+
+<div class="box theory">
+<h2>Segmentation</h2>
+<pre>segmentation = one base+bounds per logical segment:
+code, heap, stack
+segment selected by high VA bits
+stack grows downward => negative offset idea
+
+external fragmentation:
+free memory exists but split into holes.
+Segmentation = variable-size chunks => external fragmentation.</pre>
+</div>
+
+<div class="box theory">
+<h2>Paging</h2>
+<pre>paging = virtual memory cut into pages;
+RAM cut into same-size frames.
+page table maps VPN -> PFN.
+
+VPN = VA / page_size
+offset = VA % page_size
+PA = PFN * page_size + offset
+
+No external fragmentation.
+Possible internal fragmentation + page table overhead.</pre>
+</div>
+
+<div class="box theory">
+<h2>TLB / Page Fault</h2>
+<pre>TLB = cache of address translations.
+TLB hit => fast VPN->PFN.
+TLB miss => consult page table.
+
+present bit 0 => page not in RAM => page fault.
+OS loads page from disk.
+dirty bit M=1 => written, eviction needs disk write.
+reference bit R=1 => used recently.</pre>
+</div>
+
+<div class="box theory">
+<h2>Cache Idea</h2>
+<pre>Disk = huge slow warehouse.
+RAM = small fast desk/cache.
+hit = page already in RAM.
+miss/page fault = fetch from disk.
+RAM full => evict victim page.
+
+AMAT = hit_time + miss_rate * miss_penalty
+Tiny miss rate bad if miss penalty huge.</pre>
+</div>
+
+<div class="box theory">
+<h2>Replacement</h2>
+<pre>OPT/MIN: evict page used farthest in future; theoretical.
+FIFO: evict oldest loaded; can have Belady anomaly.
+LRU: evict least recently used; locality; no Belady anomaly.
+Clock: approximate LRU with R/use bit.
+
+Belady anomaly = more frames can cause more misses (FIFO).</pre>
+</div>
+
+<div class="box theory">
+<h2>NRU Victim</h2>
+<pre>NRU uses R(reference) and M(modified/dirty).
+Best victim = cheap + unlikely needed.
+
+victim priority:
+1 (R=0,M=0) not used, clean
+2 (R=0,M=1) not used, dirty
+3 (R=1,M=0) used, clean
+4 (R=1,M=1) used, dirty
+
+clean evict = no disk write; dirty evict = write back.</pre>
+</div>
+
+<div class="box theory">
+<h2>Cache Organization</h2>
+<pre>direct mapped:
+each block has one possible slot; fast, collisions/trashing.
+
+fully associative:
+block can go anywhere; flexible, search expensive.
+
+set associative:
+cache split into sets; block maps to one set,
+can use any line inside set.
+set = block_address % nr_sets</pre>
+</div>
+
+<div class="box theory">
+<h2>Free Space</h2>
+<pre>external fragmentation = free space split into holes.
+header before block stores size/metadata.
+free(ptr) finds header at ptr - sizeof(header).
+allocator searches requested_size + header_size.
+
+splitting = big free block -> allocated + rest free.
+coalescing = merge adjacent free blocks after free.</pre>
+</div>
+
+<div class="box theory">
+<h2>Placement</h2>
+<pre>first-fit: first block big enough; fast; holes near start.
+best-fit: smallest big enough; slow full search; tiny holes.
+worst-fit: largest block; slow full search.
+buddy: powers of 2; fast split/merge with buddy; internal fragmentation.</pre>
+</div>
+
+<div class="box theory">
+<h2>Filesystem</h2>
+<pre>file = bytes.
+directory = filename -> inode number.
+inode = metadata + block pointers.
+metadata: type, permissions, owner, size,
+timestamps, link count, data block pointers.
+
+superblock: FS metadata: size, nr blocks/inodes,
+free block/inode info, layout/config.</pre>
+</div>
+
+<div class="box theory">
+<h2>Inode Formula</h2>
+<pre>Linux-style:
+0-9 direct pointers
+10 single indirect
+11 double indirect
+12 triple indirect
+
+B = block size, A = pointer size
+N = B/A pointers per block
+single = N blocks
+double = N^2 blocks
+triple = N^3 blocks
+max = (10 + N + N^2 + N^3) * B</pre>
+</div>
+
+<div class="box theory">
+<h2>Links</h2>
+<pre>hard link = new directory entry to same inode.
+same filesystem/partition only.
+rm/unlink removes name + decrements link count.
+data freed when link count=0 and no process has file open.
+
+symlink = separate file containing path.
+Can cross filesystems; can dangle.</pre>
+</div>
+
+<div class="box theory">
+<h2>RAID</h2>
+<pre>RAID 0: striping; fast/full capacity; no redundancy.
+RAID 1: mirroring; reliable; ~50% usable; fast reads.
+RAID 4: dedicated parity; tolerates 1 disk failure; parity bottleneck.
+RAID 5: distributed parity; tolerates 1 disk failure; removes dedicated parity bottleneck.
+
+small parity write: read old data + old parity,
+write new data + new parity.</pre>
+</div>
+
+<div class="box hot full">
+<h2>Do Not Forget</h2>
+<pre>Process vs thread: process isolated memory, good for exec/fault isolation; thread shares memory, cheaper communication.
+RUN -> WAIT when blocking; WAIT -> READY when event done, not directly RUN.
+pthread_join can block caller => RUNNING -> WAITING.
+Page loading: demand paging = load page when first needed/page fault; locality may load neighbors/prefetch.
+Segmented-paged: segments split into pages; segment table + page table per segment.
+Hard link cannot point to inode from another filesystem.
+If O_CREAT used with open, include permissions mode.
+read/write return bytes processed; may be less than requested.</pre>
+</div>
+
+</div>
+</section>
+
+</body>
+</html>

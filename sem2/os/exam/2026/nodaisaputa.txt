@@ -1,0 +1,308 @@
+coffman conditiosn musai
+what relocks do
+rwlock tre musai repetetat ca nu inteleg care ce face
+
+sed -E 's/^([A-Za-z]+ [A-Z]*[a-z][A-Z]*)[a-z]/\1/'
+
+
+  New job → highest-priority queue
+  Higher priority runs before lower priority
+  Same priority uses RR
+  Blocked job lets another ready job run
+  CPU usage accumulates at that level
+  Full allotment → demotion
+
+
+• ## 8.6 Final MLFQ Rules
+
+  Memorize these five rules:
+
+  1. Higher priority runs first.
+
+  Priority(A) > Priority(B) → A runs
+
+  2. Same priority uses Round Robin.
+
+  A and B in same queue → alternate by quantum
+
+  3. New jobs enter highest-priority queue.
+
+  New job → top queue
+
+  4. Full cumulative allotment causes demotion.
+
+  Used full allotment at current level
+  → move down one priority
+
+  Yielding or I/O does not reset used CPU time.
+
+  5. Periodically boost all active jobs.
+
+  Every S time units
+  → all jobs move to highest queue
+
+  Purpose:
+
+  - Approximate SJF without knowing runtimes.
+  - Give interactive jobs good response.
+  - Demote CPU-bound jobs.
+  - Prevent starvation.
+  - Prevent gaming through cumulative accounting.
+
+  Exam answer:
+
+  > MLFQ dynamically changes job priority based on observed CPU use. New jobs begin at
+  > high priority, equal-priority jobs use RR, jobs are demoted after exhausting their
+  > allotment, and periodic boosts prevent starvation.
+
+
+
+Turnaround formula: Completion time - time arrival
+Response formula: First schedule time - arrival time
+Waiting time formula: Turnaround time - burst time
+Jobs arrive 2, runs 5, compelts at 10
+
+
+!!!!!
+> Memory virtualization should be transparent to programs, efficient in time
+  > and space, and provide protection between processes and the operating
+  > system.
+
+
+!!!!!!
+  > ✅ Exam summary: Virtual address identifies a segment and an offset.
+  > Hardware selects that segment’s base/bounds, checks offset, then adds offset
+  > to base.
+
+!! Coarse grained segmentation use a few segments simpler, while fine grained segmentation
+use more of them, offers fexlibility but reuqriting more managemenet
+
+coalescing combines adjacent free blocks after free , reducing external fragmenetation waste
+
+
+
+  Free-space allocator must handle variable-sized requests.
+
+  Main mechanisms:
+
+  - Free list tracks unused blocks.
+  - Splitting divides large free block.
+  - Coalescing joins adjacent free blocks.
+  - Headers store allocation size.
+  - Best, worst, first, and next fit choose blocks differently.
+  - Segregated lists optimize common sizes.
+  - Buddy allocator simplifies splitting and merging.
+
+  Main problems:
+
+  - Internal fragmentation: waste inside allocated block.
+  - External fragmentation: free memory split into separate holes.
+
+  > ✅ Exam summary: Allocator manages free blocks using metadata, splitting,
+  > coalescing, and placement policies. Main goal is fast allocation with
+  > minimal internal and external fragmentation.
+
+ > ✅ Exam summary: PTE stores frame number plus status/protection bits.
+  > Invalid or forbidden access traps; dirty and reference bits help OS manage
+  > pages.
+
+ ✅ Exam summary: Basic paging is slow because each virtual-memory access
+  > needs one memory access for PTE and another for actual data. Page tables
+  > also consume substantial physical memory.
+
+
+!!!!!!!!!!!!!!!!!!!!! super important
+
+• ### 18.5 Full Memory-Access Trace
+
+  Suppose:
+
+  Virtual address = 250
+  Page size = 100 bytes
+  Page-table base = 1000
+  PTE size = 4 bytes
+
+  #### Step 1: Split virtual address
+
+  VPN = 250 / 100 = 2
+  Offset = 250 % 100 = 50
+
+  #### Step 2: Find page-table entry
+
+  PTE address = page-table base + VPN × PTE size
+  PTE address = 1000 + 2 × 4
+  PTE address = 1008
+
+  Hardware reads memory at 1008.
+
+  Suppose entry says:
+
+  PFN = 7
+  valid = 1
+
+  #### Step 3: Build physical address
+
+  Physical address = PFN × page size + offset
+  Physical address = 7 × 100 + 50
+  Physical address = 750
+
+  #### Step 4: Access actual data
+
+  Hardware reads or writes physical address 750.
+
+  Thus two memory operations:
+
+  Read PTE at 1008
+  Read/write data at 750
+
+  > ✅ Exam summary: Compute VPN and offset, locate PTE using page-table base,
+  > read PFN, combine PFN with unchanged offset, then access physical memory.
+  > Without TLB, this needs two memory accesses.
+
+
+  AMAT = (P_hit × T_memory) + (P_miss × T_disk)
+
+  Where:
+
+  - P_hit = probability page is in RAM.
+  - P_miss = probability page is absent.
+  - T_memory = RAM access time.
+  - T_disk = disk access time.
+  - P_hit + P_miss = 1.
+
+✅ Exam summary: Replacement-policy performance depends on workload. LRU
+  > works well with locality but can perform badly when repeatedly scanning a
+  > page set larger than available RAM.
+
+LRU = least Recently used page
+LFU = least frequently used page
+
+✅ Exam summary: Exact LRU requires tracking every memory access and
+  > maintaining precise recency order, which is too expensive. Real systems
+  > usually approximate LRU using hardware-supported reference bits.
+  >
+ ✅ Exam summary: Demand paging loads pages when accessed; prefetching loads
+  > predicted pages early; clustering groups multiple page writes into fewer,
+  > larger disk operations.
+
+RAID = redudant Array of Inexpensive Disks
+it combines multiple physical disks and presents them as one logical disk
+RAID level determines how data and redundancy are distributed, affecting capacity, performance, and fault tolerance.
+redundancy = store extra information so lost data can be recovered
+redundancy its done in two methods;
+  Mirroring: store duplicate copy
+  Parity: store calculated recovery information
+  
+Raw capacity = N * S (n - nr disks, s - size)
+
+Reliability: how many disk failure can array survive without losing data
+RAID 0 - > 0 
+RAID 1 -> survives 1 per mirror pair
+RAID 4/5 -> survives 1
+
+performance:
+  sequential workload (read/write) large continous data, block transfers
+  Random workload (read/write) many small requests as unrelated locations          (non-contiguous block transfer)
+
+Compare raid levels by usable capacity, tolerated failures and read/write performance for sequential and random workloads. more redundancy usually means less usable capacity.
+
+striping = spreading consecutive data chunks across multiple disks.
+a stripe is one complete row across all disks.
+
+RAID 0 stripes data across all disks for maximum capacity
+  > and performance. It stores no duplicate/parity data, so it cannot tolerate
+  > even one disk failure.
+
+RAID 1 stores two copies of every block.
+  Disk 0      Disk 1      Disk 2      Disk 3
+  A0          A0 copy     A1          A1 copy
+  A2          A2 copy     A3          A3 copy
+
+Usable capacity = N/2 * S
+read - can read either, can use both disks in parallel
+write - must update both copies, write completes only after both disk are updated
+IMPROVES RELIABILITY!
+
+RAID 4
+Use N-1, one disk being used for xor operation (parity disk)
+  Disk 0   Disk 1   Disk 2   Disk 3
+  Data A   Data B   Data C   Parity ABC
+  Data D   Data E   Data F   Parity DEF
+
+Lets say A =1, B = 0, C = 1, disk 4 party ABC = 1xor0xor1, and that its 0
+if B disk fails, can be reconstruct using B = A xor C xor Parity
+  so B = 1 xor 1 xor 0 which its = 0
+!!! Failure tolerance = 1 disk
+Main problem: every write updates dedicate partiy disk, many writes creates parity disk bottleneck.
+Raid 4 stripes data across N-1 dsk and stores XOR partiy on one dedicated disk, it toleratoers on disk failure and use (N-1)*S capacity, ut parity disk becoes write bottleneck 
+
+Suppose one data block changes, Old a -> New A Parity must also change!
+
+Read-modify write methods:
+read old data block. Read old parity block
+write new data block, write new parity block
+one logical write =  four physical disk oeprations
+
+RAID 4 small write often needs two reads plus two writes.
+  > Full-stripe write calculates parity directly and avoids reading old blocks.
+  > Dedicated parity disk remains write bottleneck.
+
+RAID 5 almost the same distirbutive method as RAID 4, but instead of having one disk for parity only, the parity its distributed across all disksk:
+  Disk 0   Disk 1   Disk 2   Disk 3
+  A        B        C        P(ABC)
+  D        E        P(DEF)   F
+  G        P(GHI)   H        I
+  P(JKL)   J        K        L
+
+Parity pos rotates each stripe, capacity = (N-1)xS
+failure tolerance = 1 disk
+benefits over raid4:
+  no single dedicated parity disk, parity writes spread across all disks, better write-load balance
+  penalty: read old data, read old parity, write new data, write new parity
+
+  > ✅ Exam summary: RAID 5 has RAID 4’s capacity and one-disk fault tolerance,
+  > but rotates parity across disks to remove dedicated parity-disk bottleneck.
+  > Small writes still require parity updates.
+
+IOPS = input/outpus operations per second
+Sequential performance uses MB/s
+Random performance uses IOPS
+
+ ✅ Exam summary: Failed redundant RAID enters degraded mode and must rebuild
+  > missing data. Hot spare enables automatic rebuild. RAID 6 uses two parity
+  > blocks and survives two disk failures.
+
+RAID 6
+stores two indepedented aprity values.
+can tolerate two disk failures
+capacity = (N-2) x S 
+
+ Exam summary: Inode is per-file on-disk structure holding metadata and
+  > locations of data blocks. Directory stores filename-to-inode mapping;
+  > filename is not stored in inode.
+
+  > ✅ Exam summary: Direct pointer points straight from inode to one data
+  > block. With 12 direct pointers and 4-KB blocks, direct capacity is 12×4 KB =
+  > 48 KB.
+
+
+ ✅ Exam summary: Single indirect pointer points to one pointer block. With
+  > 4-KB blocks and 4-byte pointers, it reaches 1024 data blocks = 4 MB; total
+  > with 12 direct pointers is 4144 KB.
+
+✅ Exam summary: Double-indirect pointer points to blocks of indirect
+  > pointers. Capacity is pointers_per_block² × block_size; with 1024 pointers
+  > per block and 4-KB blocks, it reaches 4 GB.
+  
+
+    > ✅ Exam summary: Triple indirect crosses three pointer blocks and reaches
+  > pointers_per_block³ data blocks. With 4-KB blocks and 4-byte pointers,
+  > capacity is about 4 TB. Inode design optimizes common small files while
+  > still supporting huge files.
+
+  Why use multiple levels?
+
+  - Small files use fast direct pointers.
+  - Medium files use single indirect.
+  - Large files use double/triple indirect.
+  - Metadata is allocated only when file grows.

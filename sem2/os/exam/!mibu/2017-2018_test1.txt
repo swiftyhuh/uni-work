@@ -1,0 +1,172 @@
+1.Write a UNIX Shell command that displays the lines in file a.txt that contains words starting with capital letters
+
+solution:
+cat a.txt | grep -E "^[A-Z]|*\ [A-Z]"
+
+2.Write a UNIX Shell command that inverts in file a.txt all pairs of neighboring digits (ex: a3972b -> a9327b)
+
+solution:
+sed -E 's/([0-9])([0-9])/\2\1/g' a.txt > temp.txt && mv temp.txt a.txt
+
+3.File a.txt contains on each line two numbers separated by space. Write a UNIX Shell command that displays for each line the sum of its numbers
+
+solution:
+awk '{print $1 + $2}' a.txt
+
+4. Display only the lines of file a.txt that appear only once (not duplicated).
+
+solution:
+sort a.txt | uniq -u
+
+5. Write a UNIX Shell script that displays the name of each .txt file in the current directory that contains the word "cat".
+
+solution:
+
+#!/bin/bash
+
+find $1 -name "*.txt" | while read file; do
+        counter=`cat $file|grep -E "^cat\ |\ cat\ "|wc -l`
+        if [ $counter -gt 0 ]; then
+                echo "$file"
+        fi
+done
+
+6. In the program fragment below, mark which process executes each line: the Parent, the Child, or both.
+
+P       C
+                k = fork();
+                if (k == 0)
+                        printf("A\n");
+                else
+                        printf("B\n");
+                printf("C\n");
+
+
+solution:
+P	C
+X	X	k = fork();
+X	X	if (k == 0)
+	X		printf("A\n");
+X		else
+X			printf("B\n");
+X	X	printf("C\n");
+
+7. How many processes will be created by the code fragment below, excluding the initial parent process?
+
+fork(); wait(0); fork(); wait(0); fork();
+
+solution:
+7
+
+8. What are the possible console outputs of the following code fragment (ignoring any output that execl might generate), and when will they happen?
+
+printf("A\n"); execl(.....); printf("B\n");
+
+solution:
+the possible console output will be "A", but the output "B" will not be printed due to the 'execl' call
+the 'execl' funcion is used to replace the current process with a new process, so any code after it will not be executed.
+
+note: not really sure about this answer
+
+9. What does the system call "read" do when the pipe is empty?
+
+solution:
+the "read" call will block (pause) the process until data is available. this means that the process will wait until there is something to read from the pipe. the "read" call will only return when at least one byte of data is available to be read from the pipe.
+
+10. What does the system call "open" do before returning from opening a FIFO?
+
+solution: 
+the "open" system call firstly checks the existence of the FIFO. if it doesn't exist and the "open" call is invoked in write-only mode or read-only mode, the call will create a FIFO in the file system and block until another process opens the FIFO for reading, respectively writing.
+
+11. Give a reason for choosing threads over processes
+
+solution:
+1. efficiency: threads are generally more lightweight than processes. creating a thread requires fewer system resources compared to creating a new process. threads share the same memory space, file descriptors, and other resources of the process that created them, resulting in lower overhead and faster communication between threads. this makes threads a more efficient option when multiple tasks need to be performed concurrently within a single program.
+
+2. shared memory: threads within a process can directly access and modify shared memory. this allows for efficient communication and data sharing between threads without the need for complex interprocess communication mechanism, such as pipes or sockets. Sharing data between threads can be simpler and faster compared to sharing data between separate processes.
+
+3. synchronization: threads can easily synchronize their execution using mechanisms like locks, semaphores, and conditional variables. Synchronization primitives enable threads to coordinate their activities, share resources safely, and avoid race conditions when accessing shared data. Inter-thread communication and coordination are generally simpler to implement and understand than inter-process communication.
+
+12. Considering that functions "fa" and "fb" are run in concurrent threads, what will the value of "n" be after the threads are finished? why?
+
+pthread_mutex_t a, b;
+int n = 0;
+void* fa(void *p)
+{
+	pthread_mutex_lock(&a);
+	n++;
+	pthread_mutex_unlock(&a);
+}
+void* fb(void* p)
+{
+	pthread_mutex_lock(&b);
+        n++;
+        pthread_mutex_unlock(&b);
+}
+
+solution:
+the final value of "n" will be 2 because each thread increments "n" by 1 when it acquires its respective mutex lock.
+
+13. Schedule the following jobs (given ads Name/Duration/Deadline) so that they all meet their deadlines: A/5/9, B/7/13, C/1/10
+
+solution: CAB or ACB
+
+14. Give one advantage and one disadvantage of the segmented allocation method over the paged allocation method
+
+solution:
+
+advantage: flexibility in memory allocation
+segmented allocation allows for more flexible memory allocation compared to paged allocation. In segmented allocation, memory is divided into variable-sized segments, where each segment can represent a logical unit or a specific module of the program. This flexibility is beneficial when dealing with programs that have varying memory requirements for different modules or data structures. Segmented allocation can efficiently allocate memory for modules of different sizes without the fixed-size restrictions imposed by the paged allocation method.
+
+disadvantage: external fragmentation
+one significant disadvantage of the segmented allocation method is the potential for external fragmentation. external fragmentation occurs when free memory blocks are scattered throughout the memory space, resulting in the inability to allocate contiguous memory blocks for larger segments or modules. over time, as segments are allocated and deallocated, small gaps of unused memory may form between allocated segments, even when the total amount of free memory is sufficient. Dealing with external fragmentation requires additional memory management techniques, such as compaction or dynamic relocation, to reclaim fragmented memory blocks and provide larger contiguous memory spaces. paged allocation, on the other hand, can mitigate external fragmentation by dividing memory into fixed-size pages, allowing for more efficient memory allocation and utilization.
+
+16. When does a process change state from RUN to READY?
+
+solution:
+a process changes states from RUN to READY when it is no longer executing on the CPU and is temporarily suspended, waiting for the CPU to be allocated to it again.
+
+17.Given a UNIX file system configured with a block size of B bytes that can contain A addresses, and i-nodes having S direct link, one simple indirection link, one double indirection link, and one triple indirection link, give the formula for the maximum file size possible.
+
+solution:
+(S + A + A^2 + A^3) * B
+
+18. What happens with the data when you delete a file that has a hard link pointing to it?
+
+solution:
+1. reference count adjustment: each file on a file system has an associated reference count. when a file is created, the reference count is set to 1. each hard link to the file increments the reference count by 1. when a hard link is deleted, the reference count is decremented by 1.
+
+2. deletion of the directory entry: when you delete a file by removing its directory entry (using a command like `rm`), the directory entry is removed from the directory listing. this action removes the association between the file name and the file's metadata.
+
+3. reference count check: after deleting the directory entry, the file system checks the reference count of the file. If the reference count reaches zero, it means there are no more hard links pointing to the file.
+
+4. actual file deletion: when the reference count of the file reaches zero, indicating that no more hard links exists, the file system preoceeds to delete  the file's contents and release the disk space occupied by the file.
+
+however, if there are still one or more hard links pointing to the file (i.e., the reference count is greater than zero), the file contents remain intact, and only the directory entry associated with the deleted hard link is removed.
+
+hard links provide multiple names (directory entries) for the same file, and the file is not truly deleted until the reference count reaches zero. As long as there is at least one hard link remaining, the file's data is still accessible and can be modified through the remaining hard link(s).
+
+19. Give a method for preventing deadlocks.
+
+solution:
+1. use a proper resource allocation strategy: employ a resource allocation strategy that ensures that resources are allocated in a wy that avoids circular wait conditions, one of the necessary conditions for deadlocks occurence. this can be achieved by implementing resource allocation algorithms such as the Banker's algorithm or using techniques like resource ordering.
+
+2. avoid holding multiple resources simultaneously: encourage processes to request and acquire only one resource at a time, reducing the likelihood of circular dependencies. this approach helps prevent situations where a process holds one resource while waiting for another resource held by another process.
+
+3. use a deadlock detection and recovery algorithm: implement a deadlock detection algorithm that periodically checks for the existence of deadlocks within the system. if a deadlock is detected, the algorithm can initiate recovery mechanisms such as process termination or resource preemption to resolve the deadlock and release the involved resources.
+
+4. employ resource scheduling and allocation protocols: utilize scheduling and allocation protocols that aim to prevent or minimize the occurrence of deadlocks
+
+20. What is a binary semaphore, and what is the effect of its P method, when called by multiple concurrent processes/threads?
+
+solution:
+a binary semaphore is a synchronization primitive that can have two states: 0 (locked) and 1 (unlocked). it is often used to control access to a shared resource or coordinate the execution of concurrent processes or threads.
+
+the P method of a binary semaphore decrements its value by 1 and, if the value becomes negative, blocks the calling process or thread until the semaphore becomes unlocked (i.e. its value becomes 1). if the semaphore is already unlocked, the P method simply decrements the value to 0 and continues executing.
+
+c. (idono)
+1 2
+1 4
+12 54
+12 3
+1 56

@@ -1,0 +1,161 @@
+CPU Virtualisation and Scheduling: Advanced Study Guide
+
+This study guide provides a rigorous synthesis of process abstraction, limited direct execution, and scheduling mechanisms based on the provided technical documentation and system-level excerpts.
+
+CHAPTER 4: THE ABSTRACTION: THE PROCESS
+
+Process Abstraction and Machine State
+
+1. Exam-Ready Definition: A process is a program in execution, representing the fundamental unit of concurrency within an operating system. Its machine state includes its address space, identifiers (PID), and execution context.
+2. Exact Under-the-Hood Mechanism: The OS tracks the process through a Process Control Block (PCB). Key components include the Process ID (PID), Parent Process ID (PPID), and the machine state. Hardware registers like the Instruction Pointer (EIP/PC) and Stack Pointer (ESP) are saved during interrupts.
+3. System Consequence: By abstracting the machine state, the OS can run multiple processes on a single CPU by rapidly switching their contexts, creating the illusion of simultaneity.
+4. Concrete Example (Numerical): A system with a single CPU is running three processes. Even if they appear to run at the same time, the OS assigns each a "quanta of time" (e.g., 10ms). In 30ms, each process has progressed by one quantum.
+5. Common Exam Traps: Assuming fork() only creates a child. In reality, fork() duplicates the entire machine state; both processes continue from the instruction after the call.
+6. Key Distinction: Program vs Process: A program is a static set of instructions on disk; a process is a dynamic, active entity with a specific machine state.
+
+Process Creation: Loading and Forking
+
+1. Exam-Ready Definition: Process creation in UNIX-like systems primarily occurs via the fork() system call, which duplicates the parent, followed by exec() to load a new program.
+2. Exact Under-the-Hood Mechanism:
+  * fork(): The OS allocates a new PID, copies the parent's memory pages (often via Lazy/Copy-on-Write, though the source focuses on duplication), and copies the file descriptor table.
+  * exec(): The OS overwrites the current address space with the new program code/data from disk and resets the entry-point jump.
+3. System Consequence: The split-path execution allows the parent to manage the child (e.g., waiting for its completion) or for the child to execute independent logic.
+4. Concrete Example (Timeline):
+  * Trace:
+    * i=0: 1 process becomes 2.
+    * i=1: 2 processes become 4.
+    * i=2: 4 processes become 8.
+  * Result: 1 original parent and 7 child processes.
+5. Common Exam Traps: Neglecting to check the return value of fork(). It returns 0 in the child and the PID of the child in the parent.
+6. Key Distinction: Eager vs Lazy Loading: Eager loading brings the entire program into memory at start; lazy loading (on-demand) waits until specific code/data is needed.
+
+Process States & Transitions
+
+1. Exam-Ready Definition: The lifecycle of a process as it moves between execution, waiting for resources, and termination.
+2. Exact Under-the-Hood Mechanism:
+  * RUNNING: Currently utilizing the CPU.
+  * READY: Capable of running but waiting for a CPU quantum.
+  * BLOCKED/WAIT: Waiting for I/O (e.g., read() from a pipe) or a signal.
+  * ZOMBIE (Defunct): Execution finished (exit()), but the parent has not yet called wait().
+3. System Consequence: Zombie processes occupy a slot in the process table (PID), which is a finite resource. Excessive zombies lead to "lack of PIDs," preventing new process creation.
+4. Concrete Example (Timeline):
+  1. Process A calls fork() \rightarrow Child B is created (READY).
+  2. Scheduler picks B \rightarrow (RUNNING).
+  3. B calls sleep(10) \rightarrow (BLOCKED).
+  4. Timer interrupt occurs \rightarrow B is moved to (READY).
+  5. B calls exit(0) \rightarrow (ZOMBIE).
+  6. A calls wait(0) \rightarrow B is removed from system.
+5. Common Exam Traps: Thinking wait() is only for synchronization. It is specifically required to clean up the Zombie state and retrieve the exit code.
+6. Key Distinction: Ready vs Blocked: A READY process is waiting for the CPU; a BLOCKED process is waiting for an event (I/O, mutex, or signal) and cannot run even if the CPU is free.
+
+CHAPTER 6: MECHANISM: LIMITED DIRECT EXECUTION (LDE)
+
+User Mode vs Kernel Mode
+
+1. Exam-Ready Definition: A hardware-enforced protection mechanism where User Mode restricts access to privileged instructions and Kernel Mode allows full hardware control.
+2. Exact Under-the-Hood Mechanism: Controlled by a "privilege bit" in the CPU. System calls trigger a trap instruction, which switches the bit, saves user registers to the kernel stack, and jumps to a pre-defined address in the Trap Table.
+3. System Consequence: Protects the system from malicious or buggy user code (e.g., preventing a user process from clearing memory or disabling interrupts).
+4. Concrete Example (Numerical): A process tries to write() to a file. This requires a transition to Kernel Mode. The CPU checks the privilege level; if a user tries to access the disk directly without a system call, the hardware triggers an exception.
+5. Common Exam Traps: Confusing a function call with a system call. A function call stays in User Mode; a system call (open, read, write) must transition to Kernel Mode via the trap table.
+6. Key Distinction: Cooperative vs Preemptive: Cooperative relies on processes to yield() voluntarily; Preemptive uses a hardware timer to force a context switch.
+
+Context Switches and Timer Interrupts
+
+1. Exam-Ready Definition: The mechanism by which the OS regains control of the CPU to switch from one running process to another.
+2. Exact Under-the-Hood Mechanism:
+  * A hardware timer generates an interrupt at fixed intervals.
+  * The CPU jumps to the interrupt handler (Kernel Mode).
+  * The OS saves the current process's registers (EIP, ESP, etc.) to its PCB.
+  * The OS restores the target process's registers from its PCB.
+  * A return-from-trap instruction restores the user privilege and jumps to the new PC.
+3. System Consequence: Introduces "Context Switch Overhead" due to register saving/restoring and cache/TLB flushes, which can degrade performance if the quantum is too short.
+4. Concrete Example (Timeline):
+  * Time T: Process A is running.
+  * Time T+10ms: Timer Interrupt. OS regains control.
+  * Time T+11ms: OS saves A's context, decides to run B, restores B's context.
+  * Time T+12ms: Process B begins running.
+5. Common Exam Traps: Assuming wait() is the only way the OS regains control. Timer interrupts are the primary "preemptive" mechanism ensuring no process hogs the CPU.
+6. Key Distinction: Signal vs Trap: A trap is synchronous (triggered by code, e.g., system call); an interrupt/signal can be asynchronous (triggered by hardware or another process).
+
+CHAPTER 7: SCHEDULING: INTRODUCTION
+
+Scheduling Metrics
+
+1. Exam-Ready Definition: Quantitative measures used to evaluate scheduler performance, primarily Turnaround Time, Response Time, and Wait Time.
+2. Exact Under-the-Hood Mechanism: The scheduler maintains queues (Ready, Blocked) and applies algorithms (FIFO, SJF, RR) to decide the next process for the CPU.
+3. System Consequence: Optimising for one metric often degrades another (e.g., Round Robin improves Response Time but hurts Turnaround Time due to context switches).
+4. Concrete Example (Calculation): | Metric | Formula | | :--- | :--- | | Turnaround Time | T_{completion} - T_{arrival} | | Wait Time | T_{turnaround} - T_{burst\_time} |
+5. Common Exam Traps: Forgetting that Turnaround Time includes the time spent waiting for I/O and in the Ready queue.
+6. Key Distinction: FIFO vs SJF: FIFO (First-In, First-Out) can suffer from the "Convoy Effect" (long jobs blocking short ones); SJF (Shortest Job First) is optimal for turnaround but requires knowing the future.
+
+Round Robin (RR) and Time-Slicing
+
+1. Exam-Ready Definition: A preemptive scheduling algorithm where each process is assigned a fixed time quantum in a cyclic order.
+2. Exact Under-the-Hood Mechanism: The OS maintains a FIFO queue of READY processes. When a process's quantum expires (timer interrupt), it is moved to the back of the queue, and the next process is loaded.
+3. System Consequence: Excellent Response Time for interactive jobs, but high overhead if the quantum is set too low relative to the context switch time.
+4. Concrete Example (Numerical): Processes A, B, C arrive at T=0 with burst times 5, 5, 5. Quantum = 2.
+  * Trace: A(2), B(2), C(2), A(2), B(2), C(2), A(1), B(1), C(1).
+  * Completion: A=13, B=14, C=15.
+5. Common Exam Traps: Neglecting "Cache Warmth." Frequent switching prevents a process from effectively using CPU caches, lowering overall throughput.
+6. Key Distinction: RR vs STCF: RR switches based on time; STCF (Shortest Time-to-Completion First) switches if a new job arrives with a shorter remaining time.
+
+CHAPTER 8: MULTI-LEVEL FEEDBACK QUEUE (MLFQ)
+
+MLFQ Rules and Dynamics
+
+1. Exam-Ready Definition: A complex scheduler that learns process behaviour to balance turnaround time and response time without prior knowledge of job lengths.
+2. Exact Under-the-Hood Mechanism: Uses multiple priority queues.
+  * Rule 1: If Priority(A) > Priority(B), A runs.
+  * Rule 2: If Priority(A) = Priority(B), they run RR.
+  * Rule 3: New jobs start at the highest priority.
+  * Rule 4: If a job uses its whole allotment, it is demoted.
+  * Rule 5: Periodic "Priority Boost" moves all jobs to the top.
+3. System Consequence: Interactive (I/O-bound) jobs stay at high priority (short quanta), while CPU-bound batch jobs sink to low priority (long quanta).
+4. Concrete Example (Gaming Trace): A process "games" the scheduler by performing I/O at 99% of its quantum to stay in the high-priority queue. The "Anti-Gaming Fix" involves the OS tracking total time allotment per level, regardless of yields.
+5. Common Exam Traps: Starvation. Without Rule 5 (Priority Boost), long-running jobs may never run if new interactive jobs keep arriving.
+6. Key Distinction: Fixed Priority vs MLFQ: Fixed priority never changes; MLFQ dynamically adjusts based on observed process behaviour.
+
+CHAPTER 9: PROPORTIONAL-SHARE SCHEDULING
+
+Lottery and Stride Scheduling
+
+1. Exam-Ready Definition: Schedulers that aim to guarantee each process a specific percentage of CPU time rather than minimising turnaround/response time.
+2. Exact Under-the-Hood Mechanism:
+  * Lottery: Processes hold "tickets." The OS picks a random ticket; the winner runs.
+  * Stride: Deterministic. Each process has a stride (inverse of tickets) and a pass counter. The process with the minimum pass value runs.
+3. System Consequence: Lottery is probabilistic (becomes fairer over long durations); Stride is deterministic and precisely fair even in the short term.
+4. Concrete Example (Stride Calculation):
+  * Constant = 10,000.
+  * Job A: 100 tickets \rightarrow Stride = 100.
+  * Job B: 50 tickets \rightarrow Stride = 200.
+  * Trace:
+    1. Pass A=0, B=0. Pick A. A runs, Pass A \rightarrow 100.
+    2. Pass A=100, B=0. Pick B. B runs, Pass B \rightarrow 200.
+    3. Pass A=100, B=200. Pick A. A runs, Pass A \rightarrow 200.
+5. Common Exam Traps: Dynamic job entry in Stride scheduling. When a new job joins, its "Pass" value must be set to the global minimum to avoid it monopolising the CPU while "catching up."
+6. Key Distinction: Lottery vs Stride: Lottery is easier to implement for global ticket transfers; Stride provides higher precision for exact CPU sharing.
+
+SYSTEMATIC CHAPTER CHECKLIST
+
+Chapter	Topic	Verified
+4	Process Abstraction (PC, Stack, PCB)	[x]
+4	Address Space & Isolation	[x]
+4	Process Creation (fork, exec, loading)	[x]
+4	Process States (Running, Ready, Blocked, Zombie)	[x]
+4	Process Lists & Data Structures (xv6 struct proc)	[x]
+6	User vs Kernel Mode & Privilege Bits	[x]
+6	System Call Traps & Trap Table Setup	[x]
+6	Timer Interrupts & Preemption	[x]
+6	Context Switch Mechanics (Register Saving/Restoring)	[x]
+7	Scheduling Metrics (Turnaround, Response, Wait)	[x]
+7	FIFO, SJF, and STCF Mechanisms	[x]
+7	Round Robin & Quantum Trade-offs	[x]
+7	Incorporating I/O & Overlap	[x]
+8	MLFQ Rules (1-5)	[x]
+8	Priority Boost & Anti-Gaming Fixes	[x]
+8	Time-Slice Tuning per Queue	[x]
+9	Tickets as Shares & Lottery Mechanism	[x]
+9	Ticket Mechanisms (Currency, Transfer, Inflation)	[x]
+9	Stride/Pass Calculations & Formula	[x]
+9	Lottery vs Stride Trade-offs	[x]
+

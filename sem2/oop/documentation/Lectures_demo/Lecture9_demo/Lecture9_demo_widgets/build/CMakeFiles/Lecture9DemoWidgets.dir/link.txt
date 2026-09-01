@@ -1,0 +1,1 @@
+/usr/sbin/c++ -Wl,--dependency-file=CMakeFiles/Lecture9DemoWidgets.dir/link.d CMakeFiles/Lecture9DemoWidgets.dir/main.cpp.o -o Lecture9DemoWidgets  /usr/lib/libQt5Widgets.so.5.15.18 /usr/lib/libQt5Gui.so.5.15.18 /usr/lib/libQt5Core.so.5.15.18

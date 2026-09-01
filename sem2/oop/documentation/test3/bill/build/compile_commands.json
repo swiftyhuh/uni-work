@@ -1,0 +1,38 @@
+[
+{
+  "directory": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -std=gnu++17 -mno-direct-extern-access -o CMakeFiles/bill.dir/bill_autogen/mocs_compilation.cpp.o -c /home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/mocs_compilation.cpp",
+  "file": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/bill.dir/bill_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -std=gnu++17 -mno-direct-extern-access -o CMakeFiles/bill.dir/main.cpp.o -c /home/mibu/Documents/uni/oop/documentation/test3/bill/main.cpp",
+  "file": "/home/mibu/Documents/uni/oop/documentation/test3/bill/main.cpp",
+  "output": "CMakeFiles/bill.dir/main.cpp.o"
+},
+{
+  "directory": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -std=gnu++17 -mno-direct-extern-access -o CMakeFiles/bill.dir/gui.cpp.o -c /home/mibu/Documents/uni/oop/documentation/test3/bill/gui.cpp",
+  "file": "/home/mibu/Documents/uni/oop/documentation/test3/bill/gui.cpp",
+  "output": "CMakeFiles/bill.dir/gui.cpp.o"
+},
+{
+  "directory": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -std=gnu++17 -mno-direct-extern-access -o CMakeFiles/bill.dir/bill.cpp.o -c /home/mibu/Documents/uni/oop/documentation/test3/bill/bill.cpp",
+  "file": "/home/mibu/Documents/uni/oop/documentation/test3/bill/bill.cpp",
+  "output": "CMakeFiles/bill.dir/bill.cpp.o"
+},
+{
+  "directory": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -std=gnu++17 -mno-direct-extern-access -o CMakeFiles/bill.dir/Repository.cpp.o -c /home/mibu/Documents/uni/oop/documentation/test3/bill/Repository.cpp",
+  "file": "/home/mibu/Documents/uni/oop/documentation/test3/bill/Repository.cpp",
+  "output": "CMakeFiles/bill.dir/Repository.cpp.o"
+},
+{
+  "directory": "/home/mibu/Documents/uni/oop/documentation/test3/bill/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/mibu/Documents/uni/oop/documentation/test3/bill/build/bill_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -std=gnu++17 -mno-direct-extern-access -o CMakeFiles/bill.dir/Service.cpp.o -c /home/mibu/Documents/uni/oop/documentation/test3/bill/Service.cpp",
+  "file": "/home/mibu/Documents/uni/oop/documentation/test3/bill/Service.cpp",
+  "output": "CMakeFiles/bill.dir/Service.cpp.o"
+}
+]

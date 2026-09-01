@@ -1,0 +1,237 @@
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           1       0  0 20:16 ?        00:00:01 /sbin/init
+root           2       0  0 20:16 ?        00:00:00 [kthreadd]
+root           3       2  0 20:16 ?        00:00:00 [pool_workqueue_release]
+root           4       2  0 20:16 ?        00:00:00 [kworker/R-rcu_gp]
+root           5       2  0 20:16 ?        00:00:00 [kworker/R-sync_wq]
+root           6       2  0 20:16 ?        00:00:00 [kworker/R-kvfree_rcu_reclaim]
+root           7       2  0 20:16 ?        00:00:00 [kworker/R-slub_flushwq]
+root           8       2  0 20:16 ?        00:00:00 [kworker/R-netns]
+root          10       2  0 20:16 ?        00:00:00 [kworker/0:0H-i915_cleanup]
+root          12       2  0 20:16 ?        00:00:00 [kworker/u32:0-btrfs-endio]
+root          13       2  0 20:16 ?        00:00:00 [kworker/R-mm_percpu_wq]
+root          14       2  0 20:16 ?        00:00:00 [kworker/u32:1-btrfs-endio]
+root          15       2  0 20:16 ?        00:00:00 [ksoftirqd/0]
+root          16       2  0 20:16 ?        00:00:00 [rcu_preempt]
+root          17       2  0 20:16 ?        00:00:00 [rcub/0]
+root          18       2  0 20:16 ?        00:00:00 [rcu_exp_par_gp_kthread_worker/0]
+root          19       2  0 20:16 ?        00:00:00 [rcu_exp_gp_kthread_worker]
+root          20       2  0 20:16 ?        00:00:00 [migration/0]
+root          21       2  0 20:16 ?        00:00:00 [kprobe-optimizer]
+root          22       2  0 20:16 ?        00:00:00 [idle_inject/0]
+root          23       2  0 20:16 ?        00:00:00 [cpuhp/0]
+root          24       2  0 20:16 ?        00:00:00 [cpuhp/1]
+root          25       2  0 20:16 ?        00:00:00 [idle_inject/1]
+root          26       2  0 20:16 ?        00:00:00 [migration/1]
+root          27       2  0 20:16 ?        00:00:00 [ksoftirqd/1]
+root          29       2  0 20:16 ?        00:00:00 [kworker/1:0H-kblockd]
+root          30       2  0 20:16 ?        00:00:00 [cpuhp/2]
+root          31       2  0 20:16 ?        00:00:00 [idle_inject/2]
+root          32       2  0 20:16 ?        00:00:00 [migration/2]
+root          33       2  0 20:16 ?        00:00:00 [ksoftirqd/2]
+root          34       2  0 20:16 ?        00:00:00 [kworker/2:0-events]
+root          35       2  0 20:16 ?        00:00:00 [kworker/2:0H-kblockd]
+root          36       2  0 20:16 ?        00:00:00 [cpuhp/3]
+root          37       2  0 20:16 ?        00:00:00 [idle_inject/3]
+root          38       2  0 20:16 ?        00:00:00 [migration/3]
+root          39       2  0 20:16 ?        00:00:00 [ksoftirqd/3]
+root          41       2  0 20:16 ?        00:00:00 [kworker/3:0H-kblockd]
+root          42       2  0 20:16 ?        00:00:00 [cpuhp/4]
+root          43       2  0 20:16 ?        00:00:00 [idle_inject/4]
+root          44       2  0 20:16 ?        00:00:00 [migration/4]
+root          45       2  0 20:16 ?        00:00:00 [ksoftirqd/4]
+root          47       2  0 20:16 ?        00:00:00 [kworker/4:0H-kblockd]
+root          48       2  0 20:16 ?        00:00:00 [cpuhp/5]
+root          49       2  0 20:16 ?        00:00:00 [idle_inject/5]
+root          50       2  0 20:16 ?        00:00:00 [migration/5]
+root          51       2  0 20:16 ?        00:00:00 [ksoftirqd/5]
+root          53       2  0 20:16 ?        00:00:00 [kworker/5:0H-kblockd]
+root          54       2  0 20:16 ?        00:00:00 [cpuhp/6]
+root          55       2  0 20:16 ?        00:00:00 [idle_inject/6]
+root          56       2  0 20:16 ?        00:00:00 [migration/6]
+root          57       2  0 20:16 ?        00:00:00 [ksoftirqd/6]
+root          59       2  0 20:16 ?        00:00:00 [kworker/6:0H-kblockd]
+root          60       2  0 20:16 ?        00:00:00 [cpuhp/7]
+root          61       2  0 20:16 ?        00:00:00 [idle_inject/7]
+root          62       2  0 20:16 ?        00:00:00 [migration/7]
+root          63       2  0 20:16 ?        00:00:00 [ksoftirqd/7]
+root          65       2  0 20:16 ?        00:00:00 [kworker/7:0H-i915_cleanup]
+root          66       2  0 20:16 ?        00:00:00 [kdevtmpfs]
+root          67       2  0 20:16 ?        00:00:00 [kworker/R-inet_frag_wq]
+root          68       2  0 20:16 ?        00:00:00 [rcu_tasks_kthread]
+root          69       2  0 20:16 ?        00:00:00 [rcu_tasks_rude_kthread]
+root          70       2  0 20:16 ?        00:00:00 [kauditd]
+root          71       2  0 20:16 ?        00:00:00 [khungtaskd]
+root          72       2  0 20:16 ?        00:00:00 [oom_reaper]
+root          73       2  0 20:16 ?        00:00:00 [kworker/u32:2-btrfs-endio-write]
+root          74       2  0 20:16 ?        00:00:00 [kworker/R-writeback]
+root          75       2  0 20:16 ?        00:00:00 [kcompactd0]
+root          76       2  0 20:16 ?        00:00:00 [ksmd]
+root          77       2  0 20:16 ?        00:00:00 [khugepaged]
+root          78       2  0 20:16 ?        00:00:00 [kworker/R-kblockd]
+root          79       2  0 20:16 ?        00:00:00 [kworker/R-blkcg_punt_bio]
+root          80       2  0 20:16 ?        00:00:00 [kworker/R-kintegrityd]
+root          81       2  0 20:16 ?        00:00:05 [irq/9-acpi]
+root          83       2  0 20:16 ?        00:00:00 [kworker/R-tpm_dev_wq]
+root          85       2  0 20:16 ?        00:00:00 [kworker/R-ata_sff]
+root          86       2  0 20:16 ?        00:00:00 [kworker/R-edac-poller]
+root          87       2  0 20:16 ?        00:00:00 [kworker/R-devfreq_wq]
+root          88       2  0 20:16 ?        00:00:00 [watchdogd]
+root          89       2  0 20:16 ?        00:00:00 [kworker/R-quota_events_unbound]
+root          91       2  0 20:16 ?        00:00:03 [kworker/5:1-events]
+root          92       2  0 20:16 ?        00:00:00 [kswapd0]
+root          93       2  0 20:16 ?        00:00:00 [kworker/R-kthrotld]
+root          94       2  0 20:16 ?        00:00:00 [kworker/R-acpi_thermal_pm]
+root          95       2  0 20:16 ?        00:00:01 [kworker/u32:3-btrfs-endio]
+root          99       2  0 20:16 ?        00:00:00 [hwrng]
+root         100       2  0 20:16 ?        00:00:00 [kworker/R-mld]
+root         101       2  0 20:16 ?        00:00:00 [kworker/R-ipv6_addrconf]
+root         102       2  0 20:16 ?        00:00:00 [kworker/R-kstrp]
+root         104       2  0 20:16 ?        00:00:00 [kworker/7:1-kec_query]
+root         116       2  0 20:16 ?        00:00:00 [kworker/3:2-i915-unordered]
+root         181       2  0 20:16 ?        00:00:00 [kworker/R-nvme-wq]
+root         182       2  0 20:16 ?        00:00:00 [kworker/R-nvme-reset-wq]
+root         183       2  0 20:16 ?        00:00:00 [kworker/R-nvme-delete-wq]
+root         184       2  0 20:16 ?        00:00:00 [kworker/R-nvme-auth-wq]
+root         185       2  0 20:16 ?        00:00:00 [kworker/R-ttm]
+root         187       2  0 20:16 ?        00:00:00 [card1-crtc0]
+root         188       2  0 20:16 ?        00:00:00 [card1-crtc1]
+root         189       2  0 20:16 ?        00:00:00 [card1-crtc2]
+root         190       2  0 20:16 ?        00:00:00 [kworker/7:1H-i915_cleanup]
+root         215       2  0 20:16 ?        00:00:00 [kworker/0:1H-kblockd]
+root         252       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-worker]
+root         253       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-delalloc]
+root         254       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-flush_delalloc]
+root         255       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-cache]
+root         256       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-fixup]
+root         257       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-endio]
+root         258       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-endio-meta]
+root         259       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-rmw]
+root         260       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-endio-write]
+root         261       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-freespace-write]
+root         262       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-delayed-meta]
+root         263       2  0 20:16 ?        00:00:00 [kworker/R-btrfs-qgroup-rescan]
+root         264       2  0 20:16 ?        00:00:00 [btrfs-cleaner]
+root         265       2  0 20:16 ?        00:00:01 [btrfs-transaction]
+root         276       2  0 20:16 ?        00:00:00 [kworker/u32:5-events_unbound]
+root         277       2  0 20:16 ?        00:00:01 [kworker/u32:6-btrfs-endio]
+root         278       2  0 20:16 ?        00:00:00 [kworker/3:1H-i915_cleanup]
+root         281       2  0 20:16 ?        00:00:00 [kworker/4:1H-kblockd]
+root         283       2  0 20:16 ?        00:00:00 [kworker/6:1H-i915_cleanup]
+root         284       2  0 20:16 ?        00:00:00 [kworker/5:1H-i915_cleanup]
+root         285       2  0 20:16 ?        00:00:00 [kworker/u32:9-events_power_efficient]
+root         286       2  0 20:16 ?        00:00:00 [kworker/2:1H-i915_cleanup]
+root         307       2  0 20:16 ?        00:00:00 [kworker/1:1H-i915_cleanup]
+root         319       1  0 20:16 ?        00:00:00 /usr/lib/systemd/systemd-journald
+root         330       1  0 20:16 ?        00:00:00 /usr/lib/systemd/systemd-userdbd
+root         353       2  0 20:16 ?        00:00:00 [psimon]
+systemd+     356       1  0 20:16 ?        00:00:00 /usr/lib/systemd/systemd-timesyncd
+root         361       1  0 20:16 ?        00:00:00 /usr/lib/systemd/systemd-udevd
+root         364       2  0 20:16 ?        00:00:00 [psimon]
+root         414       2  0 20:16 ?        00:00:00 [irq/143-mei_me]
+root         417       2  0 20:16 ?        00:00:02 [irq/51-DELL081C:00]
+root         434       2  0 20:16 ?        00:00:00 [kworker/R-cfg80211]
+root         440       2  0 20:16 ?        00:00:00 [irq/145-iwlwifi]
+root         444       2  0 20:16 ?        00:00:04 [kworker/u33:2-hci0]
+root         445       2  0 20:16 ?        00:00:00 [kworker/0:3-i915-unordered]
+dbus         460       1  0 20:16 ?        00:00:00 /usr/bin/dbus-broker-launch --scope system --audit
+dbus         461     460  0 20:16 ?        00:00:00 dbus-broker --log 10 --controller 9 --machine-id 2faf36bac2cb476f9280094582a98933 --max-bytes 536870912 --max-fds 4096 --max-matches 131072 --audit
+root         463       2  0 20:16 ?        00:00:00 [kworker/6:3-i915-unordered]
+root         467       1  0 20:16 ?        00:00:01 /usr/bin/NetworkManager --no-daemon
+root         469       1  0 20:16 ?        00:00:00 /usr/lib/bluetooth/bluetoothd
+root         474       1  0 20:16 ?        00:00:00 /usr/lib/systemd/systemd-logind
+root         499       2  0 20:16 ?        00:00:00 [kworker/R-USBC000:00-con1]
+root         530       1  0 20:16 ?        00:00:00 /usr/bin/cupsd -l
+root         533       1  0 20:16 tty1     00:00:00 /usr/bin/ly-dm
+root         534       1  0 20:16 ?        00:00:00 /usr/bin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root         543     533  0 20:17 tty1     00:00:00 /usr/bin/ly-dm
+mibu         566       1  0 20:17 ?        00:00:00 /usr/lib/systemd/systemd --user
+mibu         568     566  0 20:17 ?        00:00:00 (sd-pam)
+mibu         576     566  0 20:17 ?        00:00:00 /usr/bin/gnome-keyring-daemon --foreground --components=pkcs11,secrets --control-directory=/run/user/1000/keyring
+mibu         581     566  0 20:17 ?        00:00:00 /usr/bin/dbus-broker-launch --scope user
+mibu         582     581  0 20:17 ?        00:00:00 dbus-broker --log 11 --controller 10 --machine-id 2faf36bac2cb476f9280094582a98933 --max-bytes 100000000000000 --max-fds 25000000000000 --max-matches 5000000000
+mibu         583     543  0 20:17 tty1     00:00:00 /usr/bin/start-hyprland
+mibu         599     583  2 20:17 tty1     00:01:03 Hyprland --watchdog-fd 4
+mibu         630     566  0 20:17 ?        00:00:00 /usr/lib/dconf-service
+mibu         635     599  1 20:17 tty1     00:00:39 quickshell -c /etc/xdg/quickshell/noctalia-shell
+mibu         636     599  0 20:17 tty1     00:00:00 hyprpaper
+mibu         643     599  0 20:17 tty1     00:00:00 awww-daemon
+mibu         647     566  0 20:17 ?        00:00:00 /usr/lib/hyprpolkitagent/hyprpolkitagent
+mibu         651     599  0 20:17 tty1     00:00:00 Xwayland :0 -rootless -core -listenfd 58 -listenfd 59 -displayfd 108 -wm 105
+polkitd      656       1  0 20:17 ?        00:00:00 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+mibu         661     566  0 20:17 ?        00:00:00 /usr/lib/xdg-desktop-portal
+mibu         674     566  0 20:17 ?        00:00:00 /usr/lib/xdg-permission-store
+mibu         685     566  0 20:17 ?        00:00:00 /usr/lib/xdg-document-portal
+root         701     685  0 20:17 ?        00:00:00 fusermount3 -o rw,nosuid,nodev,fsname=portal,auto_unmount,subtype=portal -- /run/user/1000/doc
+mibu         706     566  0 20:17 ?        00:00:00 /usr/lib/xdg-desktop-portal-gtk
+mibu         715     566  0 20:17 ?        00:00:00 /usr/lib/at-spi-bus-launcher
+mibu         721     715  0 20:17 ?        00:00:00 /usr/bin/dbus-broker-launch --config-file=/usr/share/defaults/at-spi2/accessibility.conf --scope user
+mibu         722     721  0 20:17 ?        00:00:00 dbus-broker --log 10 --controller 9 --machine-id 2faf36bac2cb476f9280094582a98933 --max-bytes 100000000000000 --max-fds 6400000 --max-matches 5000000000
+mibu         724     566  0 20:17 ?        00:00:00 /usr/lib/at-spi2-registryd --use-gnome-session
+rtkit        726       1  0 20:17 ?        00:00:00 /usr/lib/rtkit-daemon
+mibu         733     566  0 20:17 ?        00:00:00 /usr/bin/pipewire
+mibu         734     566  2 20:17 ?        00:00:54 /usr/bin/wireplumber
+mibu         740     566  0 20:17 ?        00:00:00 /usr/lib/xdg-desktop-portal-hyprland
+root         762       1  0 20:17 ?        00:00:00 /usr/lib/power-profiles-daemon
+root         774       2  0 20:17 ?        00:00:00 [krfcommd]
+mibu         802     635  0 20:17 tty1     00:00:00 /usr/sbin/sh
+mibu         832     635  0 20:17 tty1     00:00:00 /usr/sbin/wlsunset -t 4740 -T 6500 -l 46.75 -L 23.625 -d 900
+root         865       1  0 20:17 ?        00:00:00 /usr/lib/upowerd
+mibu         955     635  0 20:17 tty1     00:00:00 /usr/sbin/nmcli -t monitor
+mibu        1036     599  0 20:17 tty1     00:00:08 kitty
+mibu        1041    1036  0 20:17 tty1     00:00:00 /usr/bin/kitten __atexit__
+mibu        1043     566  0 20:17 ?        00:00:00 /usr/bin/dunst
+mibu        1044    1036  0 20:17 pts/0    00:00:00 /usr/bin/bash --posix
+mibu        1125     599  2 20:17 tty1     00:00:56 /opt/brave-bin/brave --profile-directory=Default --app-id=pjibgclleladliembfgfagdaldikeohf
+mibu        1127       1  0 20:17 ?        00:00:00 /opt/brave-bin/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/mibu/.config/BraveSoftware/Brave-Browser/Crash Reports --url=https://cr.brave.com --annotation=channel=unknown --annotation=lsb-release=Arch Linux --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=148.1.90.121 --initial-client-fd=10 --shared-client-connection
+mibu        1129       1  0 20:17 ?        00:00:00 /opt/brave-bin/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/mibu/.config/BraveSoftware/Brave-Browser/Crash Reports --url=https://cr.brave.com --annotation=channel=unknown --annotation=lsb-release=Arch Linux --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=148.1.90.121 --initial-client-fd=4 --shared-client-connection
+mibu        1135    1125  0 20:17 tty1     00:00:00 /opt/brave-bin/brave --type=zygote --no-zygote-sandbox --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable
+mibu        1136    1125  0 20:17 tty1     00:00:00 /opt/brave-bin/brave --type=zygote --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable
+mibu        1138    1136  0 20:17 tty1     00:00:00 /opt/brave-bin/brave --type=zygote --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable
+mibu        1169    1135  0 20:17 tty1     00:00:19 /opt/brave-bin/brave --type=gpu-process --ozone-platform=wayland --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable --gpu-preferences=UAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAYAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAA --shared-files --metrics-shmem-handle=4,i,11141665427431653709,17077113108374443639,262144 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190708988185955192
+mibu        1170    1125  0 20:17 tty1     00:00:07 /opt/brave-bin/brave --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,10496092904064100399,2282962543978010905,524288 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190708989122997041
+mibu        1185    1138  0 20:17 tty1     00:00:00 /opt/brave-bin/brave --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,3248137721659380827,10947196912466281513,524288 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190708990060038890
+mibu        1221    1138  0 20:17 tty1     00:00:01 /opt/brave-bin/brave --type=renderer --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --enable-distillability-service --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --ozone-platform=wayland --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1778519809562959 --launch-time-ticks=59304345 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,17995809318807950397,18011800801354564198,2097152 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190708991934122588
+mibu        1222    1138  6 20:17 tty1     00:02:48 /opt/brave-bin/brave --type=renderer --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --enable-distillability-service --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --ozone-platform=wayland --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1778519809562959 --launch-time-ticks=59313796 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8270146286170338426,15229023089111006431,2097152 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190708990997080739
+mibu        1492    1138  1 20:18 tty1     00:00:29 /opt/brave-bin/brave --type=utility --utility-sub-type=media.mojom.CdmServiceBroker --lang=en-US --service-sandbox-type=cdm --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8461904008127478080,18074447383420974430,524288 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190708999430457380
+root        1533       2  0 20:18 ?        00:00:00 [kworker/u32:10-btrfs-endio]
+root        1535       2  0 20:18 ?        00:00:00 [kworker/u32:12-btrfs-endio-meta]
+mibu        1568    1125  0 20:18 tty1     00:00:15 /opt/brave-bin/brave --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,6672293331256867364,6767544681818181861,524288 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190709000367499229
+mibu        1576     566  0 20:18 ?        00:00:11 /usr/bin/pipewire-pulse
+root        1718       2  0 20:18 ?        00:00:00 [psimon]
+mibu        3979     599  0 20:19 tty1     00:00:22 kitty
+mibu        3987    3979  0 20:19 tty1     00:00:00 /usr/bin/kitten __atexit__
+mibu        3994    3979  0 20:19 pts/1    00:00:00 /usr/bin/bash --posix
+mibu        4021    3994  1 20:19 pts/1    00:00:33 codex
+mibu        5386    1138  0 20:21 tty1     00:00:03 /opt/brave-bin/brave --type=renderer --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --enable-distillability-service --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --ozone-platform=wayland --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=17 --time-ticks-at-unix-epoch=-1778519809562959 --launch-time-ticks=298717220 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,15220682510005904141,8645282545639786964,2097152 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190709002241582927
+root        5490       2  0 20:22 ?        00:00:00 [kworker/u32:15-events_unbound]
+root        6332       2  0 20:30 ?        00:00:00 [kworker/4:1-events]
+root        7201       2  0 20:35 ?        00:00:00 [kworker/u32:8-btrfs-endio-write]
+mibu        7620    1138  0 20:38 tty1     00:00:11 /opt/brave-bin/brave --type=renderer --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --enable-distillability-service --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --ozone-platform=wayland --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=30 --time-ticks-at-unix-epoch=-1778519809562959 --launch-time-ticks=1293540306 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5435707895325876603,1938954960822224132,2097152 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190709014423126964
+mibu        7644    1138  0 20:38 tty1     00:00:00 /opt/brave-bin/brave --type=renderer --crashpad-handler-pid=1127 --enable-crash-reporter=,unknown --enable-distillability-service --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --ozone-platform=wayland --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=32 --time-ticks-at-unix-epoch=-1778519809562959 --launch-time-ticks=1298284818 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,16571088462828755463,16417424100180966838,2097152 --field-trial-handle=3,i,9778348083138750927,15178620136301219533,262144 --disable-features=EyeDropper --variations-seed-version=main@b82f6d3297310111549074a7d03a6f154213de66 --pseudonymization-salt-handle=7,i,6139740047481862713,7393733436605298427,4 --trace-process-track-uuid=3190709016297210662
+root        7781       2  0 20:40 ?        00:00:00 [kworker/1:0-events]
+root        7822       2  0 20:40 ?        00:00:00 [kworker/u32:13-btrfs-endio-meta]
+root        8337       2  0 20:43 ?        00:00:00 [kworker/u33:1-rb_allocator]
+root       11195       2  0 20:49 ?        00:00:00 [kworker/u32:7-btrfs-endio]
+root       11377       2  0 20:49 ?        00:00:00 [kworker/3:0-i915-unordered]
+root       11389       2  0 20:49 ?        00:00:00 [kworker/2:2-i915-unordered]
+root       11512       2  0 20:50 ?        00:00:01 [kworker/u33:0-hci0]
+root       11781       2  0 20:51 ?        00:00:00 [kworker/5:0-i915-unordered]
+root       12101       2  0 20:52 ?        00:00:00 [kworker/1:1-i915-unordered]
+root       12234       2  0 20:53 ?        00:00:00 [kworker/0:0-i915-unordered]
+root       12296       2  0 20:53 ?        00:00:00 [kworker/7:0-mm_percpu_wq]
+root       12378       2  0 20:53 ?        00:00:00 [kworker/4:0-i915-unordered]
+root       12382       2  0 20:53 ?        00:00:00 [kworker/6:1-events]
+root       12886       2  0 20:55 ?        00:00:00 [kworker/u32:4-events_unbound]
+root       13051       2  0 20:55 ?        00:00:00 [kworker/u33:3+i915_flip]
+root       13138       2  0 20:55 ?        00:00:00 [kworker/2:1-i915-unordered]
+root       13163       2  0 20:56 ?        00:00:00 [kworker/3:1-i915-unordered]
+root       13192       2  0 20:56 ?        00:00:00 [kworker/5:2]
+root       13216     330  0 20:57 ?        00:00:00 systemd-userwork: waiting...
+root       13217     330  0 20:57 ?        00:00:00 systemd-userwork: waiting...
+root       13218     330  0 20:57 ?        00:00:00 systemd-userwork: waiting...
+mibu       13548       1  0 20:58 ?        00:00:00 /usr/sbin/wl-copy --type text/plain
+root       13559       2  0 20:58 ?        00:00:00 [kworker/1:2]
+mibu       13650     635  0 20:59 tty1     00:00:00 /usr/sbin/nmcli networking connectivity check
+mibu       13684    1044  0 20:59 pts/0    00:00:00 ps -ef
+mibu       13685    1044  0 20:59 pts/0    00:00:00 nvim

@@ -1,0 +1,145 @@
+MANUAL EXECUTIONS FOR PRACTICAL WORK 2 - PROBLEM 3
+Task: find the connected components of an undirected graph using DFS.
+
+Requirement from lab2.txt:
+- 2 manual executions
+- 2 graphs with at least 5 vertices and 8 edges
+- one graph with 3 connected components, including one isolated vertex
+- one graph with 1 connected component
+
+Algorithm executed manually:
+- vertices are checked in increasing order
+- if a vertex is not in visited, start DFS from it
+- DFS uses a stack and collects the current component in component_vertices
+- after DFS ends, the current component is added to result
+
+========================================================================
+MANUAL EXECUTION 1
+========================================================================
+
+Graph 1:
+- vertices: {0,1,2,3,4,5,6,7}
+- edges: {(0,1), (0,2), (0,3), (1,2), (1,3), (2,3), (4,5), (5,6)}
+- number of vertices: 8
+- number of edges: 8
+
+Connected components expected:
+- {0,1,2,3}
+- {4,5,6}
+- {7}
+
+Neighbour order used by DFS:
+0 -> [1, 2, 3]
+1 -> [2, 3, 0]
+2 -> [3, 0, 1]
+3 -> [0, 1, 2]
+4 -> [5]
+5 -> [6, 4]
+6 -> [5]
+7 -> []
+
+Main loop order:
+0, 1, 2, 3, 4, 5, 6, 7
+
+DFS started from vertex 0
+
+Step | Stack before | Current | Added      | Stack after  | visited       | component
+-----+--------------+---------+------------+--------------+---------------+----------------
+1    | [0]          | 0       | [1, 2, 3]  | [1, 2, 3]    | {0}           | [0]
+2    | [1, 2, 3]    | 3       | [1, 2]     | [1,2,1,2]    | {0,3}         | [0,3]
+3    | [1,2,1,2]    | 2       | [1]        | [1,2,1,1]    | {0,2,3}       | [0,3,2]
+4    | [1,2,1,1]    | 1       | []         | [1,2,1]      | {0,1,2,3}     | [0,3,2,1]
+5    | [1,2,1]      | 1       | visited    | [1,2]        | {0,1,2,3}     | [0,3,2,1]
+6    | [1,2]        | 2       | visited    | [1]          | {0,1,2,3}     | [0,3,2,1]
+7    | [1]          | 1       | visited    | []           | {0,1,2,3}     | [0,3,2,1]
+
+After DFS from 0:
+- component = [0, 3, 2, 1]
+- result = [[0, 3, 2, 1]]
+- visited = {0,1,2,3}
+
+Vertices 1, 2 and 3 are skipped in the main loop because they are already visited.
+
+DFS started from vertex 4
+
+Step | Stack before | Current | Added      | Stack after | visited             | component
+-----+--------------+---------+------------+-------------+---------------------+-------------
+1    | [4]          | 4       | [5]        | [5]         | {0,1,2,3,4}         | [4]
+2    | [5]          | 5       | [6]        | [6]         | {0,1,2,3,4,5}       | [4,5]
+3    | [6]          | 6       | []         | []          | {0,1,2,3,4,5,6}     | [4,5,6]
+
+After DFS from 4:
+- component = [4, 5, 6]
+- result = [[0, 3, 2, 1], [4, 5, 6]]
+- visited = {0,1,2,3,4,5,6}
+
+Vertices 5 and 6 are skipped in the main loop because they are already visited.
+
+DFS started from vertex 7
+
+Step | Stack before | Current | Added | Stack after | visited               | component
+-----+--------------+---------+-------+-------------+-----------------------+----------
+1    | [7]          | 7       | []    | []          | {0,1,2,3,4,5,6,7}     | [7]
+
+After DFS from 7:
+- component = [7]
+- result = [[0, 3, 2, 1], [4, 5, 6], [7]]
+- visited = {0,1,2,3,4,5,6,7}
+
+Final result for Graph 1:
+- connected components = {0,1,2,3}, {4,5,6}, {7}
+
+--- PAGE BREAK ---
+
+========================================================================
+MANUAL EXECUTION 2
+========================================================================
+
+Graph 2:
+- vertices: {0,1,2,3,4,5}
+- edges: {(0,1), (1,2), (2,3), (3,4), (4,5), (5,0), (0,2), (2,4)}
+- number of vertices: 6
+- number of edges: 8
+
+Connected components expected:
+- {0,1,2,3,4,5}
+
+Neighbour order used by DFS:
+0 -> [1, 2, 5]
+1 -> [2, 0]
+2 -> [3, 4, 1, 0]
+3 -> [4, 2]
+4 -> [5, 3, 2]
+5 -> [0, 4]
+
+Main loop order:
+0, 1, 2, 3, 4, 5
+
+DFS started from vertex 0
+
+Step | Stack before | Current | Added      | Stack after   | visited         | component
+-----+--------------+---------+------------+---------------+-----------------+--------------------
+1    | [0]          | 0       | [1, 2, 5]  | [1, 2, 5]     | {0}             | [0]
+2    | [1, 2, 5]    | 5       | [4]        | [1, 2, 4]     | {0,5}           | [0,5]
+3    | [1, 2, 4]    | 4       | [3, 2]     | [1,2,3,2]     | {0,4,5}         | [0,5,4]
+4    | [1,2,3,2]    | 2       | [3, 1]     | [1,2,3,3,1]   | {0,2,4,5}       | [0,5,4,2]
+5    | [1,2,3,3,1]  | 1       | []         | [1,2,3,3]     | {0,1,2,4,5}     | [0,5,4,2,1]
+6    | [1,2,3,3]    | 3       | []         | [1,2,3]       | {0,1,2,3,4,5}   | [0,5,4,2,1,3]
+7    | [1,2,3]      | 3       | visited    | [1,2]         | {0,1,2,3,4,5}   | [0,5,4,2,1,3]
+8    | [1,2]        | 2       | visited    | [1]           | {0,1,2,3,4,5}   | [0,5,4,2,1,3]
+9    | [1]          | 1       | visited    | []            | {0,1,2,3,4,5}   | [0,5,4,2,1,3]
+
+After DFS from 0:
+- component = [0, 5, 4, 2, 1, 3]
+- result = [[0, 5, 4, 2, 1, 3]]
+- visited = {0,1,2,3,4,5}
+
+Vertices 1, 2, 3, 4 and 5 are skipped in the main loop because they are already visited.
+
+Final result for Graph 2:
+- connected components = {0,1,2,3,4,5}
+
+Conclusion:
+- Graph 1 satisfies the requirement with 3 connected components and one isolated vertex.
+- Graph 2 satisfies the requirement with 1 connected component.
+- Both graphs satisfy the condition of at least 5 vertices and at least 8 edges.

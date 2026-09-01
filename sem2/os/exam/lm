@@ -1,0 +1,140 @@
+Here is your ultimate, high-density, 2-page A4 cheat sheet. I have stripped out all question-and-answer pairs as requested and instead converted everything into hard rules, formulas, syntax patterns, and **Explicit Exam Traps** drawn strictly from your syllabus, books, and past exam files. 
+
+***
+
+# PAGE 1: UNIX COMMANDS, SHELL, AND IPC
+
+### 1. REGEX, GREP, SED & AWK
+**Regular Expressions (POSIX ERE)**
+*   **Anchors:** `^` (line start), `$` (line end), `\<` (word start), `\>` (word end). 
+*   **Quantifiers:** `*` (0+), `+` (1+), `?` (0 or 1), `{m,n}` (between m and n times). 
+*   **Sets:** `[abc]` (a, b, or c), `[^0-9]` (anything *not* a digit). 
+*   🔥 **Regex vs Shell Trap:** In the shell, `*` means "any sequence". In regex, you MUST use `.*` to mean "any sequence".
+
+**Grep (Filtering)**
+*   **Flags:** `-E` (extended regex), `-v` (invert match), `-i` (case-insensitive), `-o` (print matching part only), `-q` (quiet/truth value).
+*   **Must-know patterns:** 
+    *   Accept letter 'a' but no 'b': `grep "a" file | grep -v "b"`.
+    *   Multiples of 5: `grep -E "*"`.
+
+**Sed (Stream Editor)**
+*   **Syntax:** `sed -E 's/regex/replacement/flags'`.
+*   🔥 **The Missing 'g' Trap:** If you don't add `g` at the end (e.g., `/g`), it only replaces the *first* match on each line.
+*   **Backreferences:** Capture with `( )` and reuse with `\1`, `\2`.
+    *   *Invert neighboring digits:* `sed -r 's/()()/\2\1/g'`.
+*   **Transliteration (y):** Change vowels to uppercase: `sed -E 'y/aeiou/AEIOU/'`.
+*   **Deletion (d):** Delete lines with 5+ digits: `sed -E '/{5,}/d'`.
+
+**Awk (Table/Field Processing)**
+*   **Variables:** `NR` (line num), `NF` (num fields on line), `$0` (full line), `$1` (first field).
+*   🔥 **Dynamic Fields Trap:** Never hardcode `$4` for the last field; always use `$NF`. Penultimate field is `$(NF-1)`.
+*   **Math:** Awk runs math line-by-line. 
+    *   *Sum penultimate field:* `awk 'BEGIN {S=0} {S+=$(NF-1)} END {print S}'`.
+    *   *Sum first two columns:* `awk '{print $1 + $2}'`.
+
+---
+
+### 2. UNIX SHELL SCRIPTING
+**Variables & Truth Values**
+*   🔥 **The Exit Code Trap:** In the shell, an exit code of `0` is TRUE (success), and non-zero `!=0` is FALSE. This is the exact opposite of C.
+*   **String vs Int Operators:** 
+    *   *Strings:* `=`, `!=`, `-z` (empty length), `-n` (not empty).
+    *   *Integers:* `-eq`, `-ne`, `-lt`, `-le`, `-gt`, `-ge`.
+*   🔥 **Empty Variable Trap:** `if [ $A = "yes" ]` crashes if `$A` is empty. ALWAYS quote variables in tests: `if [ "$A" = "yes" ]`.
+
+**Arguments & Loops**
+*   **Vars:** `$0` (script name), `$1-$9` (args), `$#` (arg count), `$*` or `$@` (all args).
+*   🔥 **No-For-Loop Trap:** To iterate args without `for`, use `while`: `while [ $# -gt 0 ]; do echo $1; shift; done`. (`shift` drops `$1` and moves `$2` into `$1`).
+*   🔥 **Spaces in Filenames Trap:** `for F in $(find .)` breaks if files have spaces. Use `find . -type f | while read F; do ... done` instead.
+
+**I/O Redirection**
+*   `0` (stdin), `1` (stdout), `2` (stderr).
+*   `> file 2>&1` redirects both standard output and standard error to the same file. (Order matters: `2>&1` must be last).
+
+---
+
+### 3. PROCESSES & IPC (FORK, EXEC, PIPES, FIFOS)
+**Process Creation & Control**
+*   `fork()`: Returns `0` to child, PID to parent. 
+*   🔥 **Loop Fork Trap:** `fork()` inside a loop of $N$ creates $2^N$ processes (including parent). `for(i=0;i<3;i++) fork();` = 8 processes (7 children). But if there is a `wait(0)` after the fork inside an `if(fork()==0)` block, it severely limits parallel execution.
+*   🔥 **Exec Trap:** `exec*` overwrites the memory space completely. Any C code written *after* a successful `exec` call will NEVER execute.
+*   **Zombies:** If a child ends and parent hasn't called `wait()`, it becomes a Zombie. Fix: `wait(0)` or `signal(SIGCHLD, SIG_IGN)`.
+
+**Pipes and FIFOs**
+*   `pipe(p)`: `p` is for reading, `p` is for writing.
+*   🔥 **Pipe Read Blocking Trap:** A `read()` on an empty pipe will block infinitely UNLESS all write ends of the pipe (including the reader's own write end) are closed. Close unused ends!
+*   🔥 **FIFO Open Trap:** Calling `open()` on a FIFO blocks the process until another process opens the exact same FIFO for the complementary operation (e.g., opening for read waits for a writer). Opens must be ordered carefully to prevent deadlock.
+
+**C File Descriptor Manipulation**
+*   `dup2(oldfd, newfd)`: Overwrites `newfd` with `oldfd`. 
+*   *Override stdout trap:* To make `execlp("cat", ...)` write to `b.txt`: `int fd = open("b.txt", O_WRONLY); dup2(fd, 1); execlp("cat" ...);`.
+*   🔥 **Popen vs Fclose Trap:** `popen` spawns a child process. You MUST close it with `pclose()` (which internally calls `wait()`), NOT `fclose()`. If you use `fclose()`, the child becomes a zombie.
+
+***
+
+# PAGE 2: THREADS, OS THEORY, MEMORY, & FILE SYSTEMS
+
+### 4. THREADS & SYNCHRONIZATION
+**Basics & Mutexes**
+*   **Threads vs Processes:** Threads share memory space (global variables, heap) but have private stacks and registers. Processes have fully isolated memory.
+*   🔥 **Multiple Mutex Trap:** Using two *different* mutexes to protect the *same* shared variable does absolutely nothing. Only 1 specific mutex ensures mutual exclusion.
+*   🔥 **RWLock Trap:** `pthread_rwlock_rdlock()` allows *multiple* readers simultaneously. If you replace a mutex with a read-lock in a critical section that modifies data, it causes race conditions.
+
+**Condition Variables, Semaphores & Barriers**
+*   🔥 **Condition Variable Trap (Mesa Semantics):** You must ALWAYS put `pthread_cond_wait()` inside a `while` loop that re-checks the condition. A signal is just a hint; another thread can sneak in and alter the condition before the waking thread acquires the lock.
+*   **Semaphores:** State $\ge 0$ means available. State $< 0$ means threads are sleeping/blocked. 
+*   **Barrier Trap:** `pthread_barrier_wait` blocks until $N$ threads reach it. If $T$ (total threads created) doesn't match barrier value $N$, they hang forever.
+
+---
+
+### 5. OS THEORY: SCHEDULING, STATES & DEADLOCKS
+**Process States**
+*   **3 Main States:** RUNNING (on CPU), READY (wants CPU, in queue), BLOCKED/WAIT (waiting for an event/IO).
+*   🔥 **The I/O Transition Trap:** When a process reads a file, it goes RUN $\rightarrow$ WAIT/BLOCKED. When I/O finishes, it goes WAIT $\rightarrow$ READY (not directly to RUN). It must wait for the scheduler.
+
+**Scheduling Algorithms**
+*   *Turnaround Time* = Completion Time - Arrival Time.
+*   *Response Time* = First Run Time - Arrival Time.
+*   🔥 **Metric Trade-off Trap:** Round Robin (RR) is optimal for Response Time but terrible for Turnaround Time. Shortest Job First (SJF) is optimal for Turnaround Time but terrible for Response Time.
+*   **MLFQ Rules Trap:** MLFQ prevents starvation by periodically boosting all jobs to the topmost priority queue. It prevents gaming by strictly tracking total time allotment at a given priority level, demoting hogs.
+*   *Deadline Scheduling:* Always schedule shortest deadlines first (e.g., C, A, B) to fit everything in.
+
+**Deadlocks**
+*   **4 Conditions:** Mutual Exclusion, Hold-and-Wait, No Preemption, Circular Wait.
+*   🔥 **Programmer's Fix Trap:** The ONLY condition a developer can easily break is *Circular Wait*. Fix it by globally locking resources in the exact same strict sequential order across all threads.
+
+---
+
+### 6. MEMORY MANAGEMENT
+**Translation & Fragmentation**
+*   🔥 **The Fragmentation Golden Rule:** 
+    *   *Segmentation* (variable-sized chunks) causes **External Fragmentation** (free space chopped between segments).
+    *   *Paging* (fixed-sized chunks) completely eliminates external fragmentation but causes **Internal Fragmentation** (wasted space inside the allocated page).
+*   **Stack Address Trap:** The stack grows *downward* (negatively). To translate, hardware calculates a negative offset (subtracting max segment size from virtual offset) and adds it to the physical base.
+
+**Paging & TLBs**
+*   **TLB (Translation-Lookaside Buffer):** Hardware cache for Virtual-to-Physical translations. 
+*   🔥 **TLB Valid Bit vs PTE Valid Bit Trap:** A TLB Valid Bit = 0 means a cache miss (translation not in TLB). A PTE (Page Table Entry) Valid Bit = 0 means a Segmentation Fault (memory not legally allocated). Context switches must flush the TLB or use an ASID.
+
+**Caches, Free Space & Replacement**
+*   🔥 **Belady's Anomaly Trap:** Increasing the cache size (adding more physical memory) can actually *increase* the number of page misses. This ONLY happens with FIFO replacement, never with LRU.
+*   🔥 **NRU Victim Trap:** The most prioritized victim page for the Clock/NRU algorithm is Class 0: `(0, 0)` -> Unreferred and Unmodified. Evicting dirty pages is expensive because it requires a disk write.
+*   **Free Space Policies:** *First-Fit* is fast but pollutes the start with small holes. *Worst-Fit* wastes time searching and leaves fragmented medium chunks. *Buddy Allocation* makes coalescing fast but forces allocations to powers of 2 (internal fragmentation).
+
+---
+
+### 7. FILE SYSTEMS, INODES, & RAID
+**Linux Inode**
+*   Inodes store metadata and physical block pointers. Standard: 10 direct, 1 single indirect, 1 double indirect, 1 triple indirect.
+*   **Block Addressing Math:** If Block size is $B$ and Address size is $A$:
+    *   Double indirect addresses $(B/A)^2$ blocks.
+    *   Triple indirect addresses $(B/A)^3$ blocks.
+
+**Links & File Deletion**
+*   🔥 **Hard Link Partition Trap:** Hard links CANNOT be created across different disk partitions because they point directly to an inode number, which is only unique within its own specific file system.
+*   🔥 **File Deletion Trap:** Deleting a hard link (`rm`) only decrements the reference count. The file's data blocks are only physically deleted when the reference count reaches 0.
+
+**RAID Array Traps**
+*   **RAID 0:** Striping. High speed, ZERO redundancy (1 disk dies = all data gone).
+*   **RAID 1:** Mirroring. High redundancy, but halves usable capacity.
+*   **RAID 4 vs RAID 5 Trap:** RAID 4 uses a dedicated parity disk, causing a massive bottleneck for small random writes (4 I/O operations per write). RAID 5 fixes this bottleneck by rotating the parity blocks evenly across all disks.

@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char** argv) {
+    int w2s[2], s2s[2], s2u[2], u2w[2];
+
+    pipe(w2s); pipe(s2s); pipe(s2u); pipe(u2w);
+    if(fork() == 0) {   // who
+        close(w2s[0]); close(s2s[0]); close(s2s[1]); close(s2u[0]); close(s2u[1]); close(u2w[0]); close(u2w[1]);
+        dup2(w2s[1], 1);
+        execlp("who", "who", NULL); exit(1);
+    }
+    if(fork() == 0) {   // sed
+        close(w2s[1]); close(s2s[0]); close(s2u[0]); close(s2u[1]); close(u2w[0]); close(u2w[1]);
+        dup2(w2s[0], 0);
+        dup2(s2s[1], 1);
+        execlp("sed", "sed", "-E", "s/ .*//", NULL); exit(1);
+    }
+    if(fork() == 0) {   // sort
+        close(w2s[0]); close(w2s[1]); close(s2s[1]); close(s2u[0]); close(u2w[0]); close(u2w[1]);
+        dup2(s2s[0], 0);
+        dup2(s2u[1], 1);
+        execlp("sort", "sort", NULL); exit(1);
+    }
+    if(fork() == 0) {   // uniq
+        close(w2s[0]); close(w2s[1]); close(s2s[0]); close(s2s[1]); close(s2u[1]); close(u2w[0]);
+        dup2(s2u[0], 0);
+        dup2(u2w[1], 1);
+        execlp("uniq", "uniq", NULL); exit(1);
+    }
+    if(fork() == 0) {   // wc
+        close(w2s[0]); close(w2s[1]); close(s2s[0]); close(s2s[1]); close(s2u[0]); close(s2u[1]); close(u2w[1]);
+        dup2(u2w[0], 0);
+        execlp("wc", "wc", "-l", NULL); exit(1);
+    }
+    close(w2s[0]); close(w2s[1]); close(s2s[0]); close(s2s[1]); close(s2u[0]); close(s2u[1]); close(u2w[0]); close(u2w[1]);
+    wait(0); wait(0); wait(0); wait(0); wait(0);
+
+    (void)argc;
+    (void)argv;
+    return 0;
+}

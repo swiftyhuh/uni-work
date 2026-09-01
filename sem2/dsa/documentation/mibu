@@ -1,0 +1,17 @@
+n=2^k & The recursive formula is: T(n)=T(n/2)+1 => T(2^k) = T(2^k−1)+1 =>
+=> T(2^1):T(2^k−1) = T(2^k−2)+1    T(2^k−2) = T(2^k−3)+1 ... T(2^1) = T(2^0)+1
+add them all up, the left and right sides will cancel out all the middle T terms
+so we are left to T(2^k)=T(2^)+1+1+...+1 so T(2^k) = 1 + k.
+substitute back, n = 2^k so k = log2n. therefore T(n) = 1+ log2n, Theta(log2n)
+
+
+Complexitati:
+Rule 4: The total steps of a loop = (Number of iterations) × (Sum of all steps happening inside that loop)
+Rule 5: If a loop jumps by a constant addition (like +2,+3,+100), it divides the number of steps by that constant (e.g., n/2,n/3,n/100).
+Rule 6: Dividing by a constant does not change the final Order of Growth, because we always drop constants at the end.
+Rule 7: If a loop variable changes by multiplying or dividing by 2 at each iteration, the loop runs exactly log 2n times.
+Rule 8: Nested loops multiply their complexities. If an outer loop runs n times and an inner loop divides by 2 (log2n times), the total complexity is Θ(nlog 2n)
+
+for recursive: T(n) = A*T(n/B) + C, where A- number of recursive calls, n/B - size of new array, C - extra non recursive work
+
+Address of element = base_address + (index * size_of_element)
