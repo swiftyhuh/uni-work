@@ -1,0 +1,40 @@
+       Week                 Lab Activities        1st Deadline 2nd Deadline     After this
+                                                  (no penalty) (-3 points        week the
+                                                               penalty)        assignment
+                                                                                cannot be
+                                                                                submitted
+                                                                              anymore and
+                                                                              the grade is 0
+       Week 1          Simple programs in Java.    No grade      No grade       No grade
+ (28 September – 2
+   October 2026)
+       Week 2          Simple programs in Java.     Week 3        Week 4         Week 4
+ (5-9 October 2026)    START A1: MVC simple
+                               example
+                          WORKING on A1
+      Week 3
+(12-16October 2026)
+       Week 4
+(19 -23October 2026)
+      Week5
+(26-30October 2026)
+       Week6
+ (2-6November 2026)
+       Week7
+(9-13November 2026)
+       Week8
+(16-20November 2026)
+       Week9
+(23-27November 2026)
+      Week10
+   (30 November-
+  4December 2026)
+      Week11
+(7-11December 2026)
+       Week12
+(14-18December 2026)
+      Week13
+ (4-8January 2027)
+      Week14
+(11-15January 2027)
+

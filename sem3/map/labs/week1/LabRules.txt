@@ -1,0 +1,103 @@
+Advanced Programming
+       Method
+     Laboratories
+   GRADING & RULES
+
+
+                       1
+                         Grading
+Laboratory activity final grade is 35% of the final grade
+
+
+ - there will be about 7 Lab Assignments + 1 practical test
+ - each assignment will have a given strict deadline
+ - the assignments and the test have the same weight (At the end
+  of the semester, we calculate the arithmetic mean of the
+  assigments and the practical test)
+
+
+
+
+                                                                   2
+               Laboratory Rules
+- You can change your subgroup for the lab only once at the
+   first lab. You have to announce the lab teacher about this.
+   After the first lab you cannot change your subgroup lab
+   time.
+
+
+
+
+                                                                 3
+                Laboratory Rules
+- you have to present each lab assignment at its deadline
+- You have to use github to periodically save your code
+- for each lab assignment you will get a grade between 1 to 10
+- the deadline for each lab assignment is clearly specified in
+   the assignment text file
+ - if you delay an assignment 1 week you can get maximum 7
+   on that assignment
+ - if you delay an assignment more than 1 week you will
+   automatically get the grade 0 for it and you cannot submit it
+   anymore
+- the final grade for the lab activity is the arithmetic average
+   of the lab assignments grades and the lab test
+                                                                   4
+                Laboratory Rules
+ - you will get the lab assignments at the course
+- the lab assignments are discussed at the seminar
+ - you have to present the lab assignments to the lab
+   professor at or before the given deadline
+- all of you will get the same lab assignments
+- you can discuss with your colleagues about the
+   assignments, but you are not allowed to copy the
+   implementation
+- My colleagues and I will be very strict with any attempt to
+   copy the lab assignments
+- you have to implement all the assignments since the
+   problems of the final practical exam are extensions of the
+   lab assignments
+                                                                5
+                 Laboratory Rules
+- the lab assignments mainly consist of a big project to implement
+   an interpreter (virtual machine) of an imperative concurrent toy
+   language
+- at each lab assignment (almost each week) you will add the rules
+   and the data structures required to execute one or more new
+   instructions of the toy language
+- the toy language interpreter will be implemented in Java
+
+
+ - a schedule of the lab assignments (periodically updated) can be
+found at LabAssignmentsSchedule.pdf
+
+
+
+
+                                                                      6
+Rules to enter into the Final Exam
+
+ The first condition to get into the final exam is
+  to attend minimum 90% of the labs and
+  minimum 70% of the seminars. That means
+  you must attend minimum 10 seminars and
+  minimum 12 laboratories. Please read the
+  following document:
+http://www.cs.ubbcluj.ro/wp-content/uploads/Hotarare-CDI-15.03.2017.pdf
+- Holydays and first week are considered by default attended
+
+The second condition to get into the final exam
+ is to get minimum grade 5 at the lab activity.
+                                                                          7
+    Rules for the Students from
+   previous years (“Restantieri”)
+
+- the students must attend the labs and the
+ seminars, must do the lab assignments, and
+ must pass the final exam
+
+
+
+
+                                              8
+

@@ -1,0 +1,22 @@
+                     Laboratory 1
+        week 1 (28 September – 2 October 2026)
+
+TASKS (No GRADES for these tasks):
+Please join the TEAMS- code s0p8jb7
+
+A. Please read the lab rules in the file LabRules.pdf
+
+B. Please do the followings in the class (The lab was set up with the
+help of Tudor Jinga and Diana Timis)
+
+  1. Install IntelliJ IDEA or any other Java IDE on your laptop and become familiar with that tool.
+     Use the latest stable Java JDK.
+  2. For a quick introduction to IntelliJ IDEA, take a look at the tutorials provided below:
+         - https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-applica-
+              tion.html#convert-into-regular-class
+         - https://www.jetbrains.com/help/idea/mastering-keyboard-shortcuts.html
+         - https://www.jetbrains.com/help/idea/work-with-code-in-editor.html
+  3. For a quick introduction to Git, take a look at the tutorial provided below:
+         - https://learngitbranching.js.org/
+         - https://www.jetbrains.com/help/idea/using-git-integration.html
+

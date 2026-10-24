@@ -1,1 +1,12 @@
 .codex
+/sem1/
+sem3/mainPrompt.txt
+CLAUDE.md
+.idea/
+*.exe
+*.iml
+*.class
+.gradle/
+build/
+out/
+sem3/db/labs/lab1/infinity.sql
