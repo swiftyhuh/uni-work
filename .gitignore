@@ -10,3 +10,5 @@ CLAUDE.md
 build/
 out/
 sem3/db/labs/lab1/infinity.sql
+sem3/map/work/toy-interpreter/
+*.out

@@ -17,8 +17,8 @@ int main() {
   memset(&server_info, 0, sizeof(server_info));
 
   server_info.sin_family = AF_INET;
-  server_info.sin_port = htons(4568);
-  server_info.sin_addr.s_addr = inet_addr("172.30.253.13");
+  server_info.sin_port = htons(6767);
+  server_info.sin_addr.s_addr = inet_addr("172.30.246.46");
 
   int connect_ok = connect(socket_fd, (const struct sockaddr *)&server_info,
                            sizeof(server_info));
@@ -33,3 +33,19 @@ int main() {
 
   return 0;
 }
+
+// tcp concurent(pt 5), udp ceva, broadcast ceva, select ceva
+// ne jucam acasa, sa mentinem un array de threads, fiecare worker void * ...
+// si functia worker primeste ca parametru accept,
+// tre sa pasam prin parametri "c" si apoi close(c)
+// ce facem saptamana viitoare: select multiplex tcp chat server dadi
+// de la inceut sa iti faci selectul pt test, daca vrei cea mai mare nota
+// sa ne uitam man select, cum sa facme impelenterare de handling cu select
+// comunicare tcp server client
+// dupa vin taskrui
+// de genu: aveti o matrice care e un fel de harta si sa comunicam pos de pe
+// harta ai main din client si din server, ruleaza comunicare tcp ip server
+// client concurent serverul mai da create la un thread care trimite udp
+// clientul mai da create la un thread care receptioneaza udp (astea 2 linii
+// cred ca le am futut)
+//
